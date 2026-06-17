@@ -2,6 +2,8 @@
 <html lang="en"><head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Let There Be — Gradient Text Generator</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="assets/mitosis-1.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
 <style>
@@ -68,7 +70,6 @@
   [word,size].forEach(function(el){el.addEventListener('input',draw);});
   solid.addEventListener('change',draw);
   document.getElementById('dl').addEventListener('click',function(){
-    // export transparent PNG of just the text (ignore preview bg)
     var a=document.createElement('a');
     a.download=(word.value||'gradient-text').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'')+'.png';
     a.href=cv.toDataURL('image/png'); a.click();
