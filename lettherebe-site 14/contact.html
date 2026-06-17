@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Contact — Let There Be</title>
+<meta name="description" content="Every consumer health brand has a compelling Science Story™ waiting to be told. Let's find yours.">
+<link rel="icon" href="assets/mitosis-1.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="canonical" href="https://lettherebe.com/contact.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Let There Be">
+<meta property="og:title" content="Contact — Let There Be">
+<meta property="og:description" content="Every consumer health brand has a compelling Science Story™ waiting to be told. Let's find yours.">
+<meta property="og:url" content="https://lettherebe.com/contact.html">
+<meta property="og:image" content="https://lettherebe.com/assets/logo-block.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contact — Let There Be">
+<meta name="twitter:description" content="Every consumer health brand has a compelling Science Story™ waiting to be told. Let's find yours.">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Let There Be","alternateName":"Let There Be Science Marketing","url":"https://lettherebe.com/","logo":"https://lettherebe.com/assets/logo-block.png","description":"A science marketing agency for healthcare and consumer-health brands. Science leads the strategy; creativity brings it to life; the Science Studio scales it everywhere.","foundingDate":"2013","sameAs":["https://www.linkedin.com/company/let-there-be/"]}</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html"><img src="assets/logo-left.png" alt="Let There Be — Science Marketing"></a>
+    <button class="nav-toggle" aria-label="Menu"><span></span></button>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li class="has-dropdown">
+        <a href="engine.html">Science Marketing Engine</a>
+        <ul class="dropdown">
+          <li><a href="engine.html">Overview — The Model</a></li>
+          <li><a href="lit-review.html">Lit Review™</a></li>
+          <li><a href="claim-dev.html">Claim Dev™</a></li>
+          <li><a href="science-story.html">Science Story™</a></li>
+        </ul>
+      </li>
+      <li class="has-dropdown">
+        <a href="studio.html">Science Studio</a>
+        <ul class="dropdown">
+          <li><a href="studio.html">Overview — The Studio</a></li>
+          <li><a href="moa-moment.html">MOA Moment™</a></li>
+          <li><a href="influencer-science-kit.html">Influencer Science Kit™</a></li>
+          <li><a href="ad-to-education.html">Ad-to-Education Sequence™</a></li>
+        </ul>
+      </li>
+      <li><a href="work.html">Proof</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a class="nav-cta" href="contact.html">Get Started</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="page-hero">
+  <div class="blob-stage blob-hero" data-blob="divide" data-palette="0"></div>
+  <div class="wrap">
+    <h1 class="reveal reveal-d1">What's your <span class="grad-text">Science Story?</span></h1>
+    <hr class="divider reveal mt-2 mb-2">
+    <p class="hero-sub lead reveal reveal-d2">Tell us where your brand is. We'll tell you what the science can do.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="two-col mt-2">
+      <!-- NOTE: wire this form to your handler. Options:
+           1) Formspree: set action="https://formspree.io/f/YOUR_ID" method="POST"
+           2) Squarespace form block if rebuilt inside Squarespace
+           3) Netlify Forms: add data-netlify="true" if hosted on Netlify -->
+      <form class="form reveal" id="contact-form" action="#" method="POST">
+        <!-- honeypot — humans never see or fill this -->
+        <input type="text" name="company-website" id="f-hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+        <div>
+          <label for="f-name">Name</label>
+          <input id="f-name" name="name" type="text" required>
+        </div>
+        <div>
+          <label for="f-email">Work email</label>
+          <input id="f-email" name="email" type="email" required>
+        </div>
+        <div>
+          <label for="f-company">Company / brand</label>
+          <input id="f-company" name="company" type="text">
+        </div>
+        <div>
+          <label for="f-interest">What are you exploring?</label>
+          <select id="f-interest" name="interest">
+            <option>Not sure yet — start the conversation</option>
+            <option>Lit Review™</option>
+            <option>Claim Dev™</option>
+            <option>Science Story™</option>
+            <option>MOA Moment™</option>
+            <option>Influencer Science Kit™</option>
+            <option>Ad-to-Education Sequence™</option>
+            <option>Science Studio</option>
+            <option>The full Science Marketing Engine</option>
+          </select>
+        </div>
+        <div>
+          <label for="f-source">Where did you find us?</label>
+          <select id="f-source" name="source">
+            <option>Select one…</option>
+            <option>Web search (Google, Bing)</option>
+            <option>ChatGPT, Gemini, or another AI assistant</option>
+            <option>LinkedIn</option>
+            <option>Conference or industry event</option>
+            <option>Referral or word of mouth</option>
+            <option>Social media</option>
+            <option>Email or newsletter</option>
+            <option>Existing relationship</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div>
+          <label for="f-msg">Tell us about your science</label>
+          <textarea id="f-msg" name="message" rows="5"></textarea>
+        </div>
+        <div>
+          <label for="f-captcha" id="f-captcha-label">Quick check: what is 3 + 4?</label>
+          <input id="f-captcha" name="captcha" type="text" inputmode="numeric" required>
+        </div>
+        <button class="btn" type="submit">Send</button>
+        <p style="font-size:0.8rem;opacity:0.7">Your message goes straight to the LTB team.</p>
+      </form>
+      <div class="reveal reveal-d1">
+        <div class="card accent-sky mb-2" style="max-width:420px">
+          <h3>What does this cost?</h3>
+          <p>Get a ballpark for your project in about a minute with our cost calculator.</p>
+          <a class="card-more" style="text-decoration:none" href="calculator.html" data-calculator-link>Open the Cost Calculator →</a>
+        </div>
+        <h3 class="mb-1">Prefer a direct line?</h3>
+        <p class="mb-2">Find us on <a href="https://www.linkedin.com/company/let-there-be/" target="_blank" rel="noopener">LinkedIn</a>.</p>
+        <hr class="divider mb-2">
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-logo">
+        <img src="assets/logo-left.png" alt="Let There Be — Science Marketing">
+        <p class="footer-tag">Empowering healthcare brands to tell their Science Story™ since 2013.</p>
+      </div>
+      <div>
+        <h4>The Engine</h4>
+        <ul>
+          <li><a href="engine.html">Overview — The Model</a></li>
+          <li><a href="lit-review.html">Lit Review™</a></li>
+          <li><a href="claim-dev.html">Claim Dev™</a></li>
+          <li><a href="science-story.html">Science Story™</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Science Studio</h4>
+        <ul>
+          <li><a href="studio.html">Overview — The Studio</a></li>
+          <li><a href="moa-moment.html">MOA Moment™</a></li>
+          <li><a href="influencer-science-kit.html">Influencer Science Kit™</a></li>
+          <li><a href="ad-to-education.html">Ad-to-Education Sequence™</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <ul>
+          <li><a href="work.html">Proof</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="https://www.linkedin.com/company/let-there-be/" target="_blank" rel="noopener">LinkedIn</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p>Science Story™, What's Your Science Story?™, Gem Discovery™, Polishing Gems™, MOA Moment™, Influencer Science Kit™, Ad-to-Education Sequence™, Lit Review™, and Claim Dev™ are trademarks of Let There Be.</p>
+      <p>© <span data-year>2026</span> Let There Be. All Rights Reserved. — lettherebe.com</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
