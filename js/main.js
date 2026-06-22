@@ -65,24 +65,24 @@
   // Gradient palettes sampled from the four brand mitosis photographs.
   // Light hues only — no dark purple/red cell fills (those stay in the text gradient).
   var PALETTES = [
-    [["#5FBF9C", "#5A8FD0"], ["#8A80C6", "#EE5642"]],
-    [["#4FB8B0", "#5A8FD0"], ["#E0655F", "#EF6A4D"]],
-    [["#5A8FD0", "#5FBF9C"], ["#8A80C6", "#EE5642"]],
-    [["#8A80C6", "#5A8FD0"], ["#EF6A4D", "#EE5642"]]
+    [["#9AD9CC", "#869FBC"], ["#9B83AA", "#EB6758"]],
+    [["#87CCCB", "#869FBC"], ["#DC6763", "#F3755C"]],
+    [["#869FBC", "#9AD9CC"], ["#9B83AA", "#EB6758"]],
+    [["#9B83AA", "#869FBC"], ["#F3755C", "#EB6758"]]
   ];
   // Vivid, gradient-spectrum palettes for dark (Science Studio) pages
   var DARK_PALETTES = [
-    [["#4FB8B0", "#5A8FD0"], ["#8A80C6", "#EE5642"]],
-    [["#5A8FD0", "#8A80C6"], ["#EF6A4D", "#EE5642"]],
-    [["#EF6A4D", "#EE5642"], ["#4FB8B0", "#5A8FD0"]],
-    [["#BEC0D8", "#EF6A4D"], ["#5A8FD0", "#8A80C6"]]
+    [["#87CCCB", "#869FBC"], ["#9B83AA", "#EB6758"]],
+    [["#869FBC", "#9B83AA"], ["#F3755C", "#EB6758"]],
+    [["#F3755C", "#EB6758"], ["#87CCCB", "#869FBC"]],
+    [["#BEC0D8", "#F3755C"], ["#869FBC", "#9B83AA"]]
   ];
   if (document.body.classList.contains("theme-dark")) {
     PALETTES = DARK_PALETTES;
   }
   var uid = 0;
 
-  var GSTOP = "<stop offset='0%' stop-color='#5FBF9C'/><stop offset='20%' stop-color='#4FB8B0'/><stop offset='40%' stop-color='#5A8FD0'/><stop offset='58%' stop-color='#8A80C6'/><stop offset='80%' stop-color='#E0655F'/><stop offset='100%' stop-color='#EE5642'/>";
+  var GSTOP = "<stop offset='0%' stop-color='#9AD9CC'/><stop offset='20%' stop-color='#87CCCB'/><stop offset='40%' stop-color='#869FBC'/><stop offset='58%' stop-color='#9B83AA'/><stop offset='80%' stop-color='#EB6758'/><stop offset='100%' stop-color='#F98E68'/>";
   function linGrad(id, d) {
     return '<linearGradient id="' + id + '" gradientUnits="userSpaceOnUse" x1="' + d[0] + '" y1="' + d[1] + '" x2="' + d[2] + '" y2="' + d[3] + '">' + GSTOP + "</linearGradient>";
   }
@@ -486,36 +486,37 @@
     });
   });
 
-  /* Studio carousel: click a card to open the enlarged video lightbox */
+  /* Studio theater: click a video to play it in-tab; browse with prev/next */
   var lb = document.getElementById("vlightbox");
   if (lb) {
     var lbFrame = document.getElementById("vlb-frame");
-    var lbNote = document.getElementById("vlb-note");
-    var closeLB = function () {
-      lb.classList.remove("open");
-      lb.setAttribute("aria-hidden", "true");
-      lbFrame.innerHTML = "";
-      document.body.style.overflow = "";
-    };
-    document.querySelectorAll(".scv-play").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        var vid = btn.getAttribute("data-vid");
-        var title = (btn.getAttribute("data-title") || "").replace(/"/g, "");
-        var note = btn.getAttribute("data-note") || "";
-        lbFrame.innerHTML = '<iframe src="https://player.vimeo.com/video/' + vid +
-          '?autoplay=1&title=0&byline=0&portrait=0&dnt=1" allow="autoplay; fullscreen; picture-in-picture" title="' + title + '"></iframe>';
-        lbNote.textContent = note;
-        lbNote.style.display = note ? "block" : "none";
-        lb.classList.add("open");
-        lb.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
-      });
-    });
+    var lbNote  = document.getElementById("vlb-note");
+    var prevBtn = document.getElementById("vlb-prev");
+    var nextBtn = document.getElementById("vlb-next");
+    var tiles = Array.prototype.slice.call(document.querySelectorAll(".scv-tile[data-vid]"));
+    var idx = -1;
+    function play(i) {
+      idx = (i + tiles.length) % tiles.length;
+      var t = tiles[idx];
+      var vid = t.getAttribute("data-vid");
+      var title = (t.getAttribute("data-title") || "").replace(/"/g, "");
+      lbFrame.innerHTML = '<iframe src="https://player.vimeo.com/video/' + vid +
+        '?autoplay=1&title=0&byline=0&portrait=0&dnt=1" allow="autoplay; fullscreen; picture-in-picture" title="' + title + '"></iframe>';
+      if (lbNote) lbNote.style.display = "none";
+    }
+    function openLB(i) { play(i); lb.classList.add("open"); lb.setAttribute("aria-hidden","false"); document.body.style.overflow = "hidden"; }
+    function closeLB() { lb.classList.remove("open"); lb.setAttribute("aria-hidden","true"); lbFrame.innerHTML = ""; document.body.style.overflow = ""; }
+    tiles.forEach(function (t, i) { t.addEventListener("click", function () { openLB(i); }); });
+    if (prevBtn) prevBtn.addEventListener("click", function (e) { e.stopPropagation(); play(idx - 1); });
+    if (nextBtn) nextBtn.addEventListener("click", function (e) { e.stopPropagation(); play(idx + 1); });
     lb.addEventListener("click", function (e) {
-      if (e.target === lb || e.target.classList.contains("vlb-close")) closeLB();
+      if (e.target === lb || e.target.classList.contains("vlb-close") || e.target.classList.contains("vlb-inner")) closeLB();
     });
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Escape" && lb.classList.contains("open")) closeLB();
+      if (!lb.classList.contains("open")) return;
+      if (e.key === "Escape") closeLB();
+      else if (e.key === "ArrowLeft") play(idx - 1);
+      else if (e.key === "ArrowRight") play(idx + 1);
     });
   }
 
