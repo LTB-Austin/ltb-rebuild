@@ -111,30 +111,78 @@
       "</filter>";
   }
 
-  // A dividing cell: two gradient lobes inside a goo filter,
-  // pulling apart and re-merging (CSS keyframes drive the motion).
-  function divideBlob(palette) {
-    uid++;
-    var g = "ltbGrad" + uid, f = "ltbGoo" + uid, d = DIRS[uid % DIRS.length];
-    return '<svg viewBox="0 0 400 400" aria-hidden="true"><defs>' +
-      linGrad(g, d) + gooFilterCrisp(f, 11) + "</defs>" +
-      '<g class="goo-group anim-divide anim-drift" filter="url(#' + f + ')" opacity="0.95">' +
-      '<circle class="cell-a" cx="172" cy="196" r="92" fill="url(#' + g + ')" style="--pull:58px;--pull2:76px"/>' +
-      '<circle class="cell-b" cx="246" cy="210" r="76" fill="url(#' + g + ')" style="--pull:58px;--pull2:76px"/>' +
-      "</g></svg>";
+  /* ---------- PAINTERLY CELLS (live SVG) ----------
+     Brand mitosis cells as live, scalable SVG. The painterly fill = a
+     green->orange-weighted gradient whose axis is tightened onto the blob (so
+     green/orange land on the lobes, not dead corners), warped by a turbulence
+     /displacement filter for organic colour leaking, plus a soft highlight.
+     The fill shows through each cell's animated goo mask. */
+  var BG_TYPES = ["ambient", "divide", "longneck"];
+  var GO_STOPS =
+    "<stop offset='0%' stop-color='#7FD9B4'/><stop offset='12%' stop-color='#6FD2C8'/>" +
+    "<stop offset='26%' stop-color='#6BB2DD'/><stop offset='40%' stop-color='#9189BD'/>" +
+    "<stop offset='50%' stop-color='#9B7DB5'/><stop offset='58%' stop-color='#C96A72'/>" +
+    "<stop offset='67%' stop-color='#ED5340'/><stop offset='78%' stop-color='#F4743F'/>" +
+    "<stop offset='88%' stop-color='#F9994F'/><stop offset='100%' stop-color='#FBB46A'/>";
+  function injectPaintDefs() {
+    if (document.getElementById("ltb-paint-defs")) return;
+    var ns = "http://www.w3.org/2000/svg";
+    var s = document.createElementNS(ns, "svg");
+    s.setAttribute("id", "ltb-paint-defs");
+    s.setAttribute("style", "position:absolute;width:0;height:0;overflow:hidden");
+    s.innerHTML =
+      '<defs>' +
+      '<linearGradient id="ltbBase" gradientUnits="userSpaceOnUse" x1="112" y1="136" x2="312" y2="272">' + GO_STOPS + '</linearGradient>' +
+      '<linearGradient id="ltbE_uncover" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#7FD9B4"/><stop offset="52%" stop-color="#6FD2C8"/><stop offset="100%" stop-color="#6BB2DD"/></linearGradient>' +
+      '<linearGradient id="ltbE_extract" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#6FD2C8"/><stop offset="48%" stop-color="#6BB2DD"/><stop offset="100%" stop-color="#9189BD"/></linearGradient>' +
+      '<linearGradient id="ltbE_transform" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#9B7DB5"/><stop offset="50%" stop-color="#C96A72"/><stop offset="100%" stop-color="#ED5340"/></linearGradient>' +
+      '<linearGradient id="ltbE_scale" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#ED5340"/><stop offset="42%" stop-color="#F4743F"/><stop offset="76%" stop-color="#F9994F"/><stop offset="100%" stop-color="#FBB46A"/></linearGradient>' +
+      '<radialGradient id="ltbHL" cx="32%" cy="25%" r="46%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.16"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>' +
+      '<filter id="ltbPaint"><feTurbulence type="fractalNoise" baseFrequency="0.005 0.0075" numOctaves="3" seed="6" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="80" xChannelSelector="R" yChannelSelector="G" result="d"/><feColorMatrix in="d" type="saturate" values="1.12"/></filter>' +
+      '<filter id="ltbPaintS"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="6" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="26" xChannelSelector="R" yChannelSelector="G" result="d"/><feColorMatrix in="d" type="saturate" values="1.12"/></filter>' +
+      '</defs>';
+    document.body.appendChild(s);
   }
-
-  // Ambient cell cluster: slow drift + breathing, no division.
-  function ambientBlob(palette) {
-    uid++;
-    var g = "ltbGrad" + uid, f = "ltbGoo" + uid, d = DIRS[(uid + 1) % DIRS.length];
-    return '<svg viewBox="0 0 400 400" aria-hidden="true"><defs>' +
-      linGrad(g, d) + gooFilterCrisp(f, 10) + "</defs>" +
-      '<g class="goo-group anim-drift" filter="url(#' + f + ')" opacity="0.92">' +
-      '<circle class="anim-breathe" cx="170" cy="200" r="86" fill="url(#' + g + ')"/>' +
-      '<circle class="anim-breathe" cx="262" cy="226" r="58" fill="url(#' + g + ')" style="animation-delay:-4.5s"/>' +
-      "</g></svg>";
+  function paintFill(W, H, fid) {
+    // oversized painted rect: the split lobes pull/drift beyond the viewBox, so
+    // the fill must extend past it or the shape gets clipped where it has no fill.
+    return '<rect x="-160" y="-160" width="' + (W + 320) + '" height="' + (H + 320) + '" fill="url(#ltbBase)" filter="url(#' + (fid || "ltbPaint") + ')"/>' +
+      '<rect width="' + W + '" height="' + H + '" fill="url(#ltbHL)"/>';
   }
+  function goo(id, blur) {
+    return '<filter id="' + id + '" x="-40%" y="-40%" width="180%" height="180%">' +
+      '<feGaussianBlur in="SourceGraphic" stdDeviation="' + blur + '" result="b"/>' +
+      '<feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 34 -15"/></filter>';
+  }
+  injectPaintDefs();
+  function divideBlob() {
+    uid++; var f = "lg" + uid, m = "lm" + uid;
+    return '<svg viewBox="0 0 400 400" aria-hidden="true"><defs>' + goo(f, 11) +
+      '<mask id="' + m + '"><g class="goo-group anim-divide anim-drift" filter="url(#' + f + ')">' +
+      '<circle class="cell-a" cx="172" cy="196" r="92" fill="#fff" style="--pull:58px;--pull2:76px"/>' +
+      '<circle class="cell-b" cx="246" cy="210" r="76" fill="#fff" style="--pull:58px;--pull2:76px"/>' +
+      '</g></mask></defs><g mask="url(#' + m + ')">' + paintFill(400, 400) + '</g></svg>';
+  }
+  function ambientBlob() {
+    uid++; var f = "lg" + uid, m = "lm" + uid;
+    return '<svg viewBox="0 0 400 400" aria-hidden="true"><defs>' + goo(f, 10) +
+      '<mask id="' + m + '"><g class="goo-group anim-drift" filter="url(#' + f + ')">' +
+      '<circle class="anim-breathe" cx="170" cy="200" r="86" fill="#fff"/>' +
+      '<circle class="anim-breathe" cx="262" cy="226" r="58" fill="#fff" style="animation-delay:-4.5s"/>' +
+      '</g></mask></defs><g mask="url(#' + m + ')">' + paintFill(400, 400) + '</g></svg>';
+  }
+  function longneckBlob() {
+    uid++; var f = "lg" + uid, m = "lm" + uid;
+    return '<svg viewBox="0 0 400 400" aria-hidden="true"><defs>' + goo(f, 13) +
+      '<mask id="' + m + '"><g class="goo-group anim-drift" filter="url(#' + f + ')">' +
+      '<circle class="anim-breathe" cx="140" cy="150" r="74" fill="#fff"/>' +
+      '<circle cx="180" cy="182" r="34" fill="#fff"/>' +
+      '<circle cx="205" cy="205" r="34" fill="#fff"/>' +
+      '<circle cx="230" cy="228" r="34" fill="#fff"/>' +
+      '<circle class="anim-breathe" cx="270" cy="258" r="70" fill="#fff" style="animation-delay:-4s"/>' +
+      '</g></mask></defs><g mask="url(#' + m + ')">' + paintFill(400, 400) + '</g></svg>';
+  }
+  function blobByType(t) { return t === "divide" ? divideBlob() : t === "longneck" ? longneckBlob() : ambientBlob(); }
 
   document.querySelectorAll("[data-blob]").forEach(function (el, i) {
     var type = el.getAttribute("data-blob");
@@ -217,7 +265,7 @@
       cell.dataset.base = "scale(" + fx + "," + fy + ") rotate(" + rot + "deg)";
       cell.style.transform = cell.dataset.base;
       var palette = PALETTES[n % PALETTES.length];
-      cell.innerHTML = ((HOME ? (n % 2 === 0) : (n % 3 === 0))) ? divideBlob(palette) : ambientBlob(palette);
+      cell.innerHTML = blobByType(BG_TYPES[n % BG_TYPES.length]);
       placed.push({ side: side, top: yy - pad, bot: yy + size + pad });
       layer.appendChild(cell);
       i++;
