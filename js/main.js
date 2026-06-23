@@ -258,7 +258,7 @@
       cell.style.top = Math.round(yy) + "px";
       cell.style.width = cell.style.height = size + "px";
       cell.style.opacity = HOME ? "0.9" : "0.8";
-      cell.dataset.par = (0.08 + (i % 5) * 0.05).toFixed(3);
+      cell.dataset.par = "0.08";   // uniform parallax: cells move together so spacing never collapses into overlap
       cell.style[left ? "left" : "right"] = "-" + Math.round(size - visible) + "px";
       // per-page variety: mirror + slight tilt so layouts never repeat (bounding box stays edge-safe)
       var fx = ((n >> 1) % 2) ? -1 : 1, fy = ((n >> 2) % 2) ? -1 : 1, rot = ((n * 41) % 33) - 16;
