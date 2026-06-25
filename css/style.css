@@ -670,6 +670,18 @@ footer {
 .anim-divide  .cell-b { animation: cellDivide 14s ease-in-out infinite; }
 .anim-breathe { animation: cellBreathe 9s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
 .anim-drift   { animation: cellDrift 18s ease-in-out infinite; }
+/* whole-cell drift on the rendered group so motion is always clearly visible */
+.cell-move    { animation: cellDrift 16s ease-in-out infinite; transform-origin: center; transform-box: fill-box; }
+/* Mitosis morph: each lobe eases from -delta to +delta and pulses, so the fused
+   metaball shape actually stretches/thins at the neck (the cell animates in place). */
+@keyframes mitoMorph {
+  0%, 100% { transform: translate(calc(var(--mx, 0px) * -1), calc(var(--my, 0px) * -1)) scale(var(--s0, 0.96)); }
+  50%      { transform: translate(var(--mx, 0px), var(--my, 0px)) scale(var(--s1, 1.07)); }
+}
+.goo-group .mito { animation: mitoMorph var(--dur, 7s) ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+/* PERF: don't animate (re-rasterize) cells that are scrolled off screen */
+.bg-cell.offscreen .mito { animation-play-state: paused; }
+@media (prefers-reduced-motion: reduce) { .goo-group .mito { animation: none; } }
 
 /* Phase cells trigger on .in */
 .phase-cell .cell-a, .phase-cell .cell-b { transition: transform 1.4s cubic-bezier(0.6, 0, 0.3, 1); }
@@ -681,7 +693,7 @@ footer {
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .anim-divide .cell-a, .anim-divide .cell-b, .anim-breathe, .anim-drift { animation: none; }
+  .anim-divide .cell-a, .anim-divide .cell-b, .anim-breathe, .anim-drift, .cell-move { animation: none; }
   .reveal { opacity: 1; transform: none; transition: none; }
 }
 
@@ -1874,6 +1886,12 @@ table.compare td.win,
 }
 
 
-/* ============ Painterly cell images (compressed APNG) ============ */
+/* ============ Painterly cell images (mitosis library renders) ============ */
 .blob-stage img, .bg-cells img, .cell-img { width: 100%; height: 100%; object-fit: contain; display: block; }
 .icell img, .icell-img { width: 100%; height: auto; display: block; }
+/* faint, living breathing on the static renders (transform on the img only, so it
+   never fights the wrapper's rotate/mirror/parallax transforms) */
+@keyframes cellBreath { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.028); } }
+.cell-img { animation: cellBreath 8s ease-in-out infinite; will-change: transform; transform-origin: center; }
+.theme-dark .bg-cells img, .theme-dark .blob-stage img { filter: saturate(1.25) brightness(1.12); }
+@media (prefers-reduced-motion: reduce) { .cell-img { animation: none; } }

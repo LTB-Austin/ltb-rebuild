@@ -65,24 +65,24 @@
   // Gradient palettes sampled from the four brand mitosis photographs.
   // Light hues only — no dark purple/red cell fills (those stay in the text gradient).
   var PALETTES = [
-    [["#9AD9CC", "#869FBC"], ["#9B83AA", "#EB6758"]],
-    [["#87CCCB", "#869FBC"], ["#DC6763", "#F3755C"]],
-    [["#869FBC", "#9AD9CC"], ["#9B83AA", "#EB6758"]],
-    [["#9B83AA", "#869FBC"], ["#F3755C", "#EB6758"]]
+    [["#94CAB4", "#7C82A1"], ["#8C6C8F", "#E1483B"]],
+    [["#7FB6CC", "#7C82A1"], ["#E1483B", "#EE6B4D"]],
+    [["#7C82A1", "#94CAB4"], ["#8C6C8F", "#E1483B"]],
+    [["#8C6C8F", "#7C82A1"], ["#EE6B4D", "#E1483B"]]
   ];
   // Vivid, gradient-spectrum palettes for dark (Science Studio) pages
   var DARK_PALETTES = [
-    [["#87CCCB", "#869FBC"], ["#9B83AA", "#EB6758"]],
-    [["#869FBC", "#9B83AA"], ["#F3755C", "#EB6758"]],
-    [["#F3755C", "#EB6758"], ["#87CCCB", "#869FBC"]],
-    [["#BEC0D8", "#F3755C"], ["#869FBC", "#9B83AA"]]
+    [["#7FB6CC", "#7C82A1"], ["#8C6C8F", "#E1483B"]],
+    [["#7C82A1", "#8C6C8F"], ["#EE6B4D", "#E1483B"]],
+    [["#EE6B4D", "#E1483B"], ["#7FB6CC", "#7C82A1"]],
+    [["#B4B7C9", "#EE6B4D"], ["#7C82A1", "#8C6C8F"]]
   ];
   if (document.body.classList.contains("theme-dark")) {
     PALETTES = DARK_PALETTES;
   }
   var uid = 0;
 
-  var GSTOP = "<stop offset='0%' stop-color='#9AD9CC'/><stop offset='20%' stop-color='#87CCCB'/><stop offset='40%' stop-color='#869FBC'/><stop offset='58%' stop-color='#9B83AA'/><stop offset='80%' stop-color='#EB6758'/><stop offset='100%' stop-color='#F98E68'/>";
+  var GSTOP = "<stop offset='0%' stop-color='#94CAB4'/><stop offset='20%' stop-color='#7FB6CC'/><stop offset='40%' stop-color='#7C82A1'/><stop offset='54%' stop-color='#8C6C8F'/><stop offset='70%' stop-color='#E1483B'/><stop offset='86%' stop-color='#EE6B4D'/><stop offset='100%' stop-color='#F2966A'/>";
   function linGrad(id, d) {
     return '<linearGradient id="' + id + '" gradientUnits="userSpaceOnUse" x1="' + d[0] + '" y1="' + d[1] + '" x2="' + d[2] + '" y2="' + d[3] + '">' + GSTOP + "</linearGradient>";
   }
@@ -117,13 +117,15 @@
      green/orange land on the lobes, not dead corners), warped by a turbulence
      /displacement filter for organic colour leaking, plus a soft highlight.
      The fill shows through each cell's animated goo mask. */
-  var BG_TYPES = ["ambient", "divide", "longneck"];
+  // Background margin cells — connected, one-shape forms only (no split, so they
+  // never read as two circles). Priority: peanut > ambient > diagonal > trio.
+  var BG_TYPES = ["peanut", "ambient", "diagonal", "peanut", "ambient", "trio", "peanut", "diagonal", "ambient", "peanut"];
+  // Muted "milky" brand palette — matches the mitosis cell library.
   var GO_STOPS =
-    "<stop offset='0%' stop-color='#7FD9B4'/><stop offset='12%' stop-color='#6FD2C8'/>" +
-    "<stop offset='26%' stop-color='#6BB2DD'/><stop offset='40%' stop-color='#9189BD'/>" +
-    "<stop offset='50%' stop-color='#9B7DB5'/><stop offset='58%' stop-color='#C96A72'/>" +
-    "<stop offset='67%' stop-color='#ED5340'/><stop offset='78%' stop-color='#F4743F'/>" +
-    "<stop offset='88%' stop-color='#F9994F'/><stop offset='100%' stop-color='#FBB46A'/>";
+    "<stop offset='0%' stop-color='#94CAB4'/><stop offset='20%' stop-color='#7FB6CC'/>" +
+    "<stop offset='40%' stop-color='#7C82A1'/><stop offset='54%' stop-color='#8C6C8F'/>" +
+    "<stop offset='70%' stop-color='#E1483B'/><stop offset='86%' stop-color='#EE6B4D'/>" +
+    "<stop offset='100%' stop-color='#F2966A'/>";
   function injectPaintDefs() {
     if (document.getElementById("ltb-paint-defs")) return;
     var ns = "http://www.w3.org/2000/svg";
@@ -133,10 +135,10 @@
     s.innerHTML =
       '<defs>' +
       '<linearGradient id="ltbBase" gradientUnits="userSpaceOnUse" x1="112" y1="136" x2="312" y2="272">' + GO_STOPS + '</linearGradient>' +
-      '<linearGradient id="ltbE_uncover" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#7FD9B4"/><stop offset="52%" stop-color="#6FD2C8"/><stop offset="100%" stop-color="#6BB2DD"/></linearGradient>' +
-      '<linearGradient id="ltbE_extract" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#6FD2C8"/><stop offset="48%" stop-color="#6BB2DD"/><stop offset="100%" stop-color="#9189BD"/></linearGradient>' +
-      '<linearGradient id="ltbE_transform" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#9B7DB5"/><stop offset="50%" stop-color="#C96A72"/><stop offset="100%" stop-color="#ED5340"/></linearGradient>' +
-      '<linearGradient id="ltbE_scale" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#ED5340"/><stop offset="42%" stop-color="#F4743F"/><stop offset="76%" stop-color="#F9994F"/><stop offset="100%" stop-color="#FBB46A"/></linearGradient>' +
+      '<linearGradient id="ltbE_uncover" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#94CAB4"/><stop offset="52%" stop-color="#7FB6CC"/><stop offset="100%" stop-color="#7C82A1"/></linearGradient>' +
+      '<linearGradient id="ltbE_extract" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#7FB6CC"/><stop offset="48%" stop-color="#7C82A1"/><stop offset="100%" stop-color="#8C6C8F"/></linearGradient>' +
+      '<linearGradient id="ltbE_transform" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#8C6C8F"/><stop offset="50%" stop-color="#BC5C5A"/><stop offset="100%" stop-color="#E1483B"/></linearGradient>' +
+      '<linearGradient id="ltbE_scale" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#E1483B"/><stop offset="42%" stop-color="#EE6B4D"/><stop offset="76%" stop-color="#F2966A"/><stop offset="100%" stop-color="#F2966A"/></linearGradient>' +
       '<radialGradient id="ltbHL" cx="32%" cy="25%" r="46%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.16"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>' +
       '<filter id="ltbPaint"><feTurbulence type="fractalNoise" baseFrequency="0.005 0.0075" numOctaves="3" seed="6" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="80" xChannelSelector="R" yChannelSelector="G" result="d"/><feColorMatrix in="d" type="saturate" values="1.12"/></filter>' +
       '<filter id="ltbPaintS"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="6" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="26" xChannelSelector="R" yChannelSelector="G" result="d"/><feColorMatrix in="d" type="saturate" values="1.12"/></filter>' +
@@ -154,6 +156,67 @@
       '<feGaussianBlur in="SourceGraphic" stdDeviation="' + blur + '" result="b"/>' +
       '<feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 34 -15"/></filter>';
   }
+
+  /* ---------- SOFT CELLS (match the mitosis library) ----------
+     Library look = feathered, translucent edges that dissolve into the page,
+     a muted gradient, and glowing cores in the lobes. We reproduce that in SVG:
+       - a SOFT alpha ramp on the goo (low multiplier) -> edges fade out, not hard
+       - per-lobe radial core glows -> brightens the lobe centres (kills the flat
+         linear read) and gives the "glowing core"
+       - group opacity < 1 -> the body reads translucent
+     The fill is still warped by the turbulence filter for organic colour leak. */
+  var SOFT_STOPS = [
+    [0.00, [148, 202, 180]], [0.20, [127, 182, 204]], [0.40, [124, 130, 161]],
+    [0.54, [140, 108, 143]], [0.70, [225, 72, 59]], [0.86, [238, 107, 77]], [1.00, [242, 150, 106]]
+  ];
+  function _mix(a, b, f) { return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f]; }
+  function paletteAt(t) {
+    t = Math.max(0, Math.min(1, t));
+    for (var i = 0; i < SOFT_STOPS.length - 1; i++) {
+      var p0 = SOFT_STOPS[i][0], p1 = SOFT_STOPS[i + 1][0];
+      if (t >= p0 && t <= p1 && p1 > p0) return _mix(SOFT_STOPS[i][1], SOFT_STOPS[i + 1][1], (t - p0) / (p1 - p0));
+    }
+    return SOFT_STOPS[t <= 0 ? 0 : SOFT_STOPS.length - 1][1];
+  }
+  function _hex(c) { function h(v) { v = Math.round(Math.max(0, Math.min(255, v))); return (v < 16 ? "0" : "") + v.toString(16); } return "#" + h(c[0]) + h(c[1]) + h(c[2]); }
+  function _coreCol(c) { var l = 0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]; return [l + (c[0] - l) * 1.3, l + (c[1] - l) * 1.3, l + (c[2] - l) * 1.3]; }
+  // lobes: [{x,y,r,cls,style}]   axis: [x1,y1,x2,y2] (teal end -> red end)
+  // Two layered masks give "defined edge + translucent body":
+  //   m1 (crisp goo) = the connected silhouette with a clean, defined edge.
+  //   m2 (density)   = a per-lobe radial alpha (opaque core -> translucent rim)
+  //                    so light comes through the body but never past the edge.
+  // Colour is the directional linear gradient (teal->red, mixes organically) and
+  // each lobe gets a gentle core glow in its own hue.
+  function softCell(lobes, axis, blur) {
+    uid++; var f = "lg" + uid, m = "lm" + uid, g = "gg" + uid;
+    var x1 = axis[0], y1 = axis[1], x2 = axis[2], y2 = axis[3];
+    var dx = x2 - x1, dy = y2 - y1, L = dx * dx + dy * dy + 1e-6;
+    var masks = "", ts = [], i;
+    for (i = 0; i < lobes.length; i++) {
+      var lb = lobes[i];
+      masks += '<circle class="' + (lb.cls || "anim-breathe") + '" cx="' + lb.x + '" cy="' + lb.y + '" r="' + lb.r + '" fill="#fff"' + (lb.style ? ' style="' + lb.style + '"' : '') + '/>';
+      ts.push(((lb.x - x1) * dx + (lb.y - y1) * dy) / L);
+    }
+    // glow at the coolest + warmest lobes
+    var ci = 0, wi = 0;
+    for (i = 0; i < ts.length; i++) { if (ts[i] < ts[ci]) ci = i; if (ts[i] > ts[wi]) wi = i; }
+    var gdefs = "", guse = "";
+    [ci, wi].forEach(function (idx, k) {
+      var lb = lobes[idx]; var col = _coreCol(paletteAt(ts[idx])); var gid = "cg" + uid + (k ? "w" : "c");
+      gdefs += '<radialGradient id="' + gid + '" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="' + _hex(col) + '" stop-opacity="0.78"/><stop offset="100%" stop-color="' + _hex(col) + '" stop-opacity="0"/></radialGradient>';
+      guse += '<circle cx="' + lb.x + '" cy="' + lb.y + '" r="' + (lb.r * 0.96).toFixed(0) + '" fill="url(#' + gid + ')"/>';
+    });
+    return '<svg viewBox="0 0 400 400" aria-hidden="true"><defs>' +
+      '<linearGradient id="' + g + '" gradientUnits="userSpaceOnUse" x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '">' + GO_STOPS + '</linearGradient>' + gdefs +
+      '<filter id="' + f + '" x="-55%" y="-55%" width="210%" height="210%">' +
+      '<feGaussianBlur in="SourceGraphic" stdDeviation="' + (blur || 8) + '" result="b"/>' +
+      '<feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10"/></filter>' +
+      '<mask id="' + m + '"><g class="goo-group" filter="url(#' + f + ')">' + masks + '</g></mask></defs>' +
+      '<g mask="url(#' + m + ')" opacity="0.9">' +
+      '<rect x="-160" y="-160" width="720" height="720" fill="url(#' + g + ')"/>' +
+      guse +
+      '<rect width="400" height="400" fill="url(#ltbHL)"/></g></svg>';
+  }
   injectPaintDefs();
   function divideBlob() {
     uid++; var f = "lg" + uid, m = "lm" + uid;
@@ -163,26 +226,41 @@
       '<circle class="cell-b" cx="246" cy="210" r="76" fill="#fff" style="--pull:58px;--pull2:76px"/>' +
       '</g></mask></defs><g mask="url(#' + m + ')">' + paintFill(400, 400) + '</g></svg>';
   }
+  // The cells morph in place like living mitosis: lobes ease apart/together (the
+  // neck stretches and thins) and pulse, via per-lobe --mx/--my motion vars.
   function ambientBlob() {
-    uid++; var f = "lg" + uid, m = "lm" + uid;
-    return '<svg viewBox="0 0 400 400" aria-hidden="true"><defs>' + goo(f, 10) +
-      '<mask id="' + m + '"><g class="goo-group anim-drift" filter="url(#' + f + ')">' +
-      '<circle class="anim-breathe" cx="170" cy="200" r="86" fill="#fff"/>' +
-      '<circle class="anim-breathe" cx="262" cy="226" r="58" fill="#fff" style="animation-delay:-4.5s"/>' +
-      '</g></mask></defs><g mask="url(#' + m + ')">' + paintFill(400, 400) + '</g></svg>';
+    return softCell([
+      { x: 170, y: 200, r: 86, cls: "mito", style: "--mx:-9px;--my:-5px;--dur:8s" },
+      { x: 262, y: 226, r: 58, cls: "mito", style: "--mx:12px;--my:7px;--dur:6.5s;animation-delay:-2.2s" }
+    ], [92, 188, 338, 238], 8);
   }
-  function longneckBlob() {
-    uid++; var f = "lg" + uid, m = "lm" + uid;
-    return '<svg viewBox="0 0 400 400" aria-hidden="true"><defs>' + goo(f, 13) +
-      '<mask id="' + m + '"><g class="goo-group anim-drift" filter="url(#' + f + ')">' +
-      '<circle class="anim-breathe" cx="140" cy="150" r="74" fill="#fff"/>' +
-      '<circle cx="180" cy="182" r="34" fill="#fff"/>' +
-      '<circle cx="205" cy="205" r="34" fill="#fff"/>' +
-      '<circle cx="230" cy="228" r="34" fill="#fff"/>' +
-      '<circle class="anim-breathe" cx="270" cy="258" r="70" fill="#fff" style="animation-delay:-4s"/>' +
-      '</g></mask></defs><g mask="url(#' + m + ')">' + paintFill(400, 400) + '</g></svg>';
+  function peanutBlob() {
+    // two lobes that stay fused; the neck stretches and relaxes (mitosis-like)
+    return softCell([
+      { x: 170, y: 202, r: 92, cls: "mito", style: "--mx:-14px;--dur:7s" },
+      { x: 254, y: 212, r: 82, cls: "mito", style: "--mx:14px;--dur:7s" }
+    ], [92, 200, 332, 214], 9);
   }
-  function blobByType(t) { return t === "divide" ? divideBlob() : t === "longneck" ? longneckBlob() : ambientBlob(); }
+  function diagonalBlob() {
+    // lobes ease apart along the diagonal and back
+    return softCell([
+      { x: 156, y: 156, r: 88, cls: "mito", style: "--mx:-11px;--my:-11px;--dur:7.5s" },
+      { x: 252, y: 252, r: 84, cls: "mito", style: "--mx:11px;--my:11px;--dur:7.5s" }
+    ], [86, 86, 322, 322], 9);
+  }
+  function trioBlob() {
+    // three orbs each drift outward and pulse, out of phase -> undulating cluster
+    return softCell([
+      { x: 152, y: 166, r: 66, cls: "mito", style: "--mx:-9px;--my:-8px;--dur:7s" },
+      { x: 256, y: 158, r: 64, cls: "mito", style: "--mx:11px;--my:-6px;--dur:6.4s;animation-delay:-2.4s" },
+      { x: 206, y: 256, r: 62, cls: "mito", style: "--mx:1px;--my:12px;--dur:7.8s;animation-delay:-4.3s" }
+    ], [120, 150, 286, 286], 8);
+  }
+  // Live, animated SVG cells (they breathe + drift in the browser) carrying the
+  // translucent / glowing-core look.
+  function blobByType(t) {
+    return t === "peanut" ? peanutBlob() : t === "diagonal" ? diagonalBlob() : t === "trio" ? trioBlob() : ambientBlob();
+  }
 
   document.querySelectorAll("[data-blob]").forEach(function (el, i) {
     var type = el.getAttribute("data-blob");
@@ -190,14 +268,14 @@
       ? parseInt(el.getAttribute("data-palette"), 10) % PALETTES.length
       : i % PALETTES.length;
     var palette = PALETTES[pIdx];
-    el.innerHTML = type === "divide" ? divideBlob(palette) : ambientBlob(palette);
+    el.innerHTML = blobByType(type);
     // Per-page hero placement: shift / scale / rotate / flip so no two pages match.
     // Kept to the right & lower edge so it never crosses the left-aligned hero text.
     if (el.classList.contains("blob-hero") || el.classList.contains("blob-corner-tr")) {
       var vy = ((SEED % 7) * 6) - 8;          // -8 .. 28 vh
       var vx = ((SEED >> 3) % 4) * 2;          // 0 .. 6 vw further toward the edge
-      var sc = 0.82 + ((SEED >> 1) % 5) * 0.09; // 0.82 .. 1.18
-      var rt = (((SEED >> 2) % 9) - 4) * 10;    // -40 .. 40 deg
+      var sc = 0.95 + ((SEED >> 1) % 5) * 0.1;  // 0.95 .. 1.35 (bigger, never tiny)
+      var rt = (((SEED >> 2) % 5) + 2) * 13 * ((SEED % 2) ? -1 : 1); // +/-26..78 deg, never upright
       var fx = (SEED % 2) ? -1 : 1;
       el.dataset.base = "translate(" + vx + "vw," + vy + "vh) rotate(" + rt + "deg) scale(" + (sc * fx) + "," + sc + ")";
       el.style.transform = el.dataset.base;
@@ -217,13 +295,20 @@
     var docH = document.documentElement.scrollHeight;
     uid += SEED % 7;                                  // shift gradient directions per page
     var start = window.innerHeight * (1.05 + (SEED % 6) * 0.05);
-    var step = (HOME ? 560 : 880) + (SEED % 110);
+    var step = (HOME ? 820 : 1120) + (SEED % 110);   // fewer cells overall (perf)
     // Cells dodge solid-background blocks (dark bands) so they never look sliced.
     var blocked = [];
     document.querySelectorAll(".band, .video-embed, .blob-stage").forEach(function (el) {
       var r = el.getBoundingClientRect();
       var top = r.top + window.scrollY;
       blocked.push([top - 260, top + r.height + 60]);
+    });
+    // Statement-band sections show only their engine-motion icell — keep the
+    // background mitosis cells well clear (pushed up toward the title or further down).
+    document.querySelectorAll(".statement-band").forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      var top = r.top + window.scrollY;
+      blocked.push([top - 520, top + r.height + 520]);
     });
     function collides(y, size) {
       return blocked.some(function (b) { return y + size > b[0] && y < b[1]; });
@@ -246,7 +331,8 @@
     var i = 0;
     for (var y = start; y < docH - 600; y += step) {
       var n = i + SEED;
-      var size = (HOME ? 300 : 400) + ((n * 89) % (HOME ? 340 : 240));
+      // bigger cells, no tiny ones — they should take up real space in the margins
+      var size = (HOME ? 500 : 560) + ((n * 89) % (HOME ? 260 : 260));
       var yy = y + ((n * 53) % 220);
       var left = (n % 2 === 0);
       var side = left ? "L" : "R";
@@ -260,8 +346,11 @@
       cell.style.opacity = HOME ? "0.9" : "0.8";
       cell.dataset.par = "0.08";   // uniform parallax: cells move together so spacing never collapses into overlap
       cell.style[left ? "left" : "right"] = "-" + Math.round(size - visible) + "px";
-      // per-page variety: mirror + slight tilt so layouts never repeat (bounding box stays edge-safe)
-      var fx = ((n >> 1) % 2) ? -1 : 1, fy = ((n >> 2) % 2) ? -1 : 1, rot = ((n * 41) % 33) - 16;
+      // per-page variety + rotation so the teal/red sides keep swapping down the
+      // margins. Cells are NEVER left upright (0deg) — always tilted on the page.
+      var fx = ((n >> 1) % 2) ? -1 : 1, fy = ((n >> 2) % 2) ? -1 : 1;
+      var ROTS = [25, 200, 90, 160, 320, 250, 35, 215];     // all clearly rotated, mix of teal- and red-leading
+      var rot = ROTS[n % ROTS.length] + (((n * 23) % 13) - 6); // +/-6deg organic jitter
       cell.dataset.base = "scale(" + fx + "," + fy + ") rotate(" + rot + "deg)";
       cell.style.transform = cell.dataset.base;
       var palette = PALETTES[n % PALETTES.length];
@@ -271,22 +360,20 @@
       i++;
     }
     document.body.insertBefore(layer, document.body.firstChild);
-    parCells = HOME ? Array.prototype.slice.call(layer.querySelectorAll(".bg-cell")) : [];
+    parCells = [];
+    // PERF: only animate cells that are on (or near) the screen. Off-screen cells
+    // get their morph paused so the browser isn't re-rasterizing filtered masks for
+    // the whole page at once.
+    if (window.IntersectionObserver) {
+      var vio = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { e.target.classList.toggle("offscreen", !e.isIntersecting); });
+      }, { rootMargin: "300px 0px" });
+      Array.prototype.forEach.call(layer.querySelectorAll(".bg-cell"), function (c) { vio.observe(c); });
+    }
   }
-  // Subtle scroll parallax: background cells lag the scroll a touch, adding depth (home only).
-  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    var parTick = false;
-    window.addEventListener("scroll", function () {
-      if (parTick) return; parTick = true;
-      requestAnimationFrame(function () {
-        var y = window.scrollY;
-        for (var k = 0; k < parCells.length; k++) {
-          parCells[k].style.transform = "translate3d(0," + (y * parseFloat(parCells[k].dataset.par)).toFixed(1) + "px,0) " + parCells[k].dataset.base;
-        }
-        parTick = false;
-      });
-    }, { passive: true });
-  }
+  // Scroll parallax intentionally disabled: re-transforming the filtered SVG cells
+  // on every scroll frame caused jank. Cells now scroll normally with the page and
+  // animate in place (see the mitosis morph below).
   window.addEventListener("load", buildBgCells);
   var rsT;
   window.addEventListener("resize", function () {
@@ -386,18 +473,7 @@
     window.addEventListener("resize", function () { fit(idx); });
   });
 
-  /* ---------- HERO PARALLAX ---------- */
-  var heroBlob = document.querySelector(".blob-hero");
-  var heroBlob2 = document.querySelector(".hero .blob-corner-tl");
-  if ((heroBlob || heroBlob2) && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    window.addEventListener("scroll", function () {
-      var y = window.scrollY;
-      if (y < window.innerHeight * 1.6) {
-        if (heroBlob) heroBlob.style.transform = "translateY(" + (y * 0.16) + "px) " + (heroBlob.dataset.base || "");
-        if (heroBlob2) heroBlob2.style.transform = "translateY(" + (y * -0.12) + "px) " + (heroBlob2.dataset.base || "");
-      }
-    }, { passive: true });
-  }
+  /* ---------- HERO PARALLAX (disabled — caused scroll jank on filtered SVGs) ---------- */
 
   /* ---------- CONTACT FORM — mailto to alex@, honeypot + simple captcha ---------- */
   var cform = document.getElementById("contact-form");
