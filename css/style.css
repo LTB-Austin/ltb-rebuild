@@ -286,6 +286,12 @@ li.has-dropdown:focus-within .dropdown { opacity: 1; visibility: visible; transf
 .hero .blob-stage, .page-hero .blob-stage { z-index: 0; }
 .hero .wrap, .page-hero .wrap { position: relative; z-index: 2; }
 .page-hero .hero-sub { margin-bottom: var(--s6); }
+/* Sub-brand wordmark as page-hero title (uniform height across all service pages) */
+.wordmark-h1 { margin: 0 0 var(--s4, 16px); line-height: 0; }
+.hero-wordmark { display: block; height: 56px; width: auto; max-width: 100%; }
+@media (max-width: 760px) {
+  .hero-wordmark { height: auto; width: 100%; max-width: 460px; }
+}
 
 /* Blob canvases (SVG injected by js) */
 .blob-stage {
