@@ -135,10 +135,11 @@
     s.innerHTML =
       '<defs>' +
       '<linearGradient id="ltbBase" gradientUnits="userSpaceOnUse" x1="112" y1="136" x2="312" y2="272">' + GO_STOPS + '</linearGradient>' +
-      '<linearGradient id="ltbE_uncover" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#94CAB4"/><stop offset="52%" stop-color="#7FB6CC"/><stop offset="100%" stop-color="#7C82A1"/></linearGradient>' +
-      '<linearGradient id="ltbE_extract" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#7FB6CC"/><stop offset="48%" stop-color="#7C82A1"/><stop offset="100%" stop-color="#8C6C8F"/></linearGradient>' +
-      '<linearGradient id="ltbE_transform" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#8C6C8F"/><stop offset="50%" stop-color="#BC5C5A"/><stop offset="100%" stop-color="#E1483B"/></linearGradient>' +
-      '<linearGradient id="ltbE_scale" gradientUnits="objectBoundingBox" x1="0.31" y1="0.23" x2="0.66" y2="0.78"><stop offset="0%" stop-color="#E1483B"/><stop offset="42%" stop-color="#EE6B4D"/><stop offset="76%" stop-color="#F2966A"/><stop offset="100%" stop-color="#F2966A"/></linearGradient>' +
+      // Engine-motion cells use the FULL muted brand gradient (teal -> peach), same scheme as the cell library.
+      '<linearGradient id="ltbE_uncover" gradientUnits="objectBoundingBox" x1="0.18" y1="0.16" x2="0.82" y2="0.84">' + GO_STOPS + '</linearGradient>' +
+      '<linearGradient id="ltbE_extract" gradientUnits="objectBoundingBox" x1="0.18" y1="0.16" x2="0.82" y2="0.84">' + GO_STOPS + '</linearGradient>' +
+      '<linearGradient id="ltbE_transform" gradientUnits="objectBoundingBox" x1="0.18" y1="0.16" x2="0.82" y2="0.84">' + GO_STOPS + '</linearGradient>' +
+      '<linearGradient id="ltbE_scale" gradientUnits="objectBoundingBox" x1="0.18" y1="0.16" x2="0.82" y2="0.84">' + GO_STOPS + '</linearGradient>' +
       '<radialGradient id="ltbHL" cx="32%" cy="25%" r="46%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.16"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>' +
       '<filter id="ltbPaint"><feTurbulence type="fractalNoise" baseFrequency="0.005 0.0075" numOctaves="3" seed="6" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="80" xChannelSelector="R" yChannelSelector="G" result="d"/><feColorMatrix in="d" type="saturate" values="1.12"/></filter>' +
       '<filter id="ltbPaintS"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.018" numOctaves="2" seed="6" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="26" xChannelSelector="R" yChannelSelector="G" result="d"/><feColorMatrix in="d" type="saturate" values="1.12"/></filter>' +
