@@ -27,7 +27,7 @@
   --nav-h: 92px;
 
   /* Mitosis gradient — sampled from the four brand cell photographs */
-  --grad: linear-gradient(110deg, #9AD9CC 0%, #92D5CC 8%, #89CDCC 17%, #84BFC8 25%, #84ABC1 33%, #8C96B7 42%, #9B83AA 50%, #BE7283 58%, #DC6763 67%, #EB6758 75%, #F3755C 83%, #F88765 92%, #F98E68 100%);
+  --grad: linear-gradient(110deg, #94CAB4 0%, #7FB6CC 18%, #7C82A1 38%, #8C6C8F 52%, #E1483B 70%, #EE6B4D 86%, #F2966A 100%);
   --ink: #0c0d10;
 }
 
@@ -334,7 +334,7 @@ li.has-dropdown:focus-within .dropdown { opacity: 1; visibility: visible; transf
 a.card { text-decoration: none; }
 
 
-a.card:hover .card-more { background: linear-gradient(110deg, #7FD9B4 0%, #6BB2DD 24%, #9B7DB5 48%, #ED5340 68%, #F9994F 88%, #FBB46A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+a.card:hover .card-more { background: linear-gradient(110deg, #94CAB4 0%, #7FB6CC 18%, #7C82A1 38%, #8C6C8F 52%, #E1483B 70%, #EE6B4D 86%, #F2966A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .card .card-more {
   margin-top: auto;
   font-weight: var(--w-head);
@@ -455,7 +455,7 @@ table.compare td.win {
   opacity: 0.12;
 }
 .versus .vs-new > * { position: relative; z-index: 1; }
-.versus .vs-new li strong { opacity: 1; background: linear-gradient(110deg, #7FD9B4 0%, #6BB2DD 24%, #9B7DB5 48%, #ED5340 68%, #F9994F 88%, #FBB46A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.versus .vs-new li strong { opacity: 1; background: linear-gradient(110deg, #94CAB4 0%, #7FB6CC 18%, #7C82A1 38%, #8C6C8F 52%, #E1483B 70%, #EE6B4D 86%, #F2966A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
 /* Cost calculator */
 .calc-layout { display: grid; grid-template-columns: 1.55fr 1fr; gap: var(--s12); align-items: start; }
@@ -862,7 +862,7 @@ main, footer { position: relative; z-index: 1; }
 .tile-cap span { font-weight: var(--w-body); opacity: 0.72; font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; }
 .band .tile-cap { color: var(--text); }
 .tile { background: transparent; }
-.tile:hover .tile-cap strong { background: linear-gradient(110deg, #7FD9B4 0%, #6BB2DD 24%, #9B7DB5 48%, #ED5340 68%, #F9994F 88%, #FBB46A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.tile:hover .tile-cap strong { background: linear-gradient(110deg, #94CAB4 0%, #7FB6CC 18%, #7C82A1 38%, #8C6C8F 52%, #E1483B 70%, #EE6B4D 86%, #F2966A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .tile.tile-cta {
   position: relative; z-index: 0; overflow: visible;
   display: flex;
@@ -920,14 +920,14 @@ main, footer { position: relative; z-index: 1; }
   border-radius: 52% 48% 44% 56% / 56% 50% 50% 44%;
   z-index: 0;
 }
-.ph-mint::before   { background: linear-gradient(135deg, #7FD9B4, #6FD2C8, #6BB2DD); }
-.ph-sky::before    { background: linear-gradient(135deg, #6FD2C8, #6BB2DD, #9B7DB5); }
-.ph-purple::before { background: linear-gradient(135deg, #6BB2DD, #9B7DB5, #ED5340); }
-.ph-coral::before  { background: linear-gradient(135deg, #9B7DB5, #ED5340, #F4743F); }
-.ph-yellow::before { background: linear-gradient(135deg, #ED5340, #F9994F, #FBB46A); }
+.ph-mint::before   { background: url("../assets/photo-cells/ph-mint.png") center / 130% no-repeat; }
+.ph-sky::before    { background: url("../assets/photo-cells/ph-sky.png") center / 130% no-repeat; }
+.ph-purple::before { background: url("../assets/photo-cells/ph-purple.png") center / 130% no-repeat; }
+.ph-coral::before  { background: url("../assets/photo-cells/ph-coral.png") center / 130% no-repeat; }
+.ph-yellow::before { background: url("../assets/photo-cells/ph-yellow.png") center / 130% no-repeat; }
 .team-card h3 { font-size: 1rem; margin-top: var(--s3); }
 .team-card h3 a { text-decoration: none; }
-.team-card h3 a:hover { background: linear-gradient(110deg, #7FD9B4 0%, #6BB2DD 24%, #9B7DB5 48%, #ED5340 68%, #F9994F 88%, #FBB46A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.team-card h3 a:hover { background: linear-gradient(110deg, #94CAB4 0%, #7FB6CC 18%, #7C82A1 38%, #8C6C8F 52%, #E1483B 70%, #EE6B4D 86%, #F2966A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .team-card .role { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text); opacity: 0.72; font-weight: var(--w-head); }
 .team-card .fun { font-size: 0.85rem; opacity: 0.85; }
 
@@ -1019,7 +1019,7 @@ main, footer { position: relative; z-index: 1; }
 .team-card .ph::before { transition: border-radius 0.6s ease, transform 0.6s ease; }
 .team-card:hover .ph::before {
   border-radius: 46% 54% 57% 43% / 43% 57% 46% 54%;
-  transform: scale(1.05) rotate(-3deg);
+  transform: scale(1.06) rotate(-4deg);
 }
 
 /* Interactive mitosis cells — divide/merge on hover */
@@ -1430,11 +1430,11 @@ footer { background: var(--bg); }
   0%, 100% { border-radius: 52% 48% 44% 56% / 56% 50% 50% 44%; transform: rotate(0deg); }
   50%      { border-radius: 46% 54% 57% 43% / 43% 57% 46% 54%; transform: rotate(-3deg); }
 }
-.bio-portrait.ph-mint::before   { background: linear-gradient(135deg, #7FD9B4, #6FD2C8, #6BB2DD); }
-.bio-portrait.ph-sky::before    { background: linear-gradient(135deg, #6FD2C8, #6BB2DD, #9B7DB5); }
-.bio-portrait.ph-purple::before { background: linear-gradient(135deg, #6BB2DD, #9B7DB5, #ED5340); }
-.bio-portrait.ph-coral::before  { background: linear-gradient(135deg, #9B7DB5, #ED5340, #F4743F); }
-.bio-portrait.ph-yellow::before { background: linear-gradient(135deg, #ED5340, #F9994F, #FBB46A); }
+.bio-portrait.ph-mint::before   { background: url("../assets/photo-cells/ph-mint.png") center / 130% no-repeat; }
+.bio-portrait.ph-sky::before    { background: url("../assets/photo-cells/ph-sky.png") center / 130% no-repeat; }
+.bio-portrait.ph-purple::before { background: url("../assets/photo-cells/ph-purple.png") center / 130% no-repeat; }
+.bio-portrait.ph-coral::before  { background: url("../assets/photo-cells/ph-coral.png") center / 130% no-repeat; }
+.bio-portrait.ph-yellow::before { background: url("../assets/photo-cells/ph-yellow.png") center / 130% no-repeat; }
 .bio-back {
   display: inline-block;
   font-size: 0.76rem;
@@ -1477,7 +1477,7 @@ footer { background: var(--bg); }
 .bio-pager-link.next { text-align: right; align-items: flex-end; justify-self: end; }
 .bio-pager-dir { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.6; font-weight: var(--w-head); }
 .bio-pager-name { font-size: 1.15rem; font-weight: var(--w-head); }
-.bio-pager-link:hover .bio-pager-name { background: linear-gradient(110deg, #7FD9B4 0%, #6BB2DD 24%, #9B7DB5 48%, #ED5340 68%, #F9994F 88%, #FBB46A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.bio-pager-link:hover .bio-pager-name { background: linear-gradient(110deg, #94CAB4 0%, #7FB6CC 18%, #7C82A1 38%, #8C6C8F 52%, #E1483B 70%, #EE6B4D 86%, #F2966A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .bio-pager-all { justify-self: center; text-align: center; font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; opacity: 0.7; font-weight: var(--w-head); }
 .bio-pager-all:hover { opacity: 1; }
 @media (max-width: 560px) {
@@ -1517,7 +1517,7 @@ footer { background: var(--bg); }
 .case-chip:hover { transform: translateY(-4px); border-color: transparent; box-shadow: 0 14px 30px rgba(0,0,0,0.10); }
 .case-chip > * { position: relative; z-index: 1; }
 .case-chip:hover::before { opacity: 1; }
-.case-chip:hover .cc-more { background: linear-gradient(110deg, #7FD9B4 0%, #6BB2DD 24%, #9B7DB5 48%, #ED5340 68%, #F9994F 88%, #FBB46A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.case-chip:hover .cc-more { background: linear-gradient(110deg, #94CAB4 0%, #7FB6CC 18%, #7C82A1 38%, #8C6C8F 52%, #E1483B 70%, #EE6B4D 86%, #F2966A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .cc-kicker { font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.6; font-weight: var(--w-head); }
 .cc-name { font-size: 1.15rem; font-weight: var(--w-head); line-height: 1.2; }
 .cc-desc { font-size: 0.9rem; opacity: 0.85; }
@@ -1536,7 +1536,7 @@ footer { background: var(--bg); }
 }
 .show-item:hover .show-frame::after { transform: scaleX(1); }
 .show-item figcaption strong { transition: color 0.3s ease; }
-.show-item:hover figcaption strong { background: linear-gradient(110deg, #7FD9B4 0%, #6BB2DD 24%, #9B7DB5 48%, #ED5340 68%, #F9994F 88%, #FBB46A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.show-item:hover figcaption strong { background: linear-gradient(110deg, #94CAB4 0%, #7FB6CC 18%, #7C82A1 38%, #8C6C8F 52%, #E1483B 70%, #EE6B4D 86%, #F2966A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 
 /* Case-page framed videos: same gradient-line sweep on hover, no border */
 .video-embed.framed { position: relative; }
@@ -1608,7 +1608,7 @@ a.card:hover::before { opacity: 1; }
 }
 .phone-screen iframe { position: absolute; inset: 9px; width: calc(100% - 18px); height: calc(100% - 18px); border: 0; border-radius: 36px; }
 .phone-mock figcaption { font-size: 0.76rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.72; font-weight: var(--w-head); }
-.phone-arrow { font-size: 2.6rem; font-weight: 700; background: linear-gradient(110deg, #7FD9B4 0%, #6BB2DD 24%, #9B7DB5 48%, #ED5340 68%, #F9994F 88%, #FBB46A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; flex-shrink: 0; }
+.phone-arrow { font-size: 2.6rem; font-weight: 700; background: linear-gradient(110deg, #94CAB4 0%, #7FB6CC 18%, #7C82A1 38%, #8C6C8F 52%, #E1483B 70%, #EE6B4D 86%, #F2966A 100%); -webkit-background-clip: text; background-clip: text; color: transparent; flex-shrink: 0; }
 
 
 /* Negative failure list (red ✕) */
@@ -1840,7 +1840,7 @@ img, video, iframe, svg { max-width: 100%; }
 
 /* STAT NUMBERS GRADIENT — reserve gradient for key statistics */
 .stat-value .nm, .stat .stat-value .nm {
-  background: linear-gradient(110deg, #7FD9B4 0%, #6BB2DD 24%, #9B7DB5 48%, #ED5340 68%, #F9994F 88%, #FBB46A 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
+  background: linear-gradient(110deg, #94CAB4 0%, #7FB6CC 18%, #7C82A1 38%, #8C6C8F 52%, #E1483B 70%, #EE6B4D 86%, #F2966A 100%); -webkit-background-clip: text; background-clip: text; color: transparent;
   font-weight: var(--w-head);
 }
 
@@ -1863,7 +1863,6 @@ table.compare td.win,
 .calc-summary .total,
 .seq-arrow,
 .wordmark .wm-grad,
-.tile:hover .tile-cap strong,
 .team-card h3 a:hover,
 .proc-num,
 .bio-role,
@@ -1878,7 +1877,7 @@ table.compare td.win,
   color: inherit !important;
 }
 .stat-value .nm, .stat .stat-value .nm {
-  background: linear-gradient(110deg, #7FD9B4 0%, #6BB2DD 24%, #9B7DB5 48%, #ED5340 68%, #F9994F 88%, #FBB46A 100%) !important;
+  background: linear-gradient(110deg, #94CAB4 0%, #7FB6CC 18%, #7C82A1 38%, #8C6C8F 52%, #E1483B 70%, #EE6B4D 86%, #F2966A 100%) !important;
   -webkit-background-clip: text !important;
   background-clip: text !important;
   -webkit-text-fill-color: transparent !important;
