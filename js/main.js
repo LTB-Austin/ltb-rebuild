@@ -333,6 +333,9 @@
       var sc = 0.95 + ((SEED >> 1) % 5) * 0.1;  // 0.95 .. 1.35 (bigger, never tiny)
       var rt = (((SEED >> 2) % 5) + 2) * 13 * ((SEED % 2) ? -1 : 1); // +/-26..78 deg, never upright
       if (el.dataset.rot) rt = parseFloat(el.dataset.rot);   // per-page rotation override
+      if (el.dataset.ty) vy = parseFloat(el.dataset.ty);     // per-page vertical (vh) override
+      if (el.dataset.tx) vx = parseFloat(el.dataset.tx);     // per-page horizontal (vw) override
+      if (el.dataset.scale) sc = parseFloat(el.dataset.scale); // per-page scale override
       var fx = (SEED % 2) ? -1 : 1;
       el.dataset.base = "translate(" + vx + "vw," + vy + "vh) rotate(" + rt + "deg) scale(" + (sc * fx) + "," + sc + ")";
       el.style.transform = el.dataset.base;

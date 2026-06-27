@@ -1715,11 +1715,12 @@ img, video, iframe, svg { max-width: 100%; }
 }
 @media (max-width: 640px) { .faces .face { width: 46px; height: 46px; margin-left: -12px; } }
 /* influencer: graphic above the stats on mobile */
-/* ISK "why" row: give the copy more room + breathing space from the video, larger type */
-.ik-why { grid-template-columns: 1.15fr 0.85fr; gap: var(--s16); }
-.ik-why > div:first-child { padding-right: var(--s4); }
-.ik-why p { font-size: 1.32rem; line-height: 1.65; }
-@media (max-width: 880px) { .ik-why { grid-template-columns: 1fr; } .ik-why .ik-media { order: -1; margin-bottom: var(--s6); } .ik-why p { font-size: 1.18rem; } }
+/* ISK "why" row: balanced columns, phone vertically centered with the copy/stats */
+.ik-why { grid-template-columns: 1.1fr 0.9fr; gap: var(--s12); align-items: center; }
+.ik-why > div:first-child { padding-right: var(--s6); }
+.ik-why p { font-size: 1.28rem; line-height: 1.65; }
+.ik-why .ik-media .phone-screen { width: clamp(220px, 25vw, 300px); }
+@media (max-width: 880px) { .ik-why { grid-template-columns: 1fr; align-items: stretch; } .ik-why .ik-media { order: -1; margin-bottom: var(--s6); } .ik-why p { font-size: 1.18rem; } }
 
 /* Studio video carousel (click-to-play) */
 .show-hint { font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.65; font-weight: var(--w-head); }
