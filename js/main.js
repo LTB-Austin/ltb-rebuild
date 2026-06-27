@@ -119,7 +119,7 @@
      The fill shows through each cell's animated goo mask. */
   // Background margin cells — connected, one-shape forms only (no split, so they
   // never read as two circles). Priority: peanut > ambient > diagonal > trio.
-  var BG_TYPES = ["peanut", "ambient", "diagonal", "peanut", "ambient", "trio", "peanut", "diagonal", "ambient", "peanut"];
+  var BG_TYPES = ["peanut", "ambient", "trio", "diagonal", "quad", "trio", "peanut", "diagonal", "ambient", "quad"];
   // Muted "milky" brand palette — matches the mitosis cell library.
   var GO_STOPS =
     "<stop offset='0%' stop-color='#94CAB4'/><stop offset='20%' stop-color='#7FB6CC'/>" +
@@ -257,10 +257,65 @@
       { x: 206, y: 256, r: 62, cls: "mito", style: "--mx:1px;--my:12px;--dur:7.8s;animation-delay:-4.3s" }
     ], [120, 150, 286, 286], 8);
   }
+  function splitBlob() {
+    // active mitosis division: two lobes pull strongly apart, neck thins, then rejoin
+    // lobes start merged (one cell), then travel far enough apart that the goo
+    // metaball breaks into two distinct cells — full mitosis — then merge again.
+    return softCell([
+      { x: 190, y: 206, r: 88, cls: "mito", style: "--mx:-80px;--s0:0.99;--s1:1.03;--dur:26s" },
+      { x: 232, y: 206, r: 84, cls: "mito", style: "--mx:80px;--s0:0.99;--s1:1.03;--dur:26s" }
+    ], [88, 200, 340, 212], 8);
+  }
+  function quadBlob() {
+    // four fused lobes in a diamond cluster, each drifting out of phase
+    return softCell([
+      { x: 160, y: 158, r: 66, cls: "mito", style: "--mx:-11px;--my:-9px;--dur:7.2s" },
+      { x: 256, y: 156, r: 62, cls: "mito", style: "--mx:12px;--my:-7px;--dur:6.6s;animation-delay:-2.1s" },
+      { x: 156, y: 256, r: 60, cls: "mito", style: "--mx:-10px;--my:11px;--dur:7.6s;animation-delay:-3.6s" },
+      { x: 260, y: 258, r: 66, cls: "mito", style: "--mx:13px;--my:12px;--dur:7s;animation-delay:-5.1s" }
+    ], [124, 130, 300, 300], 8);
+  }
+  function elongatedBlob() {
+    // a stretched, gently S-curved chain of lobes
+    return softCell([
+      { x: 116, y: 150, r: 56, cls: "mito", style: "--mx:-9px;--my:-6px;--dur:7.8s" },
+      { x: 184, y: 188, r: 72, cls: "mito", style: "--mx:-2px;--my:3px;--dur:7s;animation-delay:-1.7s" },
+      { x: 252, y: 224, r: 66, cls: "mito", style: "--mx:6px;--my:6px;--dur:6.8s;animation-delay:-3.1s" },
+      { x: 314, y: 262, r: 52, cls: "mito", style: "--mx:11px;--my:9px;--dur:7.4s;animation-delay:-4.7s" }
+    ], [108, 138, 322, 274], 8);
+  }
+  function budBlob() {
+    // a parent cell with a small bud easing out and back (budding mitosis)
+    return softCell([
+      { x: 190, y: 214, r: 100, cls: "mito", style: "--mx:-6px;--dur:7.6s" },
+      { x: 286, y: 166, r: 42, cls: "mito", style: "--mx:20px;--my:-14px;--s0:0.85;--s1:1.12;--dur:5.8s;animation-delay:-1.4s" }
+    ], [112, 244, 322, 150], 9);
+  }
+  function heartBlob() {
+    // a real heart path with the brand gradient + soft edge, gently beating
+    uid++; var g = "hg" + uid, f = "hf" + uid;
+    var d = "M200,132 C200,86 160,66 130,66 C78,66 60,112 60,154 C60,220 130,262 200,330 C270,262 340,220 340,154 C340,112 322,66 270,66 C240,66 200,86 200,132 Z";
+    return '<svg viewBox="0 0 400 400" aria-hidden="true"><defs>' +
+      '<linearGradient id="' + g + '" gradientUnits="userSpaceOnUse" x1="80" y1="80" x2="330" y2="320">' + GO_STOPS + '</linearGradient>' +
+      '<filter id="' + f + '" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur in="SourceGraphic" stdDeviation="2.5"/></filter></defs>' +
+      '<g class="ltb-heartbeat" opacity="0.9" filter="url(#' + f + ')">' +
+      '<path d="' + d + '" fill="url(#' + g + ')"/>' +
+      '<path d="' + d + '" fill="url(#ltbHL)"/></g></svg>';
+  }
   // Live, animated SVG cells (they breathe + drift in the browser) carrying the
   // translucent / glowing-core look.
   function blobByType(t) {
-    return t === "peanut" ? peanutBlob() : t === "diagonal" ? diagonalBlob() : t === "trio" ? trioBlob() : ambientBlob();
+    switch (t) {
+      case "heart": return heartBlob();
+      case "peanut": return peanutBlob();
+      case "diagonal": return diagonalBlob();
+      case "trio": return trioBlob();
+      case "split": return splitBlob();
+      case "quad": return quadBlob();
+      case "elongated": return elongatedBlob();
+      case "bud": return budBlob();
+      default: return ambientBlob();
+    }
   }
 
   document.querySelectorAll("[data-blob]").forEach(function (el, i) {
@@ -277,6 +332,7 @@
       var vx = ((SEED >> 3) % 4) * 2;          // 0 .. 6 vw further toward the edge
       var sc = 0.95 + ((SEED >> 1) % 5) * 0.1;  // 0.95 .. 1.35 (bigger, never tiny)
       var rt = (((SEED >> 2) % 5) + 2) * 13 * ((SEED % 2) ? -1 : 1); // +/-26..78 deg, never upright
+      if (el.dataset.rot) rt = parseFloat(el.dataset.rot);   // per-page rotation override
       var fx = (SEED % 2) ? -1 : 1;
       el.dataset.base = "translate(" + vx + "vw," + vy + "vh) rotate(" + rt + "deg) scale(" + (sc * fx) + "," + sc + ")";
       el.style.transform = el.dataset.base;
@@ -563,6 +619,7 @@
 
   /* ---------- COUNT-UP STATS ---------- */
   var counters = Array.from(document.querySelectorAll(".stat-value .nm")).filter(function (el) {
+    if (el.closest("[data-no-count]")) return false;   // pages can opt out of the count animation
     return /^[+\u2212\-$]?[\d.,]+[%xX]?$/.test(el.textContent.trim());
   });
   if (counters.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
