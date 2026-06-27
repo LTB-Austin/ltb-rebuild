@@ -578,6 +578,11 @@
         var target = parseFloat(m[2].replace(/,/g, ""));
         var decimals = (m[2].split(".")[1] || "").length;
         var useCommas = m[2].indexOf(",") !== -1;
+        // Lock the element to its final width so counting up doesn't reflow the block/graphic
+        el.style.display = "inline-block";
+        el.style.textAlign = "left";
+        el.style.fontVariantNumeric = "tabular-nums";
+        el.style.minWidth = Math.ceil(el.getBoundingClientRect().width) + "px";
         var t0 = null, dur = 1300;
         function fmt(v) {
           var str = v.toFixed(decimals);

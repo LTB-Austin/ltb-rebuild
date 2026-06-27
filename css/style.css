@@ -286,6 +286,14 @@ li.has-dropdown:focus-within .dropdown { opacity: 1; visibility: visible; transf
 .hero .blob-stage, .page-hero .blob-stage { z-index: 0; }
 .hero .wrap, .page-hero .wrap { position: relative; z-index: 2; }
 .page-hero .hero-sub { margin-bottom: var(--s6); }
+/* MOA grid: showcase only — not clickable, captions stay solid (no gradient) */
+.moa-grid .tile { cursor: default; }
+.moa-grid .tile:hover img, .moa-grid .tile:hover video { transform: none; }
+.moa-grid .tile:hover .tile-cap strong {
+  background: none;
+  -webkit-text-fill-color: currentColor;
+  color: var(--ink);
+}
 /* Sub-brand wordmark as page-hero title (uniform height across all service pages) */
 .wordmark-h1 { margin: 0 0 var(--s4, 16px); line-height: 0; }
 .hero-wordmark { display: block; height: 56px; width: auto; max-width: 100%; }
@@ -389,6 +397,7 @@ a.card:hover .card-more {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  font-variant-numeric: tabular-nums;
 }
 .stat .stat-brand { font-weight: var(--w-head); font-size: 0.95rem; margin-top: var(--s2); }
 .stat .stat-note { font-size: 0.88rem; opacity: 0.85; }
@@ -445,7 +454,16 @@ table.compare td.win {
 .versus .vs-col h3 { font-size: 1.05rem; }
 .versus .vs-col ul { list-style: none; display: flex; flex-direction: column; gap: var(--s4); }
 .versus .vs-col li strong { font-weight: var(--w-head); display: block; font-size: 0.78rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.6; margin-bottom: 2px; }
-.versus .vs-old { border: 1.5px dashed rgba(0, 0, 0, 0.3); opacity: 0.62; }
+.versus .vs-old {
+  border: 2px solid #E1483B;
+  border-radius: 16px;
+  background: rgba(225, 72, 59, 0.05);
+  box-shadow: 0 10px 30px rgba(225, 72, 59, 0.08);
+  opacity: 1;
+}
+.versus .vs-old h3 { color: #E1483B; }
+.versus .vs-old li { color: #C23A2E; }
+.versus .vs-old li strong { color: #E1483B; opacity: 1; }
 .versus .vs-new {
   border: 2px solid rgba(0,0,0,0.14);
   border-radius: 16px;
