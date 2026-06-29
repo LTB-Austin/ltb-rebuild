@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Let There Be — Gradient Text Generator</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--bg:#f0f0f0;--text:#000;--mut:#55585f;
+    --grad:linear-gradient(110deg,#94CAB4 0%,#7FB6CC 20%,#7C82A1 40%,#8C6C8F 58%,#E1483B 80%,#E1483B 100%);}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:'Lexend',sans-serif;font-weight:300;line-height:1.6;}
+  .wrap{max-width:860px;margin:0 auto;padding:56px 28px 80px;}
+  .eyebrow{font-weight:600;font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);}
+  h1{font-weight:700;font-size:clamp(2rem,4.4vw,2.8rem);letter-spacing:-.01em;margin:6px 0 6px;}
+  .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;}
+  p.sub{font-size:1.1rem;color:#33363b;max-width:60ch;margin:0 0 6px;}
+  .grad-bar{height:8px;border-radius:6px;background:var(--grad);margin:18px 0 36px;}
+  .panel{background:#fff;border:1px solid #e2e3e5;border-radius:16px;padding:26px;box-shadow:0 8px 26px rgba(0,0,0,.05);}
+  .row{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin-bottom:22px;}
+  label{font-size:.9rem;color:var(--mut);font-weight:600;}
+  input[type=text]{font-family:Lexend;font-weight:600;font-size:1.05rem;padding:12px 15px;border:1px solid #ccc;border-radius:10px;min-width:300px;flex:1;}
+  input[type=number]{width:78px;font-family:Lexend;padding:11px;border:1px solid #ccc;border-radius:10px;}
+  .toggle{display:flex;align-items:center;gap:8px;font-size:.92rem;color:#33363b;font-weight:400;}
+  button{font-family:Lexend;font-weight:600;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:#fff;background:#0c0d10;border:none;border-radius:9px;padding:13px 20px;cursor:pointer;}
+  button:hover{background:#23252b;}
+  .preview{margin-top:8px;padding:26px;border-radius:12px;background:repeating-conic-gradient(#eee 0% 25%, #f7f7f7 0% 50%) 0/26px 26px;overflow:auto;}
+  .preview.solid-bg{background:var(--bg);}
+  canvas{max-width:100%;display:block;}
+  .hint{font-size:.9rem;color:var(--mut);margin-top:16px;}
+  .hint b{color:#000;}
+</style></head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Let There Be · Brand tool</div>
+  <h1><span class="grad-text">Gradient text</span> generator</h1>
+  <p class="sub">Type a word, download a transparent PNG in the real brand gradient and Lexend font, then drop it into Google Slides, Docs, email — anywhere gradient text isn't supported.</p>
+  <div class="grad-bar"></div>
+
+  <div class="panel">
+    <div class="row">
+      <input id="word" type="text" value="Science Story™" aria-label="Text">
+      <label>Size <input id="size" type="number" value="160"></label>
+      <label class="toggle"><input id="solid" type="checkbox"> on #F0F0F0</label>
+      <button id="dl">Download PNG</button>
+    </div>
+    <div class="preview" id="preview"><canvas id="cv"></canvas></div>
+    <p class="hint"><b>Transparent</b>, retina-resolution. In Google Slides/Docs: <b>Insert → Image → Upload from computer</b>. Checkerboard just shows transparency — it isn't part of the file.</p>
+  </div>
+</div>
+<script>
+(function(){
+  var cv=document.getElementById('cv'),ctx=cv.getContext('2d');
+  var STOPS=[[0,'#94CAB4'],[.2,'#7FB6CC'],[.4,'#7C82A1'],[.58,'#8C6C8F'],[.8,'#E1483B'],[1,'#E1483B']];
+  var word=document.getElementById('word'),size=document.getElementById('size'),
+      solid=document.getElementById('solid'),preview=document.getElementById('preview');
+  function draw(){
+    var w=word.value||' ', s=parseInt(size.value,10)||120, pad=Math.round(s*0.16), R=3;
+    ctx.font='700 '+s+'px Lexend, sans-serif';
+    var cw=Math.ceil(ctx.measureText(w).width)+pad*2, ch=Math.ceil(s*1.42);
+    cv.width=cw*R; cv.height=ch*R; cv.style.width=cw+'px'; cv.style.height=ch+'px';
+    ctx.setTransform(R,0,0,R,0,0); ctx.clearRect(0,0,cw,ch);
+    ctx.font='700 '+s+'px Lexend, sans-serif'; ctx.textBaseline='middle';
+    var g=ctx.createLinearGradient(pad,0,cw-pad,0); STOPS.forEach(function(p){g.addColorStop(p[0],p[1]);});
+    ctx.fillStyle=g; ctx.fillText(w,pad,ch/2);
+    preview.classList.toggle('solid-bg',solid.checked);
+  }
+  if(document.fonts&&document.fonts.ready){document.fonts.ready.then(draw);} else {draw();}
+  [word,size].forEach(function(el){el.addEventListener('input',draw);});
+  solid.addEventListener('change',draw);
+  document.getElementById('dl').addEventListener('click',function(){
+    var a=document.createElement('a');
+    a.download=(word.value||'gradient-text').replace(/[^a-z0-9]+/gi,'-').replace(/^-|-$/g,'')+'.png';
+    a.href=cv.toDataURL('image/png'); a.click();
+  });
+})();
+</script>
+</body></html>

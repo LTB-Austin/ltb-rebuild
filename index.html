@@ -10,6 +10,16 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
+<script>
+/* Entry-screen gate — runs before paint so the homepage never flashes underneath.
+   Only gates the homepage, once per browser session, and never for reduced-motion
+   users or crawlers (no JS = no gate, full content stays in the source). */
+(function(){try{
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seen   = sessionStorage.getItem('ltbEntered') === '1';
+  if(!reduce && !seen){ document.documentElement.className += ' ltb-gating'; }
+}catch(e){}})();
+</script>
 <link rel="canonical" href="https://lettherebe.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Let There Be">

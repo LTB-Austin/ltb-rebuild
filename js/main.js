@@ -772,4 +772,107 @@
   document.querySelectorAll("[data-year]").forEach(function (el) {
     el.textContent = new Date().getFullYear();
   });
+
+  /* ---------- ENTRY SCREEN (petri-dish loader) ----------
+     Reuses the brand soft-cell renderer. JS-gated in <head>: only the homepage,
+     once per session, never for reduced-motion users. On Enter we dive into the
+     centre cell and the homepage is revealed beneath the fading overlay. */
+  function buildEntry() {
+    var html = document.documentElement;
+    if (!html.classList.contains("ltb-gating")) return;        // gate decided no
+    if (!document.body.classList.contains("home")) { html.classList.remove("ltb-gating"); return; }
+    try {
+      var ov = document.createElement("div");
+      ov.className = "ltb-entry";
+      ov.setAttribute("role", "dialog");
+      ov.setAttribute("aria-label", "Enter the Let There Be site");
+
+      // measurement ticks around the rim (lab-instrument cue)
+      var ticks = "";
+      for (var a = 0; a < 360; a += 6) {
+        var lng = (a % 30 === 0);
+        var rad = a * Math.PI / 180;
+        var r0 = lng ? 45.2 : 46.6, r1 = 48.4;
+        ticks += '<line x1="' + (50 + r0 * Math.cos(rad)).toFixed(2) + '" y1="' + (50 + r0 * Math.sin(rad)).toFixed(2) +
+          '" x2="' + (50 + r1 * Math.cos(rad)).toFixed(2) + '" y2="' + (50 + r1 * Math.sin(rad)).toFixed(2) +
+          '" stroke="rgba(12,13,16,' + (lng ? 0.22 : 0.12) + ')" stroke-width="' + (lng ? 0.5 : 0.3) + '"/>';
+      }
+
+      var stage = document.createElement("div");
+      stage.className = "pd-stage";
+      stage.innerHTML =
+        '<div class="pd-dish">' +
+          '<svg class="pd-ticks" viewBox="0 0 100 100" aria-hidden="true">' + ticks + '</svg>' +
+          '<div class="pd-medium"></div>' +              // agar / culture medium tint
+          '<div class="pd-field"></div>' +               // single living cell goes here
+          '<div class="pd-meniscus"></div>' +            // liquid edge ring
+          '<div class="pd-glint"></div>' +               // diagonal glass streak
+          '<div class="pd-bubble b1"></div><div class="pd-bubble b2"></div><div class="pd-bubble b3"></div>' +
+          '<div class="pd-bubble b4"></div><div class="pd-bubble b5"></div><div class="pd-bubble b6"></div>' +
+          '<div class="pd-rim"></div>' +                 // glass rim thickness + highlight
+          '<div class="pd-spec"></div>' +                // top-left specular reflection
+        '</div>';
+
+      // The single homepage mitosis cell — the one you dive into.
+      var field = stage.querySelector(".pd-field");
+      var featureCell = document.createElement("div");
+      featureCell.className = "pd-cell feature";
+      var spin = document.createElement("div");
+      spin.className = "pd-spin";
+      spin.innerHTML = blobByType("split");
+      featureCell.appendChild(spin);
+      field.appendChild(featureCell);
+
+      // Match the homepage hero blob's angle/flip so the dive lands seamlessly
+      // on the same orientation (the hero blob is already placed by this point).
+      // Put the hero-matched angle on the inner spinner so the cell box itself
+      // stays free to scale (zoom-in) cleanly.
+      var hero = document.querySelector(".hero .blob-hero, .blob-hero");
+      if (hero && hero.dataset.base) {
+        var mr = hero.dataset.base.match(/rotate\(([-\d.]+)deg\)/);
+        var ms = hero.dataset.base.match(/scale\(([-\d.]+)/);
+        var rot = mr ? parseFloat(mr[1]) : 0;
+        var flip = (ms && parseFloat(ms[1]) < 0) ? -1 : 1;
+        spin.style.transform = "rotate(" + rot + "deg) scaleX(" + flip + ")";
+      }
+
+      ov.appendChild(stage);
+      ov.insertAdjacentHTML("beforeend",
+        '<img class="pd-logo" src="assets/logo-left.png" alt="Let There Be — Science Marketing">' +
+        '<div class="pd-prompt"><span class="key">Press Enter</span><span class="sub">or click anywhere to begin</span><button class="pd-skip" type="button">Skip intro</button></div>');
+      document.body.appendChild(ov);
+
+      var done = false;
+      function enter(zoom) {
+        if (done) return; done = true;
+        try { sessionStorage.setItem("ltbEntered", "1"); } catch (e) {}
+        html.classList.remove("ltb-gating");
+        html.classList.add("ltb-released");
+        if (zoom) ov.classList.add("entering");   // CSS zooms a full-screen gradient over everything
+        else ov.style.opacity = "0";
+        // Background cells were sized to the locked viewport — rebuild for the real page height.
+        setTimeout(function () { try { buildBgCells(); } catch (e) {} }, 80);
+        // Once the cell's gradient has filled the screen, crossfade through to the homepage.
+        if (zoom) setTimeout(function () { ov.style.opacity = "0"; }, 900);
+        setTimeout(function () {
+          ov.remove();
+          html.classList.remove("ltb-released");
+          document.removeEventListener("keydown", onKey);
+        }, zoom ? 1550 : 950);
+      }
+      function onKey(e) {
+        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") { e.preventDefault(); enter(true); }
+        else if (e.key === "Escape") { e.preventDefault(); enter(false); }
+      }
+      ov.addEventListener("click", function (e) {
+        if (e.target.closest(".pd-skip")) return;
+        enter(true);
+      });
+      ov.querySelector(".pd-skip").addEventListener("click", function (e) { e.stopPropagation(); enter(false); });
+      document.addEventListener("keydown", onKey);
+    } catch (err) {
+      html.classList.remove("ltb-gating");   // never trap the page if something fails
+    }
+  }
+  buildEntry();
 })();
