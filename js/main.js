@@ -44,6 +44,45 @@
     });
   });
 
+  /* ---------- ACTIVE NAV STATE (by current URL) ----------
+     The nav markup is identical on every page; we light up the current link
+     (and its top-level parent) here so we never hardcode per-page classes. */
+  (function () {
+    var here = (location.pathname.split("/").pop() || "index.html");
+    if (here === "") here = "index.html";
+    document.querySelectorAll(".nav-links > li").forEach(function (li) {
+      var matched = false;
+      li.querySelectorAll("a").forEach(function (a) {
+        var href = (a.getAttribute("href") || "").split("#")[0];
+        if (href && href === here) { a.classList.add("active"); matched = true; }
+      });
+      if (matched) {
+        var top = li.querySelector(":scope > a");
+        if (top) top.classList.add("active");
+      }
+    });
+  })();
+
+  /* ---------- MEGA-MENU PREVIEW (hover a service tile -> reveal its pane) ---------- */
+  document.querySelectorAll(".mega").forEach(function (mega) {
+    var tiles = mega.querySelectorAll(".mega-tile");
+    var panes = mega.querySelectorAll(".mega-pane");
+    var dflt = mega.querySelector(".mega-pane[data-mp-default]");
+    function show(id) {
+      panes.forEach(function (p) { p.classList.toggle("on", p.id === id); });
+      tiles.forEach(function (t) { t.classList.toggle("active-tile", t.getAttribute("data-mp") === id); });
+    }
+    tiles.forEach(function (t) {
+      var id = t.getAttribute("data-mp");
+      t.addEventListener("mouseenter", function () { show(id); });
+      t.addEventListener("focus", function () { show(id); });
+    });
+    mega.addEventListener("mouseleave", function () {       // reset to the intro pane
+      panes.forEach(function (p) { p.classList.toggle("on", p === dflt); });
+      tiles.forEach(function (t) { t.classList.remove("active-tile"); });
+    });
+  });
+
   /* ---------- SCROLL REVEAL ---------- */
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (entry) {
@@ -561,40 +600,66 @@
     });
   }
 
-  /* ---------- COST CALCULATOR ---------- */
+  /* ---------- COST CALCULATOR ----------
+     Service dependencies (the new three-service model):
+       \u2022 data-requires  \u2192 a prerequisite that is auto-added as its own billable line
+                          (Claim Dev needs a Lit Review; every Studio activation needs
+                          a Science Story).
+       \u2022 data-includes  \u2192 items the service bundles into its own price, shown "Included"
+                          (Science Story bundles Lit Review + Claim Dev).
+     We track the user's explicit picks separately so auto-added prerequisites can be
+     released cleanly when the downstream service is removed. */
   var calcSummary = document.getElementById("calc-summary");
   if (calcSummary) {
     var svcs = Array.from(document.querySelectorAll(".svc"));
+    var byId = {}; svcs.forEach(function (el) { byId[el.dataset.id] = el; });
+    var userSel = {};   // ids the user explicitly checked
     function money(n) { return "$" + n.toLocaleString("en-US"); }
+    function deps(el, name) {
+      return (el.dataset[name] || "").split(",").map(function (s) { return s.trim(); }).filter(Boolean);
+    }
     function recalc() {
-      // Science Story includes Lit Review + Claim Dev
-      var included = {};
-      svcs.forEach(function (el) {
-        var box = el.querySelector("input");
-        if (box.checked && el.dataset.includes) {
-          el.dataset.includes.split(",").forEach(function (id) { included[id] = true; });
-        }
-      });
+      // Resolve the full set: walk user picks + everything they pull in.
+      var free = {}, req = {}, seen = {};
+      var queue = Object.keys(userSel).filter(function (id) { return userSel[id]; });
+      while (queue.length) {
+        var id = queue.shift();
+        if (seen[id]) continue; seen[id] = true;
+        var el = byId[id]; if (!el) continue;
+        deps(el, "includes").forEach(function (d) { free[d] = true; if (!seen[d]) queue.push(d); });
+        deps(el, "requires").forEach(function (d) { req[d] = true; if (!seen[d]) queue.push(d); });
+      }
       var count = 0, subtotal = 0, lines = [];
       svcs.forEach(function (el) {
-        var box = el.querySelector("input");
-        var id = el.dataset.id;
-        if (included[id]) {
+        var id = el.dataset.id, box = el.querySelector("input"), pr = el.querySelector(".price");
+        var price = parseInt(el.dataset.price, 10) || 0;
+        var dep = el.querySelector(".svc-dep");
+        if (dep && !dep.dataset.orig) dep.dataset.orig = dep.textContent;
+        el.classList.remove("on", "included-note", "req-added");
+        var isFree = !!free[id];
+        var isReq = !!req[id] && !userSel[id];
+        if (isFree) {                                   // bundled into another service's price
           box.checked = true; box.disabled = true;
           el.classList.add("on", "included-note");
-          var pr = el.querySelector(".price");
           if (pr) pr.textContent = "Included";
-          return;
-        }
-        box.disabled = false;
-        el.classList.remove("included-note");
-        var pr2 = el.querySelector(".price");
-        if (pr2 && pr2.textContent === "Included") pr2.textContent = money(parseInt(el.dataset.price, 10));
-        el.classList.toggle("on", box.checked);
-        if (box.checked) {
-          count++;
-          subtotal += parseInt(el.dataset.price, 10);
-          lines.push(el.dataset.name + " - " + money(parseInt(el.dataset.price, 10)));
+          if (dep) dep.textContent = "Included with your selection.";
+        } else if (isReq) {                             // auto-added prerequisite, billed
+          box.checked = true; box.disabled = true;
+          el.classList.add("on", "req-added");
+          if (pr) pr.textContent = money(price);
+          if (dep) dep.textContent = "Added automatically \u2014 required first.";
+          count++; subtotal += price;
+          lines.push(el.dataset.name + " - " + money(price) + " (required)");
+        } else {                                        // free to toggle
+          box.disabled = false;
+          if (dep && dep.dataset.orig) dep.textContent = dep.dataset.orig;
+          if (pr) pr.textContent = money(price);
+          box.checked = !!userSel[id];
+          if (userSel[id]) {
+            el.classList.add("on");
+            count++; subtotal += price;
+            lines.push(el.dataset.name + " - " + money(price));
+          }
         }
       });
       var disc = count >= 3 ? 0.10 : count === 2 ? 0.05 : 0;
@@ -615,7 +680,12 @@
         encodeURIComponent("Project estimate inquiry (" + money(total) + ")") + "&body=" + body;
     }
     svcs.forEach(function (el) {
-      el.querySelector("input").addEventListener("change", recalc);
+      el.querySelector("input").addEventListener("change", function () {
+        var box = el.querySelector("input");
+        if (box.disabled) return;                       // forced rows aren't user-toggleable
+        if (box.checked) userSel[el.dataset.id] = true; else delete userSel[el.dataset.id];
+        recalc();
+      });
     });
     recalc();
   }
@@ -767,6 +837,53 @@
     ilb.addEventListener("click", function (e) { if (e.target === ilb || e.target.classList.contains("ilb-close")) closeIlb(); });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && ilb.classList.contains("open")) closeIlb(); });
   }
+
+  /* ---------- ENGINE PIPELINE MAP (what you need, and why) ---------- */
+  (function () {
+    var map = document.getElementById("pmap");
+    if (!map) return;
+    var info = document.getElementById("pmap-info");
+    var nodes = Array.prototype.slice.call(map.querySelectorAll(".pmap-node"));
+    var groups = Array.prototype.slice.call(map.querySelectorAll(".pmap-group"));
+    var REQ = {
+      lit: ["lit"], claim: ["lit", "claim"], story: ["lit", "claim", "story"],
+      moa: ["lit", "claim", "story", "moa"], isk: ["lit", "claim", "story", "isk"], a2e: ["lit", "claim", "story", "a2e"],
+      lab: ["lab"]
+    };
+    var INFO = {
+      lit: "<strong>Lit Review™</strong> is the foundation — it needs nothing before it. Everything downstream is built on what it uncovers.",
+      claim: "<strong>Claim Dev™</strong> needs a <strong>Lit Review™</strong> first — you can't develop defensible claims until the evidence is mapped.",
+      story: "A <strong>Science Story™</strong> is built from <strong>Lit Review™</strong> + <strong>Claim Dev™</strong> — the proof and the claims they produce are the raw material it turns into creative concepts.",
+      moa: "To produce a <strong>MOA Moment™</strong>, you start with a <strong>Science Story™</strong> (which needs Lit Review™ + Claim Dev™). Production brings a tested story to life — it never starts from a blank brief.",
+      isk: "An <strong>Influencer Science Kit™</strong> is built on a <strong>Science Story™</strong> (Lit Review™ + Claim Dev™ first) — so creators speak from validated science, not guesswork.",
+      a2e: "An <strong>Ad-to-Education Sequence™</strong> is built on a <strong>Science Story™</strong> (Lit Review™ + Claim Dev™ first) — the funnel only works when the education is grounded in proof.",
+      lab: "<strong>Claims Lab™</strong> runs on its own track — an ongoing retainer that keeps Lit Reviews and Claim Dev running every month, between projects. It isn't a step in the pipeline."
+    };
+    function select(key) {
+      var chain = REQ[key] || [];
+      nodes.forEach(function (n) {
+        var k = n.getAttribute("data-node");
+        var inChain = chain.indexOf(k) !== -1;
+        n.classList.toggle("req", inChain);
+        n.classList.toggle("active", k === key);
+        n.classList.toggle("dim", !inChain);
+      });
+      groups.forEach(function (g) { g.classList.toggle("dim", !g.querySelector(".pmap-node.req")); });
+      if (info) info.innerHTML = "<p>" + (INFO[key] || "") + "</p>";
+    }
+    function reset() {
+      nodes.forEach(function (n) { n.classList.remove("req", "active", "dim"); });
+      groups.forEach(function (g) { g.classList.remove("dim"); });
+      if (info) info.innerHTML = "<p>Hover or tap a deliverable to see what it's built on.</p>";
+    }
+    nodes.forEach(function (n) {
+      var k = n.getAttribute("data-node");
+      n.addEventListener("mouseenter", function () { select(k); });
+      n.addEventListener("click", function () { select(k); });
+      n.addEventListener("focus", function () { select(k); });
+    });
+    map.addEventListener("mouseleave", reset);
+  })();
 
   /* ---------- FOOTER YEAR ---------- */
   document.querySelectorAll("[data-year]").forEach(function (el) {

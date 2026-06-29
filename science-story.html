@@ -32,25 +32,36 @@
     <button class="nav-toggle" aria-label="Menu"><span></span></button>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li class="has-dropdown">
-        <a href="engine.html" class="active">Science Marketing Engine</a>
-        <ul class="dropdown">
-          <li><a href="engine.html">Overview — The Model</a></li>
-          <li><a href="lit-review.html">Lit Review™</a></li>
-          <li><a href="claim-dev.html">Claim Dev™</a></li>
-          <li><a href="science-story.html">Science Story™</a></li>
-        </ul>
+      <li class="has-dropdown has-mega">
+        <a class="mega-toplabel" tabindex="0" aria-haspopup="true">Science Marketing Engine</a>
+        <div class="dropdown mega">
+          <div class="mega-inner">
+            <div class="mega-tiles">
+              <a class="mega-tile mega-overview" href="engine.html"><span class="mega-step" aria-hidden="true"></span><span class="mega-tname">Overview</span></a>
+              <a class="mega-tile" href="science-intelligence.html" data-mp="mp-int"><span class="mega-step">01</span><span class="mega-tname">Science Intelligence™</span></a>
+              <a class="mega-tile" href="science-story.html" data-mp="mp-story"><span class="mega-step">02</span><span class="mega-tname">Science Story™</span></a>
+              <a class="mega-tile" href="studio.html" data-mp="mp-studio"><span class="mega-step">03</span><span class="mega-tname">Science Studio™</span></a>
+            </div>
+            <div class="mega-preview">
+              <div class="mega-pane" id="mp-int">
+                <p>Accelerated AI lit reviews and claim development — surfacing the strong science and the new claims it supports.</p>
+                <div class="mega-sublinks"><a href="lit-review.html">Lit Review™</a><a href="claim-dev.html">Claim Dev™</a></div>
+                <a class="mega-explore" href="science-intelligence.html">Explore Science Intelligence™ →</a>
+              </div>
+              <div class="mega-pane" id="mp-story">
+                <p>We turn your science and claims into creative concepts — tested with consumers before anything is produced.</p>
+                <a class="mega-explore" href="science-story.html">Explore Science Story™ →</a>
+              </div>
+              <div class="mega-pane" id="mp-studio">
+                <p>Bringing the story to life — video, social, education, infographics, and beyond.</p>
+                <div class="mega-sublinks"><a href="moa-moment.html">MOA Moment™</a><a href="influencer-science-kit.html">Influencer Science Kit™</a><a href="ad-to-education.html">Ad-to-Education Sequence™</a></div>
+                <a class="mega-explore" href="studio.html">Explore Science Studio™ →</a>
+              </div>
+            </div>
+          </div>
+        </div>
       </li>
-      <li class="has-dropdown">
-        <a href="studio.html">Science Studio</a>
-        <ul class="dropdown">
-          <li><a href="studio.html">Overview — The Studio</a></li>
-          <li><a href="moa-moment.html">MOA Moment™</a></li>
-          <li><a href="influencer-science-kit.html">Influencer Science Kit™</a></li>
-          <li><a href="ad-to-education.html">Ad-to-Education Sequence™</a></li>
-        </ul>
-      </li>
-      <li><a href="work.html">Proof</a></li>
+      <li><a href="work.html">Case Studies</a></li>
       <li class="has-dropdown">
         <a href="about.html">About</a>
         <ul class="dropdown">
@@ -68,7 +79,6 @@
 <section class="page-hero">
   <div class="blob-stage blob-hero" data-blob="peanut" data-palette="2"></div>
   <div class="wrap">
-    <span class="kicker-page reveal">Science Marketing Engine — Phase 03</span>
     <h1 class="wordmark-h1 reveal reveal-d1"><img class="hero-wordmark" src="assets/wordmarks/science-story.png" alt="Science Story™"></h1>
     <hr class="divider reveal mt-2 mb-2">
     <p class="hero-sub lead reveal reveal-d2">Most brands treat clinical data like legal protection. We treat it like creative fuel.</p>
@@ -95,6 +105,29 @@
 
 <section>
   <div class="wrap">
+    <hr class="divider mb-3">
+    <span class="label reveal">What It's Made Of</span>
+    <h2 class="reveal reveal-d1 mb-2">Proof, turned into something worth believing.</h2>
+    <div class="grid grid-3 mt-2">
+      <div class="card reveal">
+        <h3>Claim Clusters</h3>
+        <p>Grouped, tested claims that carry the argument — the substantiated building blocks pulled from Science Intelligence.</p>
+      </div>
+      <div class="card accent-sky reveal reveal-d1">
+        <h3>Narrative</h3>
+        <p>The storyline that turns claims into a throughline a brand can own — not a list of facts, but a reason to believe.</p>
+      </div>
+      <div class="card accent-coral reveal reveal-d2">
+        <h3>Consumer Testing</h3>
+        <p>We put the directions in front of real consumers — so you back the narrative that actually resonates, before a dollar goes to production.</p>
+      </div>
+    </div>
+    <p class="lead reveal mt-3"><strong>The shift:</strong> one Science Story becomes two to three — each with its own Claim Cluster and narrative. We give brands directions to choose from, not a single bet.</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
     <span class="label reveal">What Makes It Different</span>
     <ul class="ticks mt-2">
       <li class="reveal"><strong>We start with the real regulatory constraints</strong> — not a fantasy playing field.</li>
@@ -110,9 +143,8 @@
   <div class="wrap">
     <span class="label reveal">The Process</span>
     <ol class="steps mt-2">
-      <li class="reveal"><div><h3>Expert conversations</h3><p>Legal, regulatory, and medical experts define the real playing field early.</p></div></li>
-      <li class="reveal"><div><h3>Digging for Gems™</h3><p>Curated, evidence-backed insights — each one factual, substantiable, specific, and strategically directed.</p></div></li>
-      <li class="reveal"><div><h3>Science Story™ development &amp; Polishing Gems™</h3><p>We present coherent strategic directions — not a buffet of loose facts — then refine the chosen one together with your team: claims, narrative, and substantiation.</p></div></li>
+      <li class="reveal"><div><h3>Building Claim Clusters</h3><p>Curated, evidence-backed claims grouped into clusters — each one factual, substantiable, specific, and strategically directed.</p></div></li>
+      <li class="reveal"><div><h3>Science Story™ development</h3><p>We present coherent strategic directions — not a buffet of loose facts — then refine the chosen one together with your team: Claim Clusters, narrative, and substantiation.</p></div></li>
       <li class="reveal"><div><h3>Consumer testing</h3><p>Healthcare brands expect ideas to be validated — so we test for resonance, clarity, and believability with consumers or HCPs. We can run testing through our partners, or package everything cleanly for the testing partners you already trust.</p></div></li>
       <li class="reveal"><div><h3>Activation Planning Session</h3><p>Once the Science Story™ is delivered, our team sits down with yours to onboard it — and to brainstorm how to put it to work across your channels. We don't hand you a strategy and walk away; we help you activate it.</p></div></li>
     </ol>
@@ -124,7 +156,7 @@
     <span class="label reveal">What Clients Get</span>
     <div class="grid grid-3 mt-2">
       <div class="card reveal"><h3>A clear, approved science narrative</h3><p>Substantiated and ready for MLR.</p></div>
-      <div class="card accent-sky reveal reveal-d1"><h3>A short list of prioritized Gems™</h3><p>Evidence-backed insights ranked by strategic value.</p></div>
+      <div class="card accent-sky reveal reveal-d1"><h3>A short list of prioritized Claim Clusters</h3><p>Evidence-backed claims ranked by strategic value.</p></div>
       <div class="card accent-coral reveal reveal-d2"><h3>A directional foundation</h3><p>Makes every creative brief sharper — and every approval faster.</p></div>
     </div>
   </div>
@@ -140,10 +172,6 @@
       <li class="reveal"><strong>Consumer trust</strong> — science-backed messaging builds credibility and drives purchase.</li>
       <li class="reveal"><strong>Omnichannel foundation</strong> — one Science Story™ powers every channel.</li>
     </ul>
-    <div class="card mt-3 reveal" style="max-width:680px">
-      <h3>Your science stays yours.</h3>
-      <p>All AI-assisted research runs in an enterprise-only environment, audited to bank- and healthcare-grade standards. Client data is contractually excluded from AI model training.</p>
-    </div>
   </div>
 </section>
 
@@ -197,18 +225,18 @@
         <p class="footer-tag">Empowering healthcare brands to tell their Science Story™ since 2013.</p>
       </div>
       <div>
-        <h4>The Engine</h4>
+        <h4>Science Intelligence™</h4>
         <ul>
-          <li><a href="engine.html">Overview — The Model</a></li>
+          <li><a href="science-intelligence.html">Overview</a></li>
           <li><a href="lit-review.html">Lit Review™</a></li>
           <li><a href="claim-dev.html">Claim Dev™</a></li>
-          <li><a href="science-story.html">Science Story™</a></li>
         </ul>
       </div>
       <div>
-        <h4>Science Studio</h4>
+        <h4>Story &amp; Studio</h4>
         <ul>
-          <li><a href="studio.html">Overview — The Studio</a></li>
+          <li><a href="science-story.html">Science Story™</a></li>
+          <li><a href="studio.html">Science Studio™</a></li>
           <li><a href="moa-moment.html">MOA Moment™</a></li>
           <li><a href="influencer-science-kit.html">Influencer Science Kit™</a></li>
           <li><a href="ad-to-education.html">Ad-to-Education Sequence™</a></li>
@@ -217,17 +245,18 @@
       <div>
         <h4>Company</h4>
         <ul>
-          <li><a href="work.html">Proof</a></li>
+          <li><a href="engine.html">The Science Marketing Engine</a></li>
+          <li><a href="claims-lab.html">Claims Lab™</a></li>
+          <li><a href="work.html">Case Studies</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="initiatives.html">Initiatives</a></li>
-          <li><a href="claims-lab.html">Claims Lab™</a></li>
           <li><a href="contact.html">Contact</a></li>
           <li><a href="https://www.linkedin.com/company/let-there-be/" target="_blank" rel="noopener">LinkedIn</a></li>
         </ul>
       </div>
     </div>
     <div class="footer-legal">
-      <p>Science Story™, What's Your Science Story?™, Gem Discovery™, Polishing Gems™, MOA Moment™, Influencer Science Kit™, Ad-to-Education Sequence™, Lit Review™, Claim Dev™, and Claims Lab™ are trademarks of Let There Be.</p>
+      <p>Science Story™, What's Your Science Story?™, Science Intelligence™, Science Studio™, Gem Discovery™, Polishing Gems™, MOA Moment™, Influencer Science Kit™, Ad-to-Education Sequence™, Lit Review™, Claim Dev™, and Claims Lab™ are trademarks of Let There Be.</p>
       <p>© <span data-year>2026</span> Let There Be. All Rights Reserved. — lettherebe.com</p>
     </div>
   </div>
