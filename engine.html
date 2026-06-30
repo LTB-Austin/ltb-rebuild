@@ -133,7 +133,6 @@
         </div>
       </li>
     </ol>
-    <p class="lead reveal mt-3"><strong>Intelligence feeds Story. Story feeds Studio.</strong> One connected pipeline, built to run as one — every brand travels the whole way.</p>
   </div>
 </section>
 
@@ -145,7 +144,7 @@
     <p class="lead reveal reveal-d1 mb-2">The engine runs as a pipeline — each stage produces exactly what the next one needs. <strong>Tap any deliverable</strong> to trace the path to make it, and see why every step matters.</p>
 
     <div class="pmap reveal" id="pmap" role="group" aria-label="Interactive pipeline map">
-      <div class="pmap-stages">
+      <div class="pmap-spine">
         <button class="pmap-stage" type="button" data-node="lit">
           <span class="pmap-eyebrow">Science Intelligence™</span>
           <span class="pmap-name">Lit Review™</span>
@@ -167,23 +166,26 @@
         <div class="pmap-stage pmap-stage-studio" data-node="studio">
           <span class="pmap-eyebrow">Science Studio™</span>
           <span class="pmap-name">Production</span>
-          <span class="pmap-role">Needs a Science Story™ — pick one or more:</span>
-          <div class="pmap-chips">
-            <button class="pmap-chip" type="button" data-node="moa">MOA Moment™</button>
-            <button class="pmap-chip" type="button" data-node="isk">Influencer Science Kit™</button>
-            <button class="pmap-chip" type="button" data-node="a2e">Ad-to-Education Sequence™</button>
-            <button class="pmap-chip" type="button" data-node="solo">Standalone video or ad</button>
-          </div>
+          <span class="pmap-role">Needs a Science Story™</span>
+        </div>
+      </div>
+
+      <div class="pmap-branch">
+        <span class="pmap-branch-label">↳ Science Studio™ can produce</span>
+        <div class="pmap-chips-row">
+          <button class="pmap-chip" type="button" data-node="moa">MOA Moment™</button>
+          <button class="pmap-chip" type="button" data-node="isk">Influencer Science Kit™</button>
+          <button class="pmap-chip" type="button" data-node="a2e">Ad-to-Education Sequence™</button>
+          <button class="pmap-chip" type="button" data-node="solo">Standalone video or ad</button>
         </div>
       </div>
 
       <div class="pmap-lane">
         <button class="pmap-stage pmap-lab" type="button" data-node="lab">
-          <span class="pmap-eyebrow">Always-on</span>
           <span class="pmap-name">Claims Lab™</span>
-          <span class="pmap-role">A separate ongoing retainer</span>
+          <span class="pmap-role">An ongoing retainer</span>
         </button>
-        <p class="pmap-lane-note">Runs on its own track — not a step in the pipeline.</p>
+        <p class="pmap-lane-note">Runs on its own track — Lit Review™, Claim Dev™, and Science Story™ baked in, every month.</p>
       </div>
 
       <div class="pmap-info" id="pmap-info" aria-live="polite"></div>

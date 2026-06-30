@@ -861,7 +861,7 @@
       moa: { name: "MOA Moment™", what: "A short mechanism-of-action video that makes the science seeable." },
       isk: { name: "Influencer Science Kit™", what: "A creator-ready kit so partners explain your science with credibility." },
       a2e: { name: "Ad-to-Education Sequence™", what: "An ad-into-education funnel that turns attention into understanding." },
-      lab: { name: "Claims Lab™", what: "An ongoing retainer that keeps Lit Reviews and Claim Dev running every month, between projects — for brands that always need an edge. It runs on its own track and isn't a step in the pipeline." }
+      lab: { name: "Claims Lab™", what: "An ongoing retainer with Lit Review™, Claim Dev™, and Science Story™ baked in — run continuously, every month, for brands in competitive markets that always need an edge. It runs on its own track, not as a one-time pipeline." }
     };
     var NOTE = {
       moa: { type: "rec", text: "✓ A MOA Moment™ can be produced on its own — but it's far stronger built on the full engine, where the mechanism is grounded in tested claims and a clear narrative." },
