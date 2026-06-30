@@ -843,46 +843,74 @@
     var map = document.getElementById("pmap");
     if (!map) return;
     var info = document.getElementById("pmap-info");
-    var nodes = Array.prototype.slice.call(map.querySelectorAll(".pmap-node"));
-    var groups = Array.prototype.slice.call(map.querySelectorAll(".pmap-group"));
-    var REQ = {
+    var allNodes = Array.prototype.slice.call(map.querySelectorAll("[data-node]"));
+    var conns = Array.prototype.slice.call(map.querySelectorAll(".pmap-conn"));
+    // highlight chains (include the "studio" container for production goals)
+    var CHAIN = {
       lit: ["lit"], claim: ["lit", "claim"], story: ["lit", "claim", "story"],
-      moa: ["lit", "claim", "story", "moa"], isk: ["lit", "claim", "story", "isk"], a2e: ["lit", "claim", "story", "a2e"],
+      moa: ["lit", "claim", "story", "studio", "moa"],
+      isk: ["lit", "claim", "story", "studio", "isk"],
+      a2e: ["lit", "claim", "story", "studio", "a2e"],
+      solo: ["studio", "solo"],
       lab: ["lab"]
     };
-    var INFO = {
-      lit: "<strong>Lit Review™</strong> is the foundation — it needs nothing before it. Everything downstream is built on what it uncovers.",
-      claim: "<strong>Claim Dev™</strong> needs a <strong>Lit Review™</strong> first — you can't develop defensible claims until the evidence is mapped.",
-      story: "A <strong>Science Story™</strong> is built from <strong>Lit Review™</strong> + <strong>Claim Dev™</strong> — the proof and the claims they produce are the raw material it turns into creative concepts.",
-      moa: "To produce a <strong>MOA Moment™</strong>, you start with a <strong>Science Story™</strong> (which needs Lit Review™ + Claim Dev™). Production brings a tested story to life — it never starts from a blank brief.",
-      isk: "An <strong>Influencer Science Kit™</strong> is built on a <strong>Science Story™</strong> (Lit Review™ + Claim Dev™ first) — so creators speak from validated science, not guesswork.",
-      a2e: "An <strong>Ad-to-Education Sequence™</strong> is built on a <strong>Science Story™</strong> (Lit Review™ + Claim Dev™ first) — the funnel only works when the education is grounded in proof.",
-      lab: "<strong>Claims Lab™</strong> runs on its own track — an ongoing retainer that keeps Lit Reviews and Claim Dev running every month, between projects. It isn't a step in the pipeline."
+    var STAGE = {
+      lit: { name: "Lit Review™", what: "An AI-assisted map of everything the science already says — mechanisms, white space, and misconceptions.", why: "Maps what the science can support — the foundation everything else is built on." },
+      claim: { name: "Claim Dev™", what: "Pre-compliant claims pulled from the evidence and checked against MLR.", why: "Turns that evidence into pre-compliant, defensible claims you're actually allowed to make." },
+      story: { name: "Science Story™", what: "Your science and claims shaped into creative concepts, tested with consumers.", why: "Shapes the claims into tested concepts — so production starts from a story that resonates, not a blank brief." },
+      moa: { name: "MOA Moment™", what: "A short mechanism-of-action video that makes the science seeable." },
+      isk: { name: "Influencer Science Kit™", what: "A creator-ready kit so partners explain your science with credibility." },
+      a2e: { name: "Ad-to-Education Sequence™", what: "An ad-into-education funnel that turns attention into understanding." },
+      lab: { name: "Claims Lab™", what: "An ongoing retainer that keeps Lit Reviews and Claim Dev running every month, between projects — for brands that always need an edge. It runs on its own track and isn't a step in the pipeline." }
     };
-    function select(key) {
-      var chain = REQ[key] || [];
-      nodes.forEach(function (n) {
+    var NOTE = {
+      moa: { type: "rec", text: "✓ A MOA Moment™ can be produced on its own — but it's far stronger built on the full engine, where the mechanism is grounded in tested claims and a clear narrative." },
+      isk: { type: "req", text: "Requires the full engine — an Influencer Science Kit™ can't be built without a Science Story™ behind it." },
+      a2e: { type: "req", text: "Requires the full engine — the sequence only works when the education is grounded in a Science Story™." }
+    };
+    function note(t, txt) { return '<p class="pmap-note pmap-note-' + t + '">' + txt + "</p>"; }
+    var DEFAULT = '<p class="pmap-detail-h">How to read this</p><p class="pmap-sm" style="font-size:1rem;color:#4a4a4e;line-height:1.6">The Science Marketing Engine is a pipeline — each stage produces exactly what the next one needs. Tap any deliverable above to see the path to make it and why each step matters. Most brands run the whole pipeline; you can enter wherever you are.</p>';
+    function detail(goal) {
+      if (goal === "lab") {
+        return '<p class="pmap-detail-h">' + STAGE.lab.name + "</p><p class=\"pmap-sm\" style=\"font-size:0.98rem;color:#4a4a4e;line-height:1.6\">" + STAGE.lab.what + "</p>";
+      }
+      if (goal === "solo") {
+        return '<p class="pmap-detail-h">A standalone video or ad</p>'
+          + '<p class="pmap-sm">Education videos, :15 ads, social cut-downs — produced without the engine behind them.</p>'
+          + note("warn", "Possible, but not recommended. Without the engine these are ordinary videos and ads with no scientific differentiation — they won't carry the edge our process is built for. We can do it, but it's not the work we're known for.");
+      }
+      var chain = CHAIN[goal].filter(function (k) { return k !== "studio"; });
+      var lis = chain.map(function (k, i) {
+        var s = STAGE[k], isGoal = k === goal;
+        return '<li class="' + (isGoal ? "is-goal" : "") + '"><span class="pmap-num">' + (i + 1) + '</span><div><strong>' + s.name + (isGoal ? " — your deliverable" : "") + "</strong><p>" + (isGoal ? s.what : s.why) + "</p></div></li>";
+      }).join("");
+      return '<p class="pmap-detail-h">To deliver <strong>' + STAGE[goal].name + "</strong>, the path runs:</p><ol class=\"pmap-path\">" + lis + "</ol>" + (NOTE[goal] ? note(NOTE[goal].type, NOTE[goal].text) : "");
+    }
+    function show(goal) {
+      var chain = (goal && CHAIN[goal]) || [];
+      allNodes.forEach(function (n) {
         var k = n.getAttribute("data-node");
         var inChain = chain.indexOf(k) !== -1;
-        n.classList.toggle("req", inChain);
-        n.classList.toggle("active", k === key);
-        n.classList.toggle("dim", !inChain);
+        n.classList.toggle("req", !!goal && inChain && k !== goal);
+        n.classList.toggle("active", k === goal);
+        n.classList.toggle("dim", !!goal && !inChain);
       });
-      groups.forEach(function (g) { g.classList.toggle("dim", !g.querySelector(".pmap-node.req")); });
-      if (info) info.innerHTML = "<p>" + (INFO[key] || "") + "</p>";
+      conns.forEach(function (c) {
+        var ends = (c.getAttribute("data-conn") || "").split("-");
+        c.classList.toggle("on", chain.indexOf(ends[0]) !== -1 && chain.indexOf(ends[1]) !== -1);
+      });
+      if (info) info.innerHTML = goal ? detail(goal) : DEFAULT;
     }
-    function reset() {
-      nodes.forEach(function (n) { n.classList.remove("req", "active", "dim"); });
-      groups.forEach(function (g) { g.classList.remove("dim"); });
-      if (info) info.innerHTML = "<p>Hover or tap a deliverable to see what it's built on.</p>";
-    }
-    nodes.forEach(function (n) {
-      var k = n.getAttribute("data-node");
-      n.addEventListener("mouseenter", function () { select(k); });
-      n.addEventListener("click", function () { select(k); });
-      n.addEventListener("focus", function () { select(k); });
+    var locked = null;
+    var buttons = allNodes.filter(function (n) { return n.tagName === "BUTTON"; });
+    buttons.forEach(function (b) {
+      var k = b.getAttribute("data-node");
+      b.addEventListener("mouseenter", function () { show(k); });
+      b.addEventListener("focus", function () { show(k); });
+      b.addEventListener("click", function () { locked = (locked === k) ? null : k; show(locked); });
     });
-    map.addEventListener("mouseleave", reset);
+    map.addEventListener("mouseleave", function () { show(locked); });
+    show(null);
   })();
 
   /* ---------- FOOTER YEAR ---------- */

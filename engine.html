@@ -142,52 +142,51 @@
     <hr class="divider mb-3">
     <span class="label reveal">How It Fits Together</span>
     <h2 class="reveal reveal-d1 mb-1">What you need, and why.</h2>
-    <p class="lead reveal reveal-d1 mb-2">Every deliverable is built on the one before it. Pick what you want to make — we'll trace the path to get there.</p>
-    <div class="pipeline-map reveal" id="pmap">
-      <div class="pmap-row">
-        <div class="pmap-group" data-group="intel">
-          <span class="pmap-glabel">Science Intelligence™</span>
-          <button class="pmap-node" type="button" data-node="lit">Lit Review™</button>
-          <button class="pmap-node" type="button" data-node="claim">Claim Dev™</button>
-        </div>
-        <span class="pmap-arrow" aria-hidden="true">→</span>
-        <div class="pmap-group" data-group="story">
-          <span class="pmap-glabel">Science Story™</span>
-          <button class="pmap-node" type="button" data-node="story">Science Story™</button>
-        </div>
-        <span class="pmap-arrow" aria-hidden="true">→</span>
-        <div class="pmap-group" data-group="studio">
-          <span class="pmap-glabel">Science Studio™</span>
-          <button class="pmap-node" type="button" data-node="moa">MOA Moment™</button>
-          <button class="pmap-node" type="button" data-node="isk">Influencer Science Kit™</button>
-          <button class="pmap-node" type="button" data-node="a2e">Ad-to-Education Sequence™</button>
-        </div>
-      </div>
-      <div class="pmap-aside">
-        <button class="pmap-node pmap-lab" type="button" data-node="lab">Claims Lab™ <span>always-on retainer</span></button>
-      </div>
-      <div class="pmap-info" id="pmap-info"><p>Hover or tap a deliverable to see what it's built on.</p></div>
-    </div>
-  </div>
-</section>
+    <p class="lead reveal reveal-d1 mb-2">The engine runs as a pipeline — each stage produces exactly what the next one needs. <strong>Tap any deliverable</strong> to trace the path to make it, and see why every step matters.</p>
 
-<section>
-  <div class="wrap">
-    <hr class="divider mb-3">
-    <h2 class="reveal reveal-d1 mb-2">Stronger than a blank page.</h2>
-    <div class="grid grid-3 mt-2">
-      <div class="card reveal">
-        <h3>Scientific truth</h3>
-        <p>What the brand can credibly stand on.</p>
+    <div class="pmap reveal" id="pmap" role="group" aria-label="Interactive pipeline map">
+      <div class="pmap-stages">
+        <button class="pmap-stage" type="button" data-node="lit">
+          <span class="pmap-eyebrow">Science Intelligence™</span>
+          <span class="pmap-name">Lit Review™</span>
+          <span class="pmap-role">The foundation</span>
+        </button>
+        <span class="pmap-conn" data-conn="lit-claim" aria-hidden="true"></span>
+        <button class="pmap-stage" type="button" data-node="claim">
+          <span class="pmap-eyebrow">Science Intelligence™</span>
+          <span class="pmap-name">Claim Dev™</span>
+          <span class="pmap-role">Needs a Lit Review™</span>
+        </button>
+        <span class="pmap-conn" data-conn="claim-story" aria-hidden="true"></span>
+        <button class="pmap-stage" type="button" data-node="story">
+          <span class="pmap-eyebrow">Science Story™</span>
+          <span class="pmap-name">Science Story™</span>
+          <span class="pmap-role">Needs Claim Dev™</span>
+        </button>
+        <span class="pmap-conn" data-conn="story-studio" aria-hidden="true"></span>
+        <div class="pmap-stage pmap-stage-studio" data-node="studio">
+          <span class="pmap-eyebrow">Science Studio™</span>
+          <span class="pmap-name">Production</span>
+          <span class="pmap-role">Needs a Science Story™ — pick one or more:</span>
+          <div class="pmap-chips">
+            <button class="pmap-chip" type="button" data-node="moa">MOA Moment™</button>
+            <button class="pmap-chip" type="button" data-node="isk">Influencer Science Kit™</button>
+            <button class="pmap-chip" type="button" data-node="a2e">Ad-to-Education Sequence™</button>
+            <button class="pmap-chip" type="button" data-node="solo">Standalone video or ad</button>
+          </div>
+        </div>
       </div>
-      <div class="card accent-sky reveal reveal-d1">
-        <h3>Strategic opportunity</h3>
-        <p>Where the category is under-explained, misunderstood, or unclaimed.</p>
+
+      <div class="pmap-lane">
+        <button class="pmap-stage pmap-lab" type="button" data-node="lab">
+          <span class="pmap-eyebrow">Always-on</span>
+          <span class="pmap-name">Claims Lab™</span>
+          <span class="pmap-role">A separate ongoing retainer</span>
+        </button>
+        <p class="pmap-lane-note">Runs on its own track — not a step in the pipeline.</p>
       </div>
-      <div class="card accent-coral reveal reveal-d2">
-        <h3>Creative ignition</h3>
-        <p>Where science becomes story, concept, copy, and visualization.</p>
-      </div>
+
+      <div class="pmap-info" id="pmap-info" aria-live="polite"></div>
     </div>
   </div>
 </section>
