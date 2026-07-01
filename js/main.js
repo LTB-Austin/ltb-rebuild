@@ -8,6 +8,16 @@
 (function () {
   "use strict";
 
+  /* Normalize any URL/path to a clean page slug ("" = home) so active-state
+     detection works with extensionless (folder) URLs and legacy .html alike. */
+  function normPath(p) {
+    p = (p || "").split("#")[0].split("?")[0];
+    p = p.replace(/^https?:\/\/[^/]+/, "");
+    p = p.replace(/^\/+/, "").replace(/\/+$/, "").replace(/\.html$/, "");
+    if (p === "index") p = "";
+    return p;
+  }
+
   /* ---------- NAV ---------- */
   var nav = document.querySelector(".nav");
   var toggle = document.querySelector(".nav-toggle");
@@ -39,7 +49,7 @@
   }
 
   function buildMobileNav(links) {
-    var here = (location.pathname.split("/").pop() || "index.html") || "index.html";
+    var here = normPath(location.pathname);
     var wrap = document.createElement("div");
     wrap.className = "mnav"; wrap.id = "mnav"; wrap.setAttribute("aria-hidden", "true");
     var panel = document.createElement("nav");
@@ -48,7 +58,7 @@
     function mkA(href, label, cls) {
       var a = document.createElement("a");
       a.href = href; a.textContent = label; a.className = cls || "mnav-link";
-      if ((href || "").split("#")[0] === here) a.classList.add("cur");
+      if (normPath(href) === here) a.classList.add("cur");
       return a;
     }
     function mkAcc(label, build) {
@@ -67,19 +77,26 @@
     Array.prototype.forEach.call(links.children, function (li) {
       var topA = li.querySelector(":scope > a");
       if (li.classList.contains("has-mega")) {
+        // Engine: just the overview + three services (keep it uncrowded)
         mkAcc("Science Marketing Engine", function (sub) {
           li.querySelectorAll(".mega-tile").forEach(function (t) {
             var nm = t.querySelector(".mega-tname");
             sub.appendChild(mkA(t.getAttribute("href"), nm ? nm.textContent : "Overview", "mnav-sublink"));
           });
-          li.querySelectorAll(".mega-sublinks a").forEach(function (a) {
-            sub.appendChild(mkA(a.getAttribute("href"), a.textContent, "mnav-sublink mnav-sub2"));
-          });
         });
+        // Capabilities: the sub-services, split into their own section (mobile only)
+        var caps = li.querySelectorAll(".mega-sublinks a");
+        if (caps.length) {
+          mkAcc("Capabilities", function (sub) {
+            caps.forEach(function (a) {
+              sub.appendChild(mkA(a.getAttribute("href"), a.textContent, "mnav-sublink"));
+            });
+          });
+        }
       } else if (li.classList.contains("has-dropdown")) {
         var label = topA ? topA.textContent.trim() : "More";
         mkAcc(label, function (sub) {
-          if (topA && topA.getAttribute("href")) sub.appendChild(mkA(topA.getAttribute("href"), label + " Overview", "mnav-sublink"));
+          if (topA && topA.getAttribute("href")) sub.appendChild(mkA(topA.getAttribute("href"), label === "About" ? "About Us" : (label + " Overview"), "mnav-sublink"));
           li.querySelectorAll(".dropdown a").forEach(function (a) {
             sub.appendChild(mkA(a.getAttribute("href"), a.textContent, "mnav-sublink"));
           });
@@ -114,13 +131,11 @@
      The nav markup is identical on every page; we light up the current link
      (and its top-level parent) here so we never hardcode per-page classes. */
   (function () {
-    var here = (location.pathname.split("/").pop() || "index.html");
-    if (here === "") here = "index.html";
+    var here = normPath(location.pathname);
     document.querySelectorAll(".nav-links > li").forEach(function (li) {
       var matched = false;
       li.querySelectorAll("a").forEach(function (a) {
-        var href = (a.getAttribute("href") || "").split("#")[0];
-        if (href && href === here) { a.classList.add("active"); matched = true; }
+        if (normPath(a.getAttribute("href")) === here) { a.classList.add("active"); matched = true; }
       });
       if (matched) {
         var top = li.querySelector(":scope > a");
@@ -548,7 +563,7 @@
     var imgs = "";
     [false, true].forEach(function (ghost) {
       CLIENT_LOGOS.forEach(function (n) {
-        var f = "assets/clients/client-" + (n < 10 ? "0" + n : n) + ".png";
+        var f = "/assets/clients/client-" + (n < 10 ? "0" + n : n) + ".png";
         imgs += '<img src="' + f + '" alt="' + (ghost ? '" aria-hidden="true"' : 'Client logo"') + ' loading="lazy">';
       });
     });
@@ -1043,7 +1058,7 @@
 
       ov.appendChild(stage);
       ov.insertAdjacentHTML("beforeend",
-        '<img class="pd-logo" src="assets/logo-left.png" alt="Let There Be — Science Marketing">' +
+        '<img class="pd-logo" src="/assets/logo-left.png" alt="Let There Be — Science Marketing">' +
         '<div class="pd-prompt"><span class="key">Press Enter</span><span class="sub">or click anywhere to begin</span><button class="pd-skip" type="button">Skip intro</button></div>');
       document.body.appendChild(ov);
 

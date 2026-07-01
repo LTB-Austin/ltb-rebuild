@@ -985,16 +985,16 @@ main, footer { position: relative; z-index: 1; }
 .marquee-track {
   display: flex;
   align-items: center;
-  gap: var(--s8);
+  gap: var(--s3);
   width: max-content;
-  animation: marquee 82s linear infinite;
+  animation: marquee 66s linear infinite;
 }
 /* Each logo sits in a uniform box and is scaled to fit (contain), so a wide
    wordmark and a compact icon carry the same visual footprint instead of one
    reading much bigger than the other. */
 .marquee-track img {
-  width: 300px; height: 96px; object-fit: contain; object-position: center;
-  max-width: none; opacity: 0.92; padding: 0 var(--s4); box-sizing: content-box;
+  width: 340px; height: 110px; object-fit: contain; object-position: center;
+  max-width: none; opacity: 0.92; padding: 0 var(--s3); box-sizing: content-box;
 }
 @keyframes marquee {
   from { transform: translateX(0); }
