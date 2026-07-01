@@ -563,7 +563,7 @@
     var imgs = "";
     [false, true].forEach(function (ghost) {
       CLIENT_LOGOS.forEach(function (n) {
-        var f = "/assets/clients/client-" + (n < 10 ? "0" + n : n) + ".png";
+        var f = "assets/clients/client-" + (n < 10 ? "0" + n : n) + ".png";
         imgs += '<img src="' + f + '" alt="' + (ghost ? '" aria-hidden="true"' : 'Client logo"') + ' loading="lazy">';
       });
     });
@@ -1058,7 +1058,7 @@
 
       ov.appendChild(stage);
       ov.insertAdjacentHTML("beforeend",
-        '<img class="pd-logo" src="/assets/logo-left.png" alt="Let There Be — Science Marketing">' +
+        '<img class="pd-logo" src="assets/logo-left.png" alt="Let There Be — Science Marketing">' +
         '<div class="pd-prompt"><span class="key">Press Enter</span><span class="sub">or click anywhere to begin</span><button class="pd-skip" type="button">Skip intro</button></div>');
       document.body.appendChild(ov);
 
