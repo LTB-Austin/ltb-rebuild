@@ -985,20 +985,25 @@ main, footer { position: relative; z-index: 1; }
 .marquee-track {
   display: flex;
   align-items: center;
-  gap: var(--s3);
+  gap: 0;
   width: max-content;
   animation: marquee 66s linear infinite;
+  /* promote to its own GPU layer so the scroll stays smooth and crisp (no re-raster blur) */
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 /* Each logo sits in a uniform box and is scaled to fit (contain), so a wide
    wordmark and a compact icon carry the same visual footprint instead of one
    reading much bigger than the other. */
 .marquee-track img {
   width: 340px; height: 110px; object-fit: contain; object-position: center;
-  max-width: none; opacity: 0.92; padding: 0 var(--s3); box-sizing: content-box;
+  max-width: none; opacity: 0.92; padding: 0 var(--s2); box-sizing: content-box;
+  backface-visibility: hidden;
 }
 @keyframes marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
 }
 /* marquee no longer pauses on hover (per 7/1 review) */
 
