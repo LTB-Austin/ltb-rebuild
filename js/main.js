@@ -18,12 +18,78 @@
   }, { passive: true });
 
   if (toggle && links) {
-    toggle.setAttribute("aria-expanded", "false");
-    toggle.addEventListener("click", function () {
-      var open = toggle.classList.toggle("open");
-      links.classList.toggle("open", open);
+    // Dedicated, touch-friendly mobile drawer built from the existing nav.
+    var mnav = buildMobileNav(links);
+    document.body.appendChild(mnav);
+    function setOpen(open) {
+      toggle.classList.toggle("open", open);
+      mnav.classList.toggle("open", open);
+      document.documentElement.classList.toggle("mnav-lock", open);
       toggle.setAttribute("aria-expanded", open ? "true" : "false");
+      mnav.setAttribute("aria-hidden", open ? "false" : "true");
+    }
+    toggle.setAttribute("aria-expanded", "false");
+    toggle.addEventListener("click", function () { setOpen(!mnav.classList.contains("open")); });
+    mnav.addEventListener("click", function (e) {
+      if (e.target === mnav) { setOpen(false); return; }   // tap backdrop closes
+      if (e.target.closest("a")) { setOpen(false); }        // tapping a link navigates + closes
     });
+    window.addEventListener("resize", function () { if (window.innerWidth > 980) setOpen(false); });
+    window.addEventListener("keydown", function (e) { if (e.key === "Escape") setOpen(false); });
+  }
+
+  function buildMobileNav(links) {
+    var here = (location.pathname.split("/").pop() || "index.html") || "index.html";
+    var wrap = document.createElement("div");
+    wrap.className = "mnav"; wrap.id = "mnav"; wrap.setAttribute("aria-hidden", "true");
+    var panel = document.createElement("nav");
+    panel.className = "mnav-panel"; panel.setAttribute("aria-label", "Menu");
+    wrap.appendChild(panel);
+    function mkA(href, label, cls) {
+      var a = document.createElement("a");
+      a.href = href; a.textContent = label; a.className = cls || "mnav-link";
+      if ((href || "").split("#")[0] === here) a.classList.add("cur");
+      return a;
+    }
+    function mkAcc(label, build) {
+      var b = document.createElement("button");
+      b.type = "button"; b.className = "mnav-acc"; b.setAttribute("aria-expanded", "false");
+      b.innerHTML = '<span>' + label + '</span><span class="mnav-chev" aria-hidden="true"></span>';
+      var sub = document.createElement("div"); sub.className = "mnav-sub";
+      build(sub);
+      b.addEventListener("click", function () {
+        var op = b.classList.toggle("open"); sub.classList.toggle("open", op);
+        b.setAttribute("aria-expanded", op ? "true" : "false");
+      });
+      if (sub.querySelector("a.cur")) { b.classList.add("open"); sub.classList.add("open"); b.setAttribute("aria-expanded", "true"); }
+      panel.appendChild(b); panel.appendChild(sub);
+    }
+    Array.prototype.forEach.call(links.children, function (li) {
+      var topA = li.querySelector(":scope > a");
+      if (li.classList.contains("has-mega")) {
+        mkAcc("Science Marketing Engine", function (sub) {
+          li.querySelectorAll(".mega-tile").forEach(function (t) {
+            var nm = t.querySelector(".mega-tname");
+            sub.appendChild(mkA(t.getAttribute("href"), nm ? nm.textContent : "Overview", "mnav-sublink"));
+          });
+          li.querySelectorAll(".mega-sublinks a").forEach(function (a) {
+            sub.appendChild(mkA(a.getAttribute("href"), a.textContent, "mnav-sublink mnav-sub2"));
+          });
+        });
+      } else if (li.classList.contains("has-dropdown")) {
+        var label = topA ? topA.textContent.trim() : "More";
+        mkAcc(label, function (sub) {
+          if (topA && topA.getAttribute("href")) sub.appendChild(mkA(topA.getAttribute("href"), label + " Overview", "mnav-sublink"));
+          li.querySelectorAll(".dropdown a").forEach(function (a) {
+            sub.appendChild(mkA(a.getAttribute("href"), a.textContent, "mnav-sublink"));
+          });
+        });
+      } else if (topA) {
+        var cls = topA.classList.contains("nav-cta") ? "mnav-cta" : "mnav-link";
+        panel.appendChild(mkA(topA.getAttribute("href"), topA.textContent.trim(), cls));
+      }
+    });
+    return wrap;
   }
 
   // Respect reduced-motion: pause autoplaying work videos
