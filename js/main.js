@@ -134,8 +134,9 @@
     var here = normPath(location.pathname);
     document.querySelectorAll(".nav-links > li").forEach(function (li) {
       var matched = false;
-      li.querySelectorAll("a").forEach(function (a) {
-        if (normPath(a.getAttribute("href")) === here) { a.classList.add("active"); matched = true; }
+      li.querySelectorAll("a[href]").forEach(function (a) {
+        var h = a.getAttribute("href");
+        if (h && normPath(h) === here) { a.classList.add("active"); matched = true; }
       });
       if (matched) {
         var top = li.querySelector(":scope > a");
@@ -1110,10 +1111,10 @@
     moa:   { svc: "Science Studio™",       name: "MOA Moment™",  why: "Your mechanism of action, shown in seconds." },
     isk:   { svc: "Science Studio™",       name: "Influencer Science Kit™", why: "Science that creators can actually run with." },
     a2e:   { svc: "Science Studio™",       name: "Ad-to-Education Sequence™", why: "From a scroll-stopping hook to the deep explainer." },
-    lab:   { svc: "Claims Lab™",           name: "Claims Lab™",  why: "A six-month season that keeps finding and testing your next edge." }
+    lab:   { svc: "Claims Lab™",           name: "Claims Lab™",  why: "A flexible, ongoing retainer that keeps finding and testing your next edge." }
   };
   var COMP = { t: "", txt: "Aimed squarely at the competition — where you can win against a direct rival or the category." };
-  var OWN  = { t: "", txt: "Runs on its own track — a proactive season that keeps a repository of tested claims ready for every opening." };
+  var OWN  = { t: "", txt: "Runs on its own track — an ongoing retainer that keeps a repository of tested claims ready for every opening." };
   var GOAL = {
     claim:      { label: "launch a new claim",                     path: ["lit","claim"] },
     headtohead: { label: "win a head-to-head claim",               path: ["lit","claim"], note: COMP },
