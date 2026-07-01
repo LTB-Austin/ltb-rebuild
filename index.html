@@ -10,16 +10,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
-<script>
-/* Entry-screen gate — runs before paint so the homepage never flashes underneath.
-   Only gates the homepage, once per browser session, and never for reduced-motion
-   users or crawlers (no JS = no gate, full content stays in the source). */
-(function(){try{
-  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var seen   = sessionStorage.getItem('ltbEntered') === '1';
-  if(!reduce && !seen){ document.documentElement.className += ' ltb-gating'; }
-}catch(e){}})();
-</script>
 <link rel="canonical" href="https://lettherebe.com/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Let There Be">
@@ -55,7 +45,7 @@
             </div>
             <div class="mega-preview">
               <div class="mega-pane" id="mp-int">
-                <p>Accelerated AI lit reviews and claim development — surfacing the strong science and the new claims it supports.</p>
+                <p>AI-powered lit reviews and claim development — surfacing the strong science and the new claims it supports.</p>
                 <div class="mega-sublinks"><a href="lit-review.html">Lit Review™</a><a href="claim-dev.html">Claim Dev™</a></div>
                 <a class="mega-explore" href="science-intelligence.html">Explore Science Intelligence™ →</a>
               </div>
@@ -78,6 +68,7 @@
         <ul class="dropdown">
           <li><a href="about.html#team">Our People</a></li>
           <li><a href="initiatives.html">Initiatives</a></li>
+          <li><a href="sizzle.html">2026 Sizzle</a></li>
         </ul>
       </li>
       <li><a class="nav-cta" href="contact.html">Get Started</a></li>
@@ -89,7 +80,8 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="blob-stage blob-hero" data-blob="split" data-palette="0"></div>
+  <div class="blob-stage blob-hero" data-blob="peanut" data-palette="0"></div>
+  <div class="blob-stage blob-hero blob-left" data-blob="ambient" data-palette="2"></div>
   <div class="wrap">
     <h1 class="reveal reveal-d1">Science Marketing<br>Starts <span class="grad-text">Here.</span></h1>
     <hr class="divider reveal mt-2 mb-2">
@@ -101,16 +93,6 @@
   </div>
 </section>
 
-<!-- THE REEL — LTB Sizzle 2026 -->
-<section style="margin-top:-28px">
-  <div class="wrap">
-    <h2 class="reveal reveal-d1 mb-2">Ninety seconds of proof.</h2>
-    <div class="video-embed framed reveal reveal-d2">
-      <iframe id="sizzle-frame" src="https://player.vimeo.com/video/1172591925?h=820c78ea7b&background=1&autoplay=1&loop=1&muted=1&api=1&player_id=sizzle-frame" allow="autoplay; fullscreen; picture-in-picture" loading="lazy" title="LTB Sizzle 2026"></iframe>
-      <button class="mute-sq" data-frame="sizzle-frame" aria-label="Unmute"></button>
-    </div>
-  </div>
-</section>
 
 <!-- TRUSTED BY — client logo marquee on dark band -->
 <section class="band" style="padding:24px 0 28px;margin-top:var(--s12)">
@@ -134,29 +116,28 @@
   <div class="wrap">
     <h2 class="reveal reveal-d1 mb-2">The Science Marketing Engine</h2>
     <p class="lead reveal reveal-d1 mb-2">Here, science leads, and creativity amplifies.</p>
-    <div class="flow flow-3 mt-2">
+    <div class="svc-flow mt-2">
 
-      <div class="phase reveal">
-        <div class="phase-cell"><div class="icell icell-speed" aria-hidden="true"><img class="icell-img" src="assets/cells/cell-speed.png" alt="" loading="lazy"></div></div>
-        <div class="phase-num">01</div>
+      <div class="card svc-int reveal">
+        <span class="svc-num" aria-hidden="true"><svg viewBox="0 0 46 46"><defs><linearGradient id="svcg01" x1="4" y1="6" x2="42" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#94CAB4"/><stop offset=".2" stop-color="#7FB6CC"/><stop offset=".4" stop-color="#7C82A1"/><stop offset=".54" stop-color="#8C6C8F"/><stop offset=".7" stop-color="#E1483B"/><stop offset=".86" stop-color="#EE6B4D"/><stop offset="1" stop-color="#F2966A"/></linearGradient></defs><circle class="sg-ring" cx="23" cy="23" r="21" fill="none" stroke="rgba(12,13,16,.28)" stroke-width="2"/><circle class="sg-fill" cx="23" cy="23" r="23" fill="url(#svcg01)"/><text class="sg-txt" x="23" y="23" text-anchor="middle" dominant-baseline="central">01</text></svg></span>
         <h3><a href="science-intelligence.html" style="text-decoration:none">Science Intelligence™</a></h3>
-        <p>We <em>accelerate</em> finding strong science — and developing the new claims it supports.</p>
+        <p>We find strong science — and develop the new claims it supports.</p>
         <p class="mt-1"><a class="card-more" style="text-decoration:none" href="science-intelligence.html">Explore →</a></p>
       </div>
 
-      <div class="phase reveal reveal-d1">
-        <div class="phase-cell"><div class="icell icell-transform" aria-hidden="true"><img class="icell-img" src="assets/cells/cell-transform.png" alt="" loading="lazy"></div></div>
-        <div class="phase-num">02</div>
+      <span class="svc-arrow" aria-hidden="true"></span>
+      <div class="card svc-story reveal reveal-d1">
+        <span class="svc-num" aria-hidden="true"><svg viewBox="0 0 46 46"><defs><linearGradient id="svcg02" x1="4" y1="6" x2="42" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#94CAB4"/><stop offset=".2" stop-color="#7FB6CC"/><stop offset=".4" stop-color="#7C82A1"/><stop offset=".54" stop-color="#8C6C8F"/><stop offset=".7" stop-color="#E1483B"/><stop offset=".86" stop-color="#EE6B4D"/><stop offset="1" stop-color="#F2966A"/></linearGradient></defs><circle class="sg-ring" cx="23" cy="23" r="21" fill="none" stroke="rgba(12,13,16,.28)" stroke-width="2"/><circle class="sg-fill" cx="23" cy="23" r="23" fill="url(#svcg02)"/><text class="sg-txt" x="23" y="23" text-anchor="middle" dominant-baseline="central">02</text></svg></span>
         <h3><a href="science-story.html" style="text-decoration:none">Science Story™</a></h3>
-        <p>We <em>transform</em> that science into concepts worth believing.</p>
+        <p>We turn that science into concepts worth believing.</p>
         <p class="mt-1"><a class="card-more" style="text-decoration:none" href="science-story.html">Explore →</a></p>
       </div>
 
-      <div class="phase reveal reveal-d2">
-        <div class="phase-cell"><div class="icell icell-scale" aria-hidden="true"><img class="icell-img" src="assets/cells/cell-scale.png" alt="" loading="lazy"></div></div>
-        <div class="phase-num">03</div>
+      <span class="svc-arrow" aria-hidden="true"></span>
+      <div class="card svc-studio reveal reveal-d2">
+        <span class="svc-num" aria-hidden="true"><svg viewBox="0 0 46 46"><defs><linearGradient id="svcg03" x1="4" y1="6" x2="42" y2="40" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#94CAB4"/><stop offset=".2" stop-color="#7FB6CC"/><stop offset=".4" stop-color="#7C82A1"/><stop offset=".54" stop-color="#8C6C8F"/><stop offset=".7" stop-color="#E1483B"/><stop offset=".86" stop-color="#EE6B4D"/><stop offset="1" stop-color="#F2966A"/></linearGradient></defs><circle class="sg-ring" cx="23" cy="23" r="21" fill="none" stroke="rgba(12,13,16,.28)" stroke-width="2"/><circle class="sg-fill" cx="23" cy="23" r="23" fill="url(#svcg03)"/><text class="sg-txt" x="23" y="23" text-anchor="middle" dominant-baseline="central">03</text></svg></span>
         <h3><a href="studio.html" style="text-decoration:none">Science Studio™</a></h3>
-        <p>We <em>scale</em> the story across video, social, education, infographics, and beyond.</p>
+        <p>We bring the story to life across video, social, education, infographics, and beyond.</p>
         <p class="mt-1"><a class="card-more" style="text-decoration:none" href="studio.html">Explore →</a></p>
       </div>
 
@@ -185,7 +166,7 @@
 <!-- THE ENGINE — product cards -->
 <section>
   <div class="wrap">
-    <h2 class="reveal reveal-d1 mb-2">Built from parts that work alone.<br>Designed to work as one.</h2>
+    <h2 class="reveal reveal-d1 mb-2">One engine, many parts —<br>each one feeds the next.</h2>
     <div class="grid grid-3 mt-2">
       <a class="card reveal" href="lit-review.html">
         <h3>Lit Review™</h3>
@@ -359,6 +340,7 @@
           <li><a href="work.html">Case Studies</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="initiatives.html">Initiatives</a></li>
+          <li><a href="sizzle.html">2026 Sizzle</a></li>
           <li><a href="contact.html">Get Started</a></li>
         </ul>
       </div>

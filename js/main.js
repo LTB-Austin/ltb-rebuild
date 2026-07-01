@@ -158,7 +158,7 @@
      The fill shows through each cell's animated goo mask. */
   // Background margin cells — connected, one-shape forms only (no split, so they
   // never read as two circles). Priority: peanut > ambient > diagonal > trio.
-  var BG_TYPES = ["peanut", "ambient", "trio", "diagonal", "quad", "trio", "peanut", "diagonal", "ambient", "quad"];
+  var BG_TYPES = ["peanut", "ambient", "diagonal", "split", "peanut", "diagonal", "ambient", "peanut", "diagonal", "ambient"];
   // Muted "milky" brand palette — matches the mitosis cell library.
   var GO_STOPS =
     "<stop offset='0%' stop-color='#94CAB4'/><stop offset='20%' stop-color='#7FB6CC'/>" +
@@ -348,10 +348,10 @@
       case "heart": return heartBlob();
       case "peanut": return peanutBlob();
       case "diagonal": return diagonalBlob();
-      case "trio": return trioBlob();
+      case "trio": return peanutBlob();
       case "split": return splitBlob();
-      case "quad": return quadBlob();
-      case "elongated": return elongatedBlob();
+      case "quad": return diagonalBlob();
+      case "elongated": return peanutBlob();
       case "bud": return budBlob();
       default: return ambientBlob();
     }
@@ -366,17 +366,13 @@
     el.innerHTML = blobByType(type);
     // Per-page hero placement: shift / scale / rotate / flip so no two pages match.
     // Kept to the right & lower edge so it never crosses the left-aligned hero text.
-    if (el.classList.contains("blob-hero") || el.classList.contains("blob-corner-tr")) {
-      var vy = ((SEED % 7) * 6) - 8;          // -8 .. 28 vh
-      var vx = ((SEED >> 3) % 4) * 2;          // 0 .. 6 vw further toward the edge
-      var sc = 0.95 + ((SEED >> 1) % 5) * 0.1;  // 0.95 .. 1.35 (bigger, never tiny)
-      var rt = (((SEED >> 2) % 5) + 2) * 13 * ((SEED % 2) ? -1 : 1); // +/-26..78 deg, never upright
+    if (el.classList.contains("blob-hero") || /blob-corner/.test(el.className)) {
+      var sc = 1.0 + ((SEED >> 1) % 4) * 0.08;  // 1.00 .. 1.24
+      var rt = (28 + (((SEED >> 2) % 3) * 8)) * ((SEED % 2) ? -1 : 1); // +/-28..44 deg — always a clean diagonal
       if (el.dataset.rot) rt = parseFloat(el.dataset.rot);   // per-page rotation override
-      if (el.dataset.ty) vy = parseFloat(el.dataset.ty);     // per-page vertical (vh) override
-      if (el.dataset.tx) vx = parseFloat(el.dataset.tx);     // per-page horizontal (vw) override
       if (el.dataset.scale) sc = parseFloat(el.dataset.scale); // per-page scale override
       var fx = (SEED % 2) ? -1 : 1;
-      el.dataset.base = "translate(" + vx + "vw," + vy + "vh) rotate(" + rt + "deg) scale(" + (sc * fx) + "," + sc + ")";
+      el.dataset.base = "rotate(" + rt + "deg) scale(" + (sc * fx) + "," + sc + ")";  // position handled by CSS (margins)
       el.style.transform = el.dataset.base;
       el.style.transformOrigin = "center";
     }
@@ -448,7 +444,7 @@
       // per-page variety + rotation so the teal/red sides keep swapping down the
       // margins. Cells are NEVER left upright (0deg) — always tilted on the page.
       var fx = ((n >> 1) % 2) ? -1 : 1, fy = ((n >> 2) % 2) ? -1 : 1;
-      var ROTS = [25, 200, 90, 160, 320, 250, 35, 215];     // all clearly rotated, mix of teal- and red-leading
+      var ROTS = [35, 145, 215, 305, 50, 130, 230, 320];     // diagonal-only — never axis-aligned (no 0/90/180/270)
       var rot = ROTS[n % ROTS.length] + (((n * 23) % 13) - 6); // +/-6deg organic jitter
       cell.dataset.base = "scale(" + fx + "," + fy + ") rotate(" + rot + "deg)";
       cell.style.transform = cell.dataset.base;
@@ -918,11 +914,9 @@
     el.textContent = new Date().getFullYear();
   });
 
-  /* ---------- ENTRY SCREEN (petri-dish loader) ----------
-     Reuses the brand soft-cell renderer. JS-gated in <head>: only the homepage,
-     once per session, never for reduced-motion users. On Enter we dive into the
-     centre cell and the homepage is revealed beneath the fading overlay. */
-  function buildEntry() {
+  /* Entry-screen (petri-dish loader) removed — homepage loads directly. */
+  function buildEntry() { return;
+    /* eslint-disable */
     var html = document.documentElement;
     if (!html.classList.contains("ltb-gating")) return;        // gate decided no
     if (!document.body.classList.contains("home")) { html.classList.remove("ltb-gating"); return; }
@@ -1020,4 +1014,59 @@
     }
   }
   buildEntry();
+})();
+/* ---------- ENGINE MAP — "what are you trying to do?" -> what you'd need from us ---------- */
+(function () {
+  var root = document.querySelector(".emap2");
+  if (!root) return;
+  var pathEl = root.querySelector("#emap2-path");
+  var pills = Array.prototype.slice.call(root.querySelectorAll(".emap2-pills button"));
+  var D = {
+    lit:   { svc: "Science Intelligence™", name: "Lit Review™",  why: "Find the strong science you can build on." },
+    claim: { svc: "Science Intelligence™", name: "Claim Dev™",   why: "Turn it into pre-compliant claims you can defend." },
+    story: { svc: "Science Story™",        name: "Science Story™", why: "Shape the claims into a concept worth believing." },
+    studio:{ svc: "Science Studio™",       name: "Science Studio™", why: "Produce it — video, social, and beyond." },
+    moa:   { svc: "Science Studio™",       name: "MOA Moment™",  why: "Your mechanism of action, shown in seconds." },
+    isk:   { svc: "Science Studio™",       name: "Influencer Science Kit™", why: "Science that creators can actually run with." },
+    a2e:   { svc: "Science Studio™",       name: "Ad-to-Education Sequence™", why: "From a scroll-stopping hook to the deep explainer." },
+    lab:   { svc: "Claims Lab™",           name: "Claims Lab™",  why: "A six-month season that keeps finding and testing your next edge." }
+  };
+  var COMP = { t: "", txt: "Aimed squarely at the competition — where you can win against a direct rival or the category." };
+  var OWN  = { t: "", txt: "Runs on its own track — a proactive season that keeps a repository of tested claims ready for every opening." };
+  var GOAL = {
+    claim:      { label: "launch a new claim",                     path: ["lit","claim"] },
+    headtohead: { label: "win a head-to-head claim",               path: ["lit","claim"], note: COMP },
+    whitespace: { label: "find where you can credibly win",        path: ["lit"] },
+    substantiate:{label: "substantiate a claim you already use",   path: ["lit","claim"] },
+    defend:     { label: "respond to a competitor's claim",        path: ["lit","claim"], note: COMP },
+    mlr:        { label: "get claims through MLR faster",          path: ["lit","claim"] },
+    vet:        { label: "vet a new ingredient or acquisition",    path: ["lit"] },
+    refresh:    { label: "refresh a tired claim set",              path: ["lit","claim"] },
+    reposition: { label: "reposition the brand",                   path: ["lit","claim","story"] },
+    audience:   { label: "reach an underserved audience",          path: ["lit","claim","story"] },
+    platform:   { label: "build a new campaign platform",          path: ["lit","claim","story"] },
+    moa:        { label: "explain your mechanism",                 path: ["lit","claim","story","moa"] },
+    tiktok:     { label: "make science-led social",                path: ["lit","claim","story","isk"] },
+    creators:   { label: "work with science creators",             path: ["lit","claim","story","isk"] },
+    a2e:        { label: "make an ad that also educates",          path: ["lit","claim","story","a2e"] },
+    hcp:        { label: "make professional / HCP education",      path: ["lit","claim","story","studio"] },
+    campaign:   { label: "run a full science-led campaign",        path: ["lit","claim","story","studio"] },
+    edge:       { label: "stay ahead all year",                    path: ["lab"], note: OWN },
+    repo:       { label: "build a claim repository for next year", path: ["lab"], note: OWN }
+  };
+  function render(gid) {
+    var g = GOAL[gid]; if (!g) return;
+    pills.forEach(function (b) { b.setAttribute("aria-selected", b.getAttribute("data-goal") === gid ? "true" : "false"); });
+    var steps = g.path, lis = "", i;
+    for (i = 0; i < steps.length; i++) {
+      var d = D[steps[i]], last = (i === steps.length - 1);
+      lis += '<li class="' + (last ? "is-goal" : "") + '"><span class="es-svc">' + d.svc + '</span><strong>' + d.name + '</strong><p>' + d.why + '</p></li>';
+      if (!last) lis += '<span class="emap2-conn" aria-hidden="true"></span>';
+    }
+    var head = 'To <strong>' + g.label + '</strong>, here\'s what you\'d need from us:';
+    var note = g.note ? '<p class="emap2-note ' + g.note.t + '">' + g.note.txt + '</p>' : '';
+    pathEl.innerHTML = '<p class="emap2-path-h">' + head + '</p><ol class="emap2-steps">' + lis + '</ol>' + note;
+  }
+  pills.forEach(function (b) { b.addEventListener("click", function () { render(b.getAttribute("data-goal")); }); });
+  render("reposition");
 })();
