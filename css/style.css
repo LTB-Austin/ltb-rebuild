@@ -2355,12 +2355,12 @@ section[id]{scroll-margin-top:120px}
   transform:translateY(-2px);
 }
 
-/* homepage case-study tiles: embedded looping video header */
+/* homepage case-study tiles: looping video sits as a contained rectangle
+   inside the card (not full-bleed), transparent background, no black frame */
 .case-vid {
-  margin: calc(var(--s6) * -1) calc(var(--s6) * -1) 4px;
-  border-radius: 16px 16px 0 0; overflow:hidden; background:var(--ink);
+  border-radius: 12px; overflow:hidden; background:transparent; margin-bottom:6px;
 }
-.case-vid iframe { width:100%; aspect-ratio:16/10; border:0; display:block; pointer-events:none; }
+.case-vid iframe { width:100%; aspect-ratio:16/9; border:0; display:block; pointer-events:none; }
 
 /* ============================================================
    MOBILE NAV DRAWER (dedicated, touch-first) — built by main.js
