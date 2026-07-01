@@ -2291,7 +2291,7 @@ html.ltb-released body > *:not(.ltb-entry) { visibility: visible; }
 /* ===== Engine map — interactive "what do you want to make?" ===== */
 .emap2{margin-top:var(--s4)}
 .emap2-q{font-weight:700;font-size:1.05rem;margin-bottom:14px}
-.emap2-pills{display:flex;flex-wrap:wrap;gap:10px}
+.emap2-pills{display:flex;flex-wrap:wrap;gap:12px 12px}
 .emap2-pills button{font:inherit;cursor:pointer;border:none;box-shadow:inset 0 0 0 2px rgba(12,13,16,.16);background:var(--bg);color:var(--ink);border-radius:999px;padding:10px 17px;font-size:.92rem;font-weight:500;transition:box-shadow .2s ease,transform .2s ease,background .2s ease}
 .emap2-pills button:hover{transform:translateY(-2px);box-shadow:inset 0 0 0 2px rgba(12,13,16,.36)}
 .emap2-pills button[aria-selected="true"]{color:#fff;background:var(--grad);box-shadow:0 8px 22px rgba(0,0,0,.12)}
@@ -2319,9 +2319,9 @@ section[id]{scroll-margin-top:120px}
 @media (max-width:600px){.studio-nav a{font-size:.78rem;padding:5px 11px}}
 
 /* ---- Sizzle page (fits the viewport, native controls) ---- */
-.sizzle-stage{min-height:calc(100vh - 150px);display:flex;flex-direction:column;justify-content:center;padding-top:72px}
+.sizzle-stage{min-height:100vh;display:flex;flex-direction:column;justify-content:flex-start;padding:calc(var(--nav-h) + 48px) 0 40px}
 .sizzle-stage .wrap{width:100%}
 .sz-head{text-align:center;margin-bottom:22px}
 .sz-head h1{margin-bottom:8px}
-.sizzle-video{position:relative;width:min(100%, calc((100vh - 380px) * 1.7778));aspect-ratio:16/9;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.20)}
+.sizzle-video{position:relative;width:min(100%, calc((100vh - 430px) * 1.7778));aspect-ratio:16/9;margin-top:28px;margin:0 auto;border-radius:16px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.20)}
 .sizzle-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
