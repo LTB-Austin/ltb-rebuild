@@ -477,7 +477,7 @@
 
   /* ---------- CLIENT LOGO MARQUEE ---------- */
   // Edit this list to add/remove client logos (files in assets/clients/).
-  var CLIENT_LOGOS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 26, 27];
+  var CLIENT_LOGOS = [1, 14, 22, 7, 19, 3, 25, 11, 5, 17, 23, 9, 2, 20, 13, 26, 8, 15, 4, 24, 10, 18, 6, 21, 12, 16];
   document.querySelectorAll("[data-client-logos]").forEach(function (track) {
     var imgs = "";
     [false, true].forEach(function (ghost) {
@@ -1049,6 +1049,8 @@
     a2e:        { label: "make an ad that also educates",          path: ["lit","claim","story","a2e"] },
     hcp:        { label: "make professional / HCP education",      path: ["lit","claim","story","studio"] },
     campaign:   { label: "run a full science-led campaign",        path: ["lit","claim","story","studio"] },
+    amazon:     { label: "win on Amazon",                          path: ["lit","claim","story","studio"] },
+    educate:    { label: "educate consumers on the science",       path: ["lit","claim","story","a2e"] },
     edge:       { label: "stay ahead all year",                    path: ["lab"], note: OWN },
     repo:       { label: "build a claim repository for next year", path: ["lab"], note: OWN }
   };
