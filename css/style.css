@@ -230,7 +230,7 @@ li.has-dropdown:focus-within .dropdown { opacity: 1; visibility: visible; transf
   padding: 14px 16px; border-radius: 12px;
   transition: background 0.16s ease;
 }
-.mega-tile .mega-step { display: inline-block; width: 1.6em; flex-shrink: 0; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.14em; color: #9a9a9e; }
+.mega-tile .mega-step { display: inline-block; width: 1.6em; flex-shrink: 0; font-size: 0.66rem; font-weight: 600; letter-spacing: 0.14em; color: #6b6b6e; }
 .mega-tile .mega-tname { font-size: 1.32rem; font-weight: 700; letter-spacing: -0.01em; }
 .mega-tile::after {
   content: "→"; margin-left: auto; align-self: center; font-weight: 400;
@@ -293,7 +293,7 @@ li.has-dropdown:focus-within .dropdown { opacity: 1; visibility: visible; transf
 }
 .pmap-stage.active, .pmap-chip.active { box-shadow: 0 8px 22px rgba(0,0,0,0.10); }
 .pmap-stage.dim, .pmap-chip.dim { opacity: 0.34; }
-.pmap-eyebrow { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: #9a9a9e; font-weight: 600; }
+.pmap-eyebrow { font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: #6b6b6e; font-weight: 600; }
 .pmap-name { font-size: 1.02rem; font-weight: 700; letter-spacing: -0.01em; }
 .pmap-role { font-size: 0.78rem; font-weight: 300; color: #6b6b6e; line-height: 1.35; }
 .pmap-conn { align-self: center; flex: 0 0 24px; display: flex; align-items: center; justify-content: center; color: #b6b6bb; font-size: 1.45rem; line-height: 1; transition: color 0.16s ease; }
@@ -2101,171 +2101,6 @@ table.compare td.win,
 @media (prefers-reduced-motion: reduce) { .cell-img { animation: none; } }
 
 
-/* ============================================================
-   ENTRY SCREEN — the petri-dish "press Enter" loader
-   Paper #f0f0f0, Lexend 300, no gradient text, no dark fills.
-   JS-gated (see inline gate in index.html <head>); crawlers and
-   no-JS visitors never see it and get the full page in source.
-   ============================================================ */
-
-/* While gating: paint paper instantly and hide the page so nothing
-   flashes before the JS overlay mounts. */
-html.ltb-gating, html.ltb-gating body { background: var(--bg); }
-html.ltb-gating body { overflow: hidden; height: 100vh; }
-html.ltb-gating body > *:not(.ltb-entry) { visibility: hidden; }
-html.ltb-gating::before {
-  content: ""; position: fixed; inset: 0; background: var(--bg); z-index: 9990;
-}
-/* Once the visitor enters, the gate releases and the page is revealed
-   beneath the fading overlay. */
-html.ltb-released::before { display: none; }
-html.ltb-released body > *:not(.ltb-entry) { visibility: visible; }
-
-.ltb-entry {
-  position: fixed; inset: 0; z-index: 9999;
-  background: var(--bg); color: var(--ink);
-  font-family: var(--font); font-weight: 300;
-  display: flex; align-items: center; justify-content: center;
-  overflow: hidden;
-  opacity: 1;
-  transition: opacity 0.9s ease;
-  cursor: pointer;
-}
-
-/* ---- the stage (focus-in like a microscope) ---- */
-.pd-stage {
-  position: relative;
-  width: min(76vmin, 720px); height: min(76vmin, 720px);
-  display: flex; align-items: center; justify-content: center;
-  animation: pdFocus 1.6s cubic-bezier(.2,.7,.2,1) both;
-  will-change: transform, filter;
-}
-@keyframes pdFocus {
-  0%   { filter: blur(18px); opacity: 0; transform: scale(1.06); }
-  60%  { opacity: 1; }
-  100% { filter: blur(0); opacity: 1; transform: scale(1); }
-}
-
-/* ---- the petri dish (glass, viewed from above) ---- */
-.pd-dish {
-  position: absolute; inset: 0; border-radius: 50%;
-  /* glass body: faint cool tint + thick rim suggested by layered ring shadows */
-  background:
-    radial-gradient(circle at 38% 32%, rgba(255,255,255,0.85), rgba(255,255,255,0) 46%),
-    radial-gradient(circle at 50% 50%, #f6f6f7 0%, #ededee 70%, #e6e6e8 100%);
-  box-shadow:
-    inset 0 0 0 2px rgba(255,255,255,0.9),          /* inner glass lip highlight */
-    inset 0 0 0 10px rgba(12,13,16,0.035),          /* rim thickness */
-    inset 0 0 0 11px rgba(255,255,255,0.6),
-    inset 0 6px 26px rgba(12,13,16,0.10),           /* well depth */
-    inset 0 -4px 18px rgba(255,255,255,0.7),
-    0 24px 60px rgba(12,13,16,0.13),                /* dish casts a soft shadow on the paper */
-    0 2px 0 rgba(255,255,255,0.8);
-}
-/* culture medium — a barely-there agar tint pooled in the centre */
-.pd-medium {
-  position: absolute; inset: 6%; border-radius: 50%;
-  background: radial-gradient(circle at 50% 46%, rgba(148,202,180,0.10), rgba(127,182,204,0.06) 55%, rgba(0,0,0,0) 72%);
-}
-/* concentric measurement ticks etched on the rim — fixed, like a real dish */
-.pd-ticks { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0.9; }
-/* meniscus — the liquid's bright edge ring just inside the glass */
-.pd-meniscus {
-  position: absolute; inset: 4.5%; border-radius: 50%;
-  box-shadow: inset 0 0 14px 2px rgba(255,255,255,0.55), inset 0 0 0 1px rgba(255,255,255,0.4);
-  pointer-events: none;
-}
-/* diagonal glass glint sweeping across the lid */
-.pd-glint {
-  position: absolute; inset: 0; border-radius: 50%; overflow: hidden; pointer-events: none;
-}
-.pd-glint::before {
-  content: ""; position: absolute; top: -30%; left: -10%; width: 70%; height: 160%;
-  background: linear-gradient(105deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.5) 48%, rgba(255,255,255,0) 60%);
-  transform: rotate(8deg); filter: blur(6px);
-}
-/* condensation droplets clinging under the lid */
-.pd-bubble {
-  position: absolute; border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.95), rgba(255,255,255,0.15) 60%, rgba(12,13,16,0.06) 100%);
-  box-shadow: 0 1px 2px rgba(12,13,16,0.10);
-}
-/* Kept in the outer ring (~r42%) so the mitosis cell never touches them,
-   at any hero-matched rotation. */
-.pd-bubble.b1 { width: 10px; height: 10px; top: 18%; left: 23%; }
-.pd-bubble.b2 { width: 6px;  height: 6px;  top: 9%;  left: 50%; }
-.pd-bubble.b3 { width: 13px; height: 13px; top: 18%; left: 77%; opacity: 0.85; }
-.pd-bubble.b4 { width: 8px;  height: 8px;  top: 82%; left: 77%; opacity: 0.9; }
-.pd-bubble.b5 { width: 5px;  height: 5px;  top: 88%; left: 47%; }
-.pd-bubble.b6 { width: 11px; height: 11px; top: 77%; left: 23%; opacity: 0.8; }
-/* the outer glass rim ring + a bright specular kiss top-left */
-.pd-rim {
-  position: absolute; inset: 0; border-radius: 50%; pointer-events: none;
-  box-shadow: inset 0 0 0 1px rgba(12,13,16,0.16), inset 0 0 0 6px rgba(255,255,255,0.35);
-}
-.pd-spec {
-  position: absolute; top: 7%; left: 14%; width: 34%; height: 22%;
-  border-radius: 50%; pointer-events: none;
-  background: radial-gradient(closest-side, rgba(255,255,255,0.85), rgba(255,255,255,0));
-  transform: rotate(-18deg); filter: blur(2px);
-}
-
-/* the single living cell, clipped to the dish well */
-.pd-field { position: absolute; inset: 11%; border-radius: 50%; overflow: hidden; }
-.pd-cell { position: absolute; inset: 6%; }
-.pd-cell.feature { z-index: 2; }
-/* The cell does not spin — only the mitosis morph inside the SVG is alive. */
-.pd-spin { width: 100%; height: 100%; }
-.pd-spin svg { width: 100%; height: 100%; display: block; }
-
-/* ---- chrome: logo flanks left, prompt + skip grouped together on the right ---- */
-.pd-logo {
-  position: absolute; left: 56px; top: 50%; transform: translateY(-50%);
-  height: 30px; width: auto; opacity: 0.9;
-}
-.pd-prompt {
-  position: absolute; right: 56px; top: 50%; transform: translateY(-50%);
-  display: flex; flex-direction: column; align-items: flex-end; gap: 14px;
-  text-align: right; color: var(--ink); max-width: 240px;
-}
-.pd-prompt .key {
-  font-size: 0.78rem; letter-spacing: 0.32em; text-transform: uppercase;
-  font-weight: 300; border: 1px solid rgba(12,13,16,0.22); border-radius: 6px; padding: 9px 18px;
-  animation: pdPulse 2.6s ease-in-out infinite;
-}
-.pd-prompt .sub { font-size: 0.74rem; letter-spacing: 0.16em; line-height: 1.5; color: var(--mute, #6b6b6e); }
-@keyframes pdPulse { 0%,100% { opacity: 0.55; } 50% { opacity: 1; } }
-.pd-skip {
-  margin-top: 2px; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--mute, #6b6b6e); background: none; border: 0; cursor: pointer;
-  font-family: var(--font); font-weight: 300; padding: 4px 0;
-}
-.pd-skip:hover { color: var(--ink); }
-
-/* ---- the Enter transition: zoom straight into the cell ---- */
-/* the cell scales up from the dish centre until its own gradient fills the
-   screen, then we crossfade to the homepage. Nothing separate or shaped. */
-.ltb-entry { transition: opacity 0.55s ease; }
-.ltb-entry.entering { pointer-events: none; }
-.ltb-entry.entering .pd-field { overflow: visible; z-index: 20; }
-.ltb-entry.entering .pd-cell {
-  transform: scale(24);
-  transition: transform 1.15s cubic-bezier(.55,0,.85,.32);
-}
-.ltb-entry.entering .pd-prompt,
-.ltb-entry.entering .pd-skip,
-.ltb-entry.entering .pd-logo { opacity: 0; transition: opacity 0.3s ease; }
-
-@media (max-width: 600px) {
-  .pd-logo { height: 22px; left: 20px; top: auto; bottom: 24px; transform: none; }
-  .pd-prompt { right: 20px; top: auto; bottom: 24px; transform: none; max-width: 150px; }
-}
-
-/* Reduced motion never reaches this overlay (the gate skips it), but guard anyway. */
-@media (prefers-reduced-motion: reduce) {
-  .pd-stage, .pd-ticks, .pd-spin, .pd-prompt .key { animation: none !important; }
-}
-
 /* ===== Service process flow (Intelligence -> Story -> Studio) ===== */
 .svc-flow{display:flex;gap:0;align-items:stretch}
 .svc-flow .card{flex:1;position:relative}
@@ -2364,7 +2199,7 @@ section[id]{scroll-margin-top:120px}
 .case-vid {
   border-radius: 12px; overflow:hidden; background:transparent; margin-bottom:6px;
 }
-.case-vid iframe { width:100%; aspect-ratio:16/9; border:0; display:block; pointer-events:none; }
+.case-vid iframe, .case-vid video { width:100%; aspect-ratio:16/9; border:0; display:block; object-fit:cover; pointer-events:none; }
 
 /* ============================================================
    MOBILE NAV DRAWER (dedicated, touch-first) — built by main.js
@@ -2446,8 +2281,8 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 }
 
 /* Three Ps — subtle eyebrow that props up each service (Proof/Persuade/Produce) */
-.svc-p { display:block; font-size:0.64rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#9a9a9e; margin-bottom:5px; }
-.hero-p { display:block; font-size:0.72rem; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:#9a9a9e; margin-bottom:14px; }
+.svc-p { display:block; font-size:0.64rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; color:#6b6b6e; margin-bottom:5px; }
+.hero-p { display:block; font-size:0.72rem; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:#6b6b6e; margin-bottom:14px; }
 
 /* Case-study story body — one consistent, readable size + comfortable spacing */
 .case-copy p { font-size: 1.16rem; line-height: 1.75; margin-bottom: 1.15em; max-width: 68ch; }

@@ -117,16 +117,6 @@
     });
   }
 
-  // Mobile: tap a dropdown parent to expand it
-  document.querySelectorAll("li.has-dropdown > a").forEach(function (a) {
-    a.addEventListener("click", function (e) {
-      if (window.innerWidth <= 980) {
-        e.preventDefault();
-        a.parentElement.classList.toggle("open");
-      }
-    });
-  });
-
   /* ---------- ACTIVE NAV STATE (by current URL) ----------
      The nav markup is identical on every page; we light up the current link
      (and its top-level parent) here so we never hardcode per-page classes. */
@@ -645,19 +635,36 @@
       fit(i);
     }
     function next() { show((idx + 1) % quotes.length); }
-    function restart() { clearInterval(timer); timer = setInterval(next, 6500); }
+    var paused = false;
+    function restart() { clearInterval(timer); timer = setInterval(function () { if (!paused) next(); }, 6500); }
     show(0); restart();
+    // WCAG 2.2.2 — let the reader pause: on hover, on keyboard focus, and when scrolled off-screen
+    rot.addEventListener("mouseenter", function () { paused = true; });
+    rot.addEventListener("mouseleave", function () { paused = false; });
+    rot.addEventListener("focusin", function () { paused = true; });
+    rot.addEventListener("focusout", function () { paused = false; });
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { paused = !es[0].isIntersecting; }, { threshold: 0.2 }).observe(rot);
+    }
     window.addEventListener("resize", function () { fit(idx); });
   });
 
   /* ---------- HERO PARALLAX (disabled — caused scroll jank on filtered SVGs) ---------- */
 
-  /* ---------- CONTACT FORM — mailto to alex@, honeypot + simple captcha ---------- */
+  /* ---------- CONTACT FORM — posts to /api/contact (Resend), mailto fallback ---------- */
   var cform = document.getElementById("contact-form");
   if (cform) {
     var A = 2 + Math.floor(Math.random() * 6), B = 2 + Math.floor(Math.random() * 6);
     var capLabel = document.getElementById("f-captcha-label");
     if (capLabel) capLabel.textContent = "Quick check: what is " + A + " + " + B + "?";
+    var g = function (id) { return (document.getElementById(id) || {}).value || ""; };
+    function mailtoFallback(p) {
+      var subject = encodeURIComponent("Website inquiry — " + (p.company || p.name));
+      var body = encodeURIComponent(
+        "Name: " + p.name + "\nEmail: " + p.email + "\nCompany: " + p.company +
+        "\nExploring: " + p.interest + "\nFound us via: " + p.source + "\n\n" + p.message);
+      window.location.href = "mailto:alex@lettherebe.com?subject=" + subject + "&body=" + body;
+    }
     cform.addEventListener("submit", function (e) {
       e.preventDefault();
       if (document.getElementById("f-hp").value) return;                  // bot filled the honeypot
@@ -668,13 +675,21 @@
         cap.setCustomValidity("");
         return;
       }
-      var g = function (id) { return (document.getElementById(id) || {}).value || ""; };
-      var subject = encodeURIComponent("Website inquiry — " + (g("f-company") || g("f-name")));
-      var body = encodeURIComponent(
-        "Name: " + g("f-name") + "\nEmail: " + g("f-email") +
-        "\nCompany: " + g("f-company") + "\nExploring: " + g("f-interest") +
-        "\n\n" + g("f-msg"));
-      window.location.href = "mailto:alex@lettherebe.com?subject=" + subject + "&body=" + body;
+      var payload = { name: g("f-name"), email: g("f-email"), company: g("f-company"),
+        interest: g("f-interest"), source: g("f-source"), message: g("f-msg"), hp: g("f-hp") };
+      var btn = cform.querySelector('[type="submit"]');
+      var orig = btn ? btn.textContent : "";
+      if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+      fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+        .then(function (r) { if (!r.ok) throw new Error("bad"); return r.json(); })
+        .then(function () {
+          cform.innerHTML = '<div class="form-thanks"><h3>Thank you — we’ll be in touch.</h3>' +
+            '<p class="lead">Your message is on its way to our team.</p></div>';
+        })
+        .catch(function () {
+          if (btn) { btn.disabled = false; btn.textContent = orig; }
+          mailtoFallback(payload);   // never lose a lead
+        });
     });
   }
 
@@ -771,7 +786,7 @@
   /* ---------- COUNT-UP STATS ---------- */
   var counters = Array.from(document.querySelectorAll(".stat-value .nm")).filter(function (el) {
     if (el.closest("[data-no-count]")) return false;   // pages can opt out of the count animation
-    return /^[+\u2212\-$]?[\d.,]+[%xX]?$/.test(el.textContent.trim());
+    return /^[+\u2212\-$]?[\d.,]+[%xXMKB]?$/.test(el.textContent.trim());
   });
   if (counters.length && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
     var cio = new IntersectionObserver(function (entries) {
@@ -780,7 +795,7 @@
         cio.unobserve(entry.target);
         var el = entry.target;
         var raw = el.textContent.trim();
-        var m = raw.match(/^([+\u2212\-$]*)([\d.,]+)([%xX]?)$/);
+        var m = raw.match(/^([+\u2212\-$]*)([\d.,]+)([%xXMKB]?)$/);
         if (!m) return;
         var prefix = m[1], suffix = m[3];
         var target = parseFloat(m[2].replace(/,/g, ""));
@@ -996,106 +1011,7 @@
     el.textContent = new Date().getFullYear();
   });
 
-  /* Entry-screen (petri-dish loader) removed — homepage loads directly. */
-  function buildEntry() { return;
-    /* eslint-disable */
-    var html = document.documentElement;
-    if (!html.classList.contains("ltb-gating")) return;        // gate decided no
-    if (!document.body.classList.contains("home")) { html.classList.remove("ltb-gating"); return; }
-    try {
-      var ov = document.createElement("div");
-      ov.className = "ltb-entry";
-      ov.setAttribute("role", "dialog");
-      ov.setAttribute("aria-label", "Enter the Let There Be site");
-
-      // measurement ticks around the rim (lab-instrument cue)
-      var ticks = "";
-      for (var a = 0; a < 360; a += 6) {
-        var lng = (a % 30 === 0);
-        var rad = a * Math.PI / 180;
-        var r0 = lng ? 45.2 : 46.6, r1 = 48.4;
-        ticks += '<line x1="' + (50 + r0 * Math.cos(rad)).toFixed(2) + '" y1="' + (50 + r0 * Math.sin(rad)).toFixed(2) +
-          '" x2="' + (50 + r1 * Math.cos(rad)).toFixed(2) + '" y2="' + (50 + r1 * Math.sin(rad)).toFixed(2) +
-          '" stroke="rgba(12,13,16,' + (lng ? 0.22 : 0.12) + ')" stroke-width="' + (lng ? 0.5 : 0.3) + '"/>';
-      }
-
-      var stage = document.createElement("div");
-      stage.className = "pd-stage";
-      stage.innerHTML =
-        '<div class="pd-dish">' +
-          '<svg class="pd-ticks" viewBox="0 0 100 100" aria-hidden="true">' + ticks + '</svg>' +
-          '<div class="pd-medium"></div>' +              // agar / culture medium tint
-          '<div class="pd-field"></div>' +               // single living cell goes here
-          '<div class="pd-meniscus"></div>' +            // liquid edge ring
-          '<div class="pd-glint"></div>' +               // diagonal glass streak
-          '<div class="pd-bubble b1"></div><div class="pd-bubble b2"></div><div class="pd-bubble b3"></div>' +
-          '<div class="pd-bubble b4"></div><div class="pd-bubble b5"></div><div class="pd-bubble b6"></div>' +
-          '<div class="pd-rim"></div>' +                 // glass rim thickness + highlight
-          '<div class="pd-spec"></div>' +                // top-left specular reflection
-        '</div>';
-
-      // The single homepage mitosis cell — the one you dive into.
-      var field = stage.querySelector(".pd-field");
-      var featureCell = document.createElement("div");
-      featureCell.className = "pd-cell feature";
-      var spin = document.createElement("div");
-      spin.className = "pd-spin";
-      spin.innerHTML = blobByType("split");
-      featureCell.appendChild(spin);
-      field.appendChild(featureCell);
-
-      // Match the homepage hero blob's angle/flip so the dive lands seamlessly
-      // on the same orientation (the hero blob is already placed by this point).
-      // Put the hero-matched angle on the inner spinner so the cell box itself
-      // stays free to scale (zoom-in) cleanly.
-      var hero = document.querySelector(".hero .blob-hero, .blob-hero");
-      if (hero && hero.dataset.base) {
-        var mr = hero.dataset.base.match(/rotate\(([-\d.]+)deg\)/);
-        var ms = hero.dataset.base.match(/scale\(([-\d.]+)/);
-        var rot = mr ? parseFloat(mr[1]) : 0;
-        var flip = (ms && parseFloat(ms[1]) < 0) ? -1 : 1;
-        spin.style.transform = "rotate(" + rot + "deg) scaleX(" + flip + ")";
-      }
-
-      ov.appendChild(stage);
-      ov.insertAdjacentHTML("beforeend",
-        '<img class="pd-logo" src="assets/logo-left.png" alt="Let There Be — Science Marketing">' +
-        '<div class="pd-prompt"><span class="key">Press Enter</span><span class="sub">or click anywhere to begin</span><button class="pd-skip" type="button">Skip intro</button></div>');
-      document.body.appendChild(ov);
-
-      var done = false;
-      function enter(zoom) {
-        if (done) return; done = true;
-        try { sessionStorage.setItem("ltbEntered", "1"); } catch (e) {}
-        html.classList.remove("ltb-gating");
-        html.classList.add("ltb-released");
-        if (zoom) ov.classList.add("entering");   // CSS zooms a full-screen gradient over everything
-        else ov.style.opacity = "0";
-        // Background cells were sized to the locked viewport — rebuild for the real page height.
-        setTimeout(function () { try { buildBgCells(); } catch (e) {} }, 80);
-        // Once the cell's gradient has filled the screen, crossfade through to the homepage.
-        if (zoom) setTimeout(function () { ov.style.opacity = "0"; }, 900);
-        setTimeout(function () {
-          ov.remove();
-          html.classList.remove("ltb-released");
-          document.removeEventListener("keydown", onKey);
-        }, zoom ? 1550 : 950);
-      }
-      function onKey(e) {
-        if (e.key === "Enter" || e.key === " " || e.key === "Spacebar") { e.preventDefault(); enter(true); }
-        else if (e.key === "Escape") { e.preventDefault(); enter(false); }
-      }
-      ov.addEventListener("click", function (e) {
-        if (e.target.closest(".pd-skip")) return;
-        enter(true);
-      });
-      ov.querySelector(".pd-skip").addEventListener("click", function (e) { e.stopPropagation(); enter(false); });
-      document.addEventListener("keydown", onKey);
-    } catch (err) {
-      html.classList.remove("ltb-gating");   // never trap the page if something fails
-    }
-  }
-  buildEntry();
+  /* (Entry-screen loader removed.) */
 })();
 /* ---------- ENGINE MAP — "what are you trying to do?" -> what you'd need from us ---------- */
 (function () {
