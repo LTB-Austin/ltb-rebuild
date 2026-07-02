@@ -1,0 +1,15 @@
+# Clean URLs without folders.
+# Netlify already serves each flat file at its extensionless path (e.g. about.html -> /about).
+# These redirects strip ".html" from the address bar so visitors never see it.
+
+[[redirects]]
+  from = "/index.html"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/*.html"
+  to = "/:splat"
+  status = 301
+  force = true

@@ -176,24 +176,24 @@
   // Gradient palettes sampled from the four brand mitosis photographs.
   // Light hues only — no dark purple/red cell fills (those stay in the text gradient).
   var PALETTES = [
-    [["#94CAB4", "#7C82A1"], ["#8C6C8F", "#E1483B"]],
-    [["#7FB6CC", "#7C82A1"], ["#E1483B", "#EE6B4D"]],
-    [["#7C82A1", "#94CAB4"], ["#8C6C8F", "#E1483B"]],
-    [["#8C6C8F", "#7C82A1"], ["#EE6B4D", "#E1483B"]]
+    [["#94CAB4", "#7C82A1"], ["#8C6C8F", "#D84B40"]],
+    [["#7FB6CC", "#7C82A1"], ["#D84B40", "#E66E52"]],
+    [["#7C82A1", "#94CAB4"], ["#8C6C8F", "#D84B40"]],
+    [["#8C6C8F", "#7C82A1"], ["#E66E52", "#D84B40"]]
   ];
   // Vivid, gradient-spectrum palettes for dark (Science Studio) pages
   var DARK_PALETTES = [
-    [["#7FB6CC", "#7C82A1"], ["#8C6C8F", "#E1483B"]],
-    [["#7C82A1", "#8C6C8F"], ["#EE6B4D", "#E1483B"]],
-    [["#EE6B4D", "#E1483B"], ["#7FB6CC", "#7C82A1"]],
-    [["#B4B7C9", "#EE6B4D"], ["#7C82A1", "#8C6C8F"]]
+    [["#7FB6CC", "#7C82A1"], ["#8C6C8F", "#D84B40"]],
+    [["#7C82A1", "#8C6C8F"], ["#E66E52", "#D84B40"]],
+    [["#E66E52", "#D84B40"], ["#7FB6CC", "#7C82A1"]],
+    [["#B4B7C9", "#E66E52"], ["#7C82A1", "#8C6C8F"]]
   ];
   if (document.body.classList.contains("theme-dark")) {
     PALETTES = DARK_PALETTES;
   }
   var uid = 0;
 
-  var GSTOP = "<stop offset='0%' stop-color='#94CAB4'/><stop offset='20%' stop-color='#7FB6CC'/><stop offset='40%' stop-color='#7C82A1'/><stop offset='54%' stop-color='#8C6C8F'/><stop offset='70%' stop-color='#E1483B'/><stop offset='86%' stop-color='#EE6B4D'/><stop offset='100%' stop-color='#F2966A'/>";
+  var GSTOP = "<stop offset='0%' stop-color='#94CAB4'/><stop offset='20%' stop-color='#7FB6CC'/><stop offset='40%' stop-color='#7C82A1'/><stop offset='54%' stop-color='#8C6C8F'/><stop offset='70%' stop-color='#D84B40'/><stop offset='86%' stop-color='#E66E52'/><stop offset='100%' stop-color='#EC986F'/>";
   function linGrad(id, d) {
     return '<linearGradient id="' + id + '" gradientUnits="userSpaceOnUse" x1="' + d[0] + '" y1="' + d[1] + '" x2="' + d[2] + '" y2="' + d[3] + '">' + GSTOP + "</linearGradient>";
   }
@@ -235,8 +235,8 @@
   var GO_STOPS =
     "<stop offset='0%' stop-color='#94CAB4'/><stop offset='20%' stop-color='#7FB6CC'/>" +
     "<stop offset='40%' stop-color='#7C82A1'/><stop offset='54%' stop-color='#8C6C8F'/>" +
-    "<stop offset='70%' stop-color='#E1483B'/><stop offset='86%' stop-color='#EE6B4D'/>" +
-    "<stop offset='100%' stop-color='#F2966A'/>";
+    "<stop offset='70%' stop-color='#D84B40'/><stop offset='86%' stop-color='#E66E52'/>" +
+    "<stop offset='100%' stop-color='#EC986F'/>";
   function injectPaintDefs() {
     if (document.getElementById("ltb-paint-defs")) return;
     var ns = "http://www.w3.org/2000/svg";
@@ -279,7 +279,7 @@
      The fill is still warped by the turbulence filter for organic colour leak. */
   var SOFT_STOPS = [
     [0.00, [148, 202, 180]], [0.20, [127, 182, 204]], [0.40, [124, 130, 161]],
-    [0.54, [140, 108, 143]], [0.70, [225, 72, 59]], [0.86, [238, 107, 77]], [1.00, [242, 150, 106]]
+    [0.54, [140, 108, 143]], [0.70, [216, 75, 64]], [0.86, [230, 110, 82]], [1.00, [236, 152, 111]]
   ];
   function _mix(a, b, f) { return [a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f, a[2] + (b[2] - a[2]) * f]; }
   function paletteAt(t) {
@@ -309,25 +309,31 @@
       masks += '<circle class="' + (lb.cls || "anim-breathe") + '" cx="' + lb.x + '" cy="' + lb.y + '" r="' + lb.r + '" fill="#fff"' + (lb.style ? ' style="' + lb.style + '"' : '') + '/>';
       ts.push(((lb.x - x1) * dx + (lb.y - y1) * dy) / L);
     }
-    // glow at the coolest + warmest lobes
-    var ci = 0, wi = 0;
-    for (i = 0; i < ts.length; i++) { if (ts[i] < ts[ci]) ci = i; if (ts[i] > ts[wi]) wi = i; }
-    var gdefs = "", guse = "";
-    [ci, wi].forEach(function (idx, k) {
-      var lb = lobes[idx]; var col = _coreCol(paletteAt(ts[idx])); var gid = "cg" + uid + (k ? "w" : "c");
-      gdefs += '<radialGradient id="' + gid + '" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="' + _hex(col) + '" stop-opacity="0.78"/><stop offset="100%" stop-color="' + _hex(col) + '" stop-opacity="0"/></radialGradient>';
-      guse += '<circle cx="' + lb.x + '" cy="' + lb.y + '" r="' + (lb.r * 0.96).toFixed(0) + '" fill="url(#' + gid + ')"/>';
-    });
+    // POINT-BASED fill: a full-spectrum linear gradient BASE guarantees coverage
+    // (no washed edges), then a stack of radialGradient blobs stepped along the
+    // axis pools the colour into curved contours -> it radiates from points
+    // rather than reading as flat linear bands. Warm end is muted (see stops).
+    var LEN = Math.sqrt(dx * dx + dy * dy) || 1;
+    var NP = 11, br = 0.30 * LEN, bdefs = "", blobs = "";
+    for (i = 0; i < NP; i++) {
+      var fk = i / (NP - 1);
+      var bx = x1 + dx * fk, by = y1 + dy * fk, bc = _hex(paletteAt(fk)), bid = "pb" + uid + "_" + i;
+      bdefs += '<radialGradient id="' + bid + '" gradientUnits="userSpaceOnUse" cx="' + bx.toFixed(1) + '" cy="' + by.toFixed(1) + '" r="' + br.toFixed(1) + '">' +
+        '<stop offset="0%" stop-color="' + bc + '" stop-opacity="0.85"/>' +
+        '<stop offset="50%" stop-color="' + bc + '" stop-opacity="0.4"/>' +
+        '<stop offset="100%" stop-color="' + bc + '" stop-opacity="0"/></radialGradient>';
+      blobs += '<rect x="-160" y="-160" width="720" height="720" fill="url(#' + bid + ')"/>';
+    }
     return '<svg viewBox="0 0 400 400" aria-hidden="true"><defs>' +
-      '<linearGradient id="' + g + '" gradientUnits="userSpaceOnUse" x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '">' + GO_STOPS + '</linearGradient>' + gdefs +
+      '<linearGradient id="' + g + '" gradientUnits="userSpaceOnUse" x1="' + x1 + '" y1="' + y1 + '" x2="' + x2 + '" y2="' + y2 + '">' + GO_STOPS + '</linearGradient>' + bdefs +
       '<filter id="' + f + '" x="-55%" y="-55%" width="210%" height="210%">' +
       '<feGaussianBlur in="SourceGraphic" stdDeviation="' + (blur || 8) + '" result="b"/>' +
       '<feColorMatrix in="b" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 24 -10"/></filter>' +
       '<mask id="' + m + '"><g class="goo-group" filter="url(#' + f + ')">' + masks + '</g></mask></defs>' +
-      '<g mask="url(#' + m + ')" opacity="0.9">' +
+      '<g mask="url(#' + m + ')" opacity="0.92">' +
       '<rect x="-160" y="-160" width="720" height="720" fill="url(#' + g + ')"/>' +
-      guse +
-      '<rect width="400" height="400" fill="url(#ltbHL)"/></g></svg>';
+      blobs +
+      '</g></svg>';
   }
   injectPaintDefs();
   function divideBlob() {
@@ -658,13 +664,6 @@
     var capLabel = document.getElementById("f-captcha-label");
     if (capLabel) capLabel.textContent = "Quick check: what is " + A + " + " + B + "?";
     var g = function (id) { return (document.getElementById(id) || {}).value || ""; };
-    function mailtoFallback(p) {
-      var subject = encodeURIComponent("Website inquiry — " + (p.company || p.name));
-      var body = encodeURIComponent(
-        "Name: " + p.name + "\nEmail: " + p.email + "\nCompany: " + p.company +
-        "\nExploring: " + p.interest + "\nFound us via: " + p.source + "\n\n" + p.message);
-      window.location.href = "mailto:alex@lettherebe.com?subject=" + subject + "&body=" + body;
-    }
     cform.addEventListener("submit", function (e) {
       e.preventDefault();
       if (document.getElementById("f-hp").value) return;                  // bot filled the honeypot
@@ -688,7 +687,14 @@
         })
         .catch(function () {
           if (btn) { btn.disabled = false; btn.textContent = orig; }
-          mailtoFallback(payload);   // never lose a lead
+          var err = document.getElementById("f-error");
+          if (!err) {
+            err = document.createElement("p");
+            err.id = "f-error"; err.className = "form-error"; err.setAttribute("role", "alert");
+            cform.appendChild(err);
+          }
+          err.innerHTML = 'We couldn’t send your message just now. Please email us directly at ' +
+            '<a href="mailto:alex@lettherebe.com">alex@lettherebe.com</a> and we’ll get right back to you.';
         });
     });
   }
