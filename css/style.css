@@ -2452,3 +2452,37 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 /* Case-study story body — one consistent, readable size + comfortable spacing */
 .case-copy p { font-size: 1.16rem; line-height: 1.75; margin-bottom: 1.15em; max-width: 68ch; }
 .case-copy p:last-child { margin-bottom: 0; }
+
+/* ============================================================
+   MOBILE SIZING PASS v2 — tame oversized graphics & type on phones
+   ============================================================ */
+@media (max-width: 640px) {
+  body { font-size: 16px; }                                  /* was 18px — everything scaled up */
+
+  /* service-page hero wordmarks were filling the screen width */
+  .hero-wordmark { width: auto !important; height: auto !important; max-width: 270px !important; }
+  /* homepage Science Marketing Engine lockup */
+  .engine-lockup img { max-width: 320px !important; width: 100% !important; }
+
+  /* mitosis cells: keep them a tucked accent, not the whole screen */
+  .blob-hero { width: 50vw !important; height: 50vw !important; opacity: 0.38 !important; right: -14vw; top: 4vh; }
+  .blob-hero.blob-left { left: -16vw !important; bottom: -14vh; }
+  .blob-corner-br, .blob-corner-bl, .blob-corner-tr, .blob-corner-tl { transform: scale(0.55); opacity: 0.5; }
+
+  /* stats can wrap and sit a touch smaller */
+  .stat .stat-value { font-size: 1.5rem; white-space: normal; }
+  .case-roi { font-size: 0.98rem; }
+
+  /* tighten hero vertical space */
+  .hero { padding: calc(var(--nav-h) + var(--s6)) 0 var(--s8); }
+  .page-hero { padding: calc(var(--nav-h) + var(--s6)) 0 var(--s6); }
+}
+
+@media (max-width: 430px) {
+  .hero-wordmark { max-width: 230px !important; }
+  .engine-lockup img { max-width: 270px !important; }
+  h1, .page-hero h1, .hero h1 { font-size: clamp(1.75rem, 8.2vw, 2.15rem) !important; }
+  .statement, .statement-band .statement { font-size: clamp(1.35rem, 6vw, 1.7rem) !important; }
+  .lead, .hero-sub.lead, .hero-sub { font-size: 1.08rem !important; }
+  .blob-hero { width: 46vw !important; height: 46vw !important; }
+}
