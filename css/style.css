@@ -2495,3 +2495,26 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 @media (max-width: 430px) {
   .marquee-track img { width: 128px; height: 40px; }
 }
+
+/* ============================================================
+   MOBILE SIZING PASS v3 — logos up, tiles down (sitewide)
+   ============================================================ */
+@media (max-width: 640px) {
+  /* wordmark logos were too small — bring them back up */
+  .engine-lockup img { max-width: 440px !important; width: 100% !important; }
+  .hero-wordmark { max-width: 340px !important; width: auto !important; height: auto !important; }
+
+  /* media/video galleries stay multi-up so tiles aren't full-screen huge */
+  .studio-grid, .reel-grid, .moa-grid, .frame-grid, .sketch-grid {
+    grid-template-columns: 1fr 1fr !important; gap: var(--s3) !important;
+  }
+
+  /* content cards: tighter, smaller */
+  .card { padding: var(--s4); border-radius: 14px; }
+  .card h3 { font-size: 1.04rem; }
+  .card p { font-size: 0.97rem; }
+}
+@media (max-width: 430px) {
+  .engine-lockup img { max-width: 360px !important; }
+  .hero-wordmark { max-width: 290px !important; }
+}
