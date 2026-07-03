@@ -2245,11 +2245,12 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
   .mnav-acc.open .mnav-chev { transform: rotate(-135deg); }
   .mnav-sub { display: none; background: rgba(12,13,16,0.028); }
   .mnav-sub.open { display: block; }
-  /* Dropdown items sit in Lexend Light so they read as children under the bold parents */
-  .mnav-sublink { font-size: 1rem; font-weight: 300; padding-left: calc(var(--s6) + 16px); min-height: 50px; }
-  .mnav-sub2 { font-size: 0.92rem; font-weight: 300; opacity: 0.82; padding-left: calc(var(--s6) + 34px); min-height: 46px; }
-  .mnav-cta {
-    justify-content: center; margin: var(--s6) var(--s6) 0; min-height: 48px;
+  /* Dropdown items sit in Lexend Light so they read as children under the bold parents.
+     Note: selectors need `.mnav a...` specificity to beat the base `.mnav a` rule. */
+  .mnav a.mnav-sublink { font-size: 1rem; font-weight: 300; padding-left: calc(var(--s6) + 16px); min-height: 50px; }
+  .mnav a.mnav-sub2 { font-size: 0.92rem; font-weight: 300; opacity: 0.82; padding-left: calc(var(--s6) + 34px); min-height: 46px; }
+  .mnav a.mnav-cta {
+    justify-content: center; margin: var(--s6); min-height: 48px;
     border: 2px solid transparent; border-radius: 12px; border-bottom: 2px solid transparent;
     background: linear-gradient(var(--bg), var(--bg)) padding-box, var(--grad) border-box;
     text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.82rem; font-weight: 600;
