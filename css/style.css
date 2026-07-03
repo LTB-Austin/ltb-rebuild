@@ -439,7 +439,7 @@ li.has-dropdown:focus-within .dropdown { opacity: 1; visibility: visible; transf
 .wordmark-h1 { margin: 0 0 var(--s4, 16px); line-height: 0; }
 .hero-wordmark { display: block; height: 56px; width: auto; max-width: 100%; }
 @media (max-width: 760px) {
-  .hero-wordmark { height: auto; width: 100%; max-width: 100%; max-height: 42px; }
+  .hero-wordmark { height: auto; width: auto; max-width: 100%; max-height: 42px; }
 }
 
 /* Blob canvases (SVG injected by js) */
@@ -2245,13 +2245,14 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
   .mnav-acc.open .mnav-chev { transform: rotate(-135deg); }
   .mnav-sub { display: none; background: rgba(12,13,16,0.028); }
   .mnav-sub.open { display: block; }
-  .mnav-sublink { font-size: 1rem; font-weight: 500; padding-left: calc(var(--s6) + 16px); min-height: 50px; }
-  .mnav-sub2 { font-size: 0.92rem; font-weight: 400; opacity: 0.82; padding-left: calc(var(--s6) + 34px); min-height: 46px; }
+  /* Dropdown items sit in Lexend Light so they read as children under the bold parents */
+  .mnav-sublink { font-size: 1rem; font-weight: 300; padding-left: calc(var(--s6) + 16px); min-height: 50px; }
+  .mnav-sub2 { font-size: 0.92rem; font-weight: 300; opacity: 0.82; padding-left: calc(var(--s6) + 34px); min-height: 46px; }
   .mnav-cta {
-    justify-content: center; margin: var(--s6) var(--s6) 0; min-height: 54px;
+    justify-content: center; margin: var(--s6) var(--s6) 0; min-height: 48px;
     border: 2px solid transparent; border-radius: 12px; border-bottom: 2px solid transparent;
     background: linear-gradient(var(--bg), var(--bg)) padding-box, var(--grad) border-box;
-    text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.95rem;
+    text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.82rem; font-weight: 600;
   }
 }
 
@@ -2295,7 +2296,7 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
   body { font-size: 16px; }                                  /* was 18px — everything scaled up */
 
   /* service-page hero wordmarks were filling the screen width */
-  .hero-wordmark { width: 100% !important; height: auto !important; max-width: 100% !important; max-height: 34px !important; }
+  .hero-wordmark { width: auto !important; height: auto !important; max-width: 100% !important; max-height: 34px !important; }
   /* homepage Science Marketing Engine lockup */
   .engine-lockup img { max-width: 320px !important; width: 100% !important; }
 
@@ -2337,7 +2338,7 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 @media (max-width: 640px) {
   /* wordmark logos were too small — bring them back up */
   .engine-lockup img { max-width: 440px !important; width: 100% !important; }
-  .hero-wordmark { max-width: 100% !important; width: 100% !important; height: auto !important; max-height: 34px !important; }
+  .hero-wordmark { max-width: 100% !important; width: auto !important; height: auto !important; max-height: 34px !important; }
 
   /* media/video galleries stay multi-up so tiles aren't full-screen huge */
   .studio-grid, .reel-grid, .moa-grid, .frame-grid, .sketch-grid {
@@ -2360,30 +2361,3 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 .form-error { margin-top: var(--s4); color: #b23b2e; font-size: 1rem; }
 .form-error a { color: #b23b2e; text-decoration: underline; }
 
-/* ============ MOBILE MENU CLARITY (brand colour-coding + tidy CTA) ============ */
-@media (max-width: 980px) {
-  /* Colour-code the Engine services so the dropdown reads at a glance */
-  .nav-links .mega-tile { border-left: 3px solid transparent; padding-left: 12px !important; }
-  .nav-links .mega-tile .mega-step { font-weight: 700; }
-  .nav-links .mega-tile[data-mp="mp-int"]    { border-left-color: var(--teal); }
-  .nav-links .mega-tile[data-mp="mp-int"]    .mega-step { color: var(--teal-d); }
-  .nav-links .mega-tile[data-mp="mp-story"]  { border-left-color: var(--purple); }
-  .nav-links .mega-tile[data-mp="mp-story"]  .mega-step { color: var(--purple); }
-  .nav-links .mega-tile[data-mp="mp-studio"] { border-left-color: var(--coral); }
-  .nav-links .mega-tile[data-mp="mp-studio"] .mega-step { color: var(--coral); }
-  .nav-links .mega-tile.mega-overview { border-left-color: var(--ink); font-weight: 700; }
-  /* Match each preview pane's accent to its service */
-  .nav-links #mp-int    { border-left: 3px solid var(--teal);   padding-left: 12px; }
-  .nav-links #mp-story  { border-left: 3px solid var(--purple); padding-left: 12px; }
-  .nav-links #mp-studio { border-left: 3px solid var(--coral);  padding-left: 12px; }
-  /* Non-mega dropdown (About) gets a soft teal wash so groups are distinct */
-  .nav-links li.has-dropdown:not(.has-mega) .dropdown {
-    background: rgba(135,204,203,0.08); border-radius: 0 8px 8px 0; padding: 4px 0 4px 4px;
-  }
-  /* Get Started — full-width, tidy button that sits inside the drawer margins */
-  .nav-links .nav-cta {
-    display: block !important; width: 100% !important; text-align: center;
-    padding: 13px 18px !important; font-size: 0.82rem !important;
-    margin-top: var(--s6); border-radius: 12px;
-  }
-}
