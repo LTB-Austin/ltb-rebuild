@@ -2362,3 +2362,26 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 .form-error { margin-top: var(--s4); color: #b23b2e; font-size: 1rem; }
 .form-error a { color: #b23b2e; text-decoration: underline; }
 
+
+/* ============ CLIENT LOGOS on case studies (black, homepage-wheel style) ============ */
+/* Uniform box + object-fit:contain (like the homepage wheel) so every logo carries
+   the same visual footprint regardless of aspect ratio. */
+/* Case hero: fixed box + contain, right-aligned to the content edge (in line with the rule). */
+.case-logo { display:block; width:190px; height:54px; object-fit:contain; object-position:left center; }
+/* Case tiles: logo sized by HEIGHT (auto width) so the product suffix sits right beside it. */
+.tile-logo { display:block; height:36px; width:auto; max-width:230px; }
+/* Case hero: kicker on the left, client logo right-aligned on the same line
+   (its right edge lines up with the black rule below). */
+.case-hero-top { display:flex; align-items:center; justify-content:space-between; gap:20px; margin-bottom:12px; }
+.case-hero-top .kicker-page { margin:0; }
+.case-hero-top .case-logo { object-position:right center; }
+/* Case tiles: the logo stands in for the title text; optional product suffix beside it. */
+.tile-head { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+.tile-head .tile-logo { flex:0 0 auto; }
+.tile-suffix { font-weight:700; font-size:1.1rem; }
+@media (max-width: 640px) {
+  .case-logo { width:150px; height:46px; }
+  .tile-logo { height:30px; }
+  .tile-suffix { font-size:1rem; }
+  .case-hero-top { gap:12px; }
+}
