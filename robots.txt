@@ -1,6 +1,7 @@
 # robots.txt — lettherebe.com
 User-agent: *
 Allow: /
+Disallow: /offering-blueprint
 
 # AI / LLM crawlers — explicitly welcome to read and cite our content
 User-agent: GPTBot
