@@ -1074,3 +1074,33 @@
   pills.forEach(function (b) { b.addEventListener("click", function () { render(b.getAttribute("data-goal")); }); });
   render("reposition");
 })();
+
+/* ---------- CAREERS APPLICATION FORM — posts to /api/apply (Resend -> shivaya@) ---------- */
+;(function () {
+  var aform = document.getElementById("apply-form");
+  if (!aform) return;
+  var A = 2 + Math.floor(Math.random() * 6), B = 2 + Math.floor(Math.random() * 6);
+  var lab = document.getElementById("a-captcha-label");
+  if (lab) lab.textContent = "Quick check: what is " + A + " + " + B + "?";
+  var g = function (id) { return (document.getElementById(id) || {}).value || ""; };
+  aform.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if ((document.getElementById("a-hp") || {}).value) return;
+    var cap = document.getElementById("a-captcha");
+    if (parseInt(cap.value, 10) !== A + B) {
+      cap.setCustomValidity("That doesn't add up — try again."); cap.reportValidity(); cap.setCustomValidity(""); return;
+    }
+    var payload = { role: g("a-role"), name: g("a-name"), email: g("a-email"), links: g("a-links"), message: g("a-msg"), hp: g("a-hp") };
+    var btn = aform.querySelector('[type="submit"]'); var orig = btn ? btn.textContent : "";
+    if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
+    fetch("/api/apply", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+      .then(function (r) { if (!r.ok) throw new Error("bad"); return r.json(); })
+      .then(function () { aform.innerHTML = '<div class="form-thanks"><h3>Thanks — your application is in.</h3><p class="lead">We review every submission and will reach out if there’s a fit.</p></div>'; })
+      .catch(function () {
+        if (btn) { btn.disabled = false; btn.textContent = orig; }
+        var err = document.getElementById("a-error");
+        if (!err) { err = document.createElement("p"); err.id = "a-error"; err.className = "form-error"; err.setAttribute("role", "alert"); aform.appendChild(err); }
+        err.innerHTML = 'We couldn’t submit just now. Please email your application to <a href="mailto:shivaya@lettherebe.com">shivaya@lettherebe.com</a>.';
+      });
+  });
+})();
