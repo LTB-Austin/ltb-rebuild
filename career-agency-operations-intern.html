@@ -33,7 +33,7 @@
   gtag('config', 'G-LLBQH2HWPL');
 </script>
 </head>
-<body>
+<body class="page-careers">
 <a class="skip-link" href="#main">Skip to content</a>
 <header class="nav">
   <div class="nav-inner">
@@ -92,14 +92,21 @@
     <hr class="divider mb-3">
     <span class="label reveal">Apply</span>
     <h2 class="reveal reveal-d1 mb-2">Apply for this role</h2>
-    <p class="lead reveal" style="max-width:60ch">Tell us a bit about you and share a link to your work. Your application goes straight to our team. Prefer email? Reach us at <a href="mailto:shivaya@lettherebe.com?subject=Application%20%E2%80%94%20Agency%20Operations%20Intern">shivaya@lettherebe.com</a> (attach your resume or reel).</p>
-    <form class="form reveal" id="apply-form" action="#" method="POST" style="max-width:640px">
+    <p class="lead reveal" style="max-width:62ch">Tell us about you, share your work, and attach your resume. Your application goes straight to our team.</p>
+    <p class="reveal" style="max-width:62ch;color:#6b6b6e">Have extra work samples that won&#8217;t fit here? Email them to <a href="mailto:shivaya@lettherebe.com?subject=Application%20%E2%80%94%20Agency%20Operations%20Intern">shivaya@lettherebe.com</a>.</p>
+    <form class="form reveal" id="apply-form" action="#" method="POST" style="max-width:680px">
       <input type="hidden" id="a-role" name="role" value="Agency Operations Intern">
       <input type="text" name="company-website" id="a-hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
-      <div><label for="a-name">Name</label><input id="a-name" name="name" type="text" required></div>
-      <div><label for="a-email">Email</label><input id="a-email" name="email" type="email" required></div>
-      <div><label for="a-links">Portfolio, reel, LinkedIn, or resume link</label><input id="a-links" name="links" type="text" placeholder="https://" required></div>
-      <div><label for="a-msg">Anything you&#8217;d like us to know</label><textarea id="a-msg" name="message" rows="5"></textarea></div>
+      <div><label for="a-name">Full name *</label><input id="a-name" name="name" type="text" required></div>
+      <div><label for="a-email">Email *</label><input id="a-email" name="email" type="email" required></div>
+      <div><label for="a-phone">Phone <span style="opacity:.55">(optional)</span></label><input id="a-phone" name="phone" type="tel"></div>
+      <div><label for="a-location">Where are you based? <span style="opacity:.55">(city, country)</span></label><input id="a-location" name="location" type="text"></div>
+      <div><label for="a-resume-file">Resume <span style="opacity:.55">(PDF or Word, up to 3&nbsp;MB)</span></label><input id="a-resume-file" name="resume_file" type="file" accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"></div>
+      <div><label for="a-portfolio">Portfolio, reel, or website <span style="opacity:.55">(optional)</span></label><input id="a-portfolio" name="portfolio" type="text" placeholder="https://"></div>
+      <div><label for="a-linkedin">LinkedIn <span style="opacity:.55">(optional)</span></label><input id="a-linkedin" name="linkedin" type="text" placeholder="https://"></div>
+      <div><label for="a-msg">Why you? Anything you&#8217;d like us to know</label><textarea id="a-msg" name="message" rows="5"></textarea></div>
+      <div><label for="a-hear">How did you hear about this role?</label>
+        <select id="a-hear" name="hear"><option>Select one…</option><option>LinkedIn</option><option>Referral</option><option>Our website</option><option>Job board</option><option>Other</option></select></div>
       <div><label for="a-captcha" id="a-captcha-label">Quick check: what is 3 + 4?</label><input id="a-captcha" name="captcha" type="text" inputmode="numeric" required></div>
       <button class="btn" type="submit">Submit application</button>
       <p style="font-size:0.8rem;opacity:0.7">Your application goes straight to the LTB team.</p>

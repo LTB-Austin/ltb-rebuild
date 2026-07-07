@@ -1075,7 +1075,7 @@
   render("reposition");
 })();
 
-/* ---------- CAREERS APPLICATION FORM — posts to /api/apply (Resend -> shivaya@) ---------- */
+/* ---------- CAREERS APPLICATION FORM — posts to /api/apply (Resend -> shivaya@), with resume upload ---------- */
 ;(function () {
   var aform = document.getElementById("apply-form");
   if (!aform) return;
@@ -1083,24 +1083,36 @@
   var lab = document.getElementById("a-captcha-label");
   if (lab) lab.textContent = "Quick check: what is " + A + " + " + B + "?";
   var g = function (id) { return (document.getElementById(id) || {}).value || ""; };
-  aform.addEventListener("submit", function (e) {
-    e.preventDefault();
-    if ((document.getElementById("a-hp") || {}).value) return;
-    var cap = document.getElementById("a-captcha");
-    if (parseInt(cap.value, 10) !== A + B) {
-      cap.setCustomValidity("That doesn't add up — try again."); cap.reportValidity(); cap.setCustomValidity(""); return;
-    }
-    var payload = { role: g("a-role"), name: g("a-name"), email: g("a-email"), links: g("a-links"), message: g("a-msg"), hp: g("a-hp") };
-    var btn = aform.querySelector('[type="submit"]'); var orig = btn ? btn.textContent : "";
+  var btn = aform.querySelector('[type="submit"]'); var orig = btn ? btn.textContent : "";
+  function fail(msg) {
+    if (btn) { btn.disabled = false; btn.textContent = orig; }
+    var err = document.getElementById("a-error");
+    if (!err) { err = document.createElement("p"); err.id = "a-error"; err.className = "form-error"; err.setAttribute("role", "alert"); aform.appendChild(err); }
+    err.innerHTML = msg;
+  }
+  function send(payload) {
     if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
     fetch("/api/apply", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
       .then(function (r) { if (!r.ok) throw new Error("bad"); return r.json(); })
       .then(function () { aform.innerHTML = '<div class="form-thanks"><h3>Thanks — your application is in.</h3><p class="lead">We review every submission and will reach out if there’s a fit.</p></div>'; })
-      .catch(function () {
-        if (btn) { btn.disabled = false; btn.textContent = orig; }
-        var err = document.getElementById("a-error");
-        if (!err) { err = document.createElement("p"); err.id = "a-error"; err.className = "form-error"; err.setAttribute("role", "alert"); aform.appendChild(err); }
-        err.innerHTML = 'We couldn’t submit just now. Please email your application to <a href="mailto:shivaya@lettherebe.com">shivaya@lettherebe.com</a>.';
-      });
+      .catch(function () { fail('We couldn’t submit just now. Please email your application to <a href="mailto:shivaya@lettherebe.com">shivaya@lettherebe.com</a>.'); });
+  }
+  aform.addEventListener("submit", function (e) {
+    e.preventDefault();
+    if ((document.getElementById("a-hp") || {}).value) return;
+    var cap = document.getElementById("a-captcha");
+    if (parseInt(cap.value, 10) !== A + B) { cap.setCustomValidity("That doesn't add up — try again."); cap.reportValidity(); cap.setCustomValidity(""); return; }
+    var payload = { role: g("a-role"), name: g("a-name"), email: g("a-email"), phone: g("a-phone"),
+      location: g("a-location"), portfolio: g("a-portfolio"), linkedin: g("a-linkedin"),
+      message: g("a-msg"), hear: g("a-hear"), hp: g("a-hp") };
+    var fi = document.getElementById("a-resume-file");
+    var file = fi && fi.files && fi.files[0];
+    if (file) {
+      if (file.size > 3 * 1024 * 1024) { fail('That resume is over 3&nbsp;MB. Please upload a smaller file, or email it to <a href="mailto:shivaya@lettherebe.com">shivaya@lettherebe.com</a>.'); return; }
+      var reader = new FileReader();
+      reader.onload = function () { payload.resumeFileName = file.name; payload.resumeFileB64 = String(reader.result).split(",")[1] || ""; send(payload); };
+      reader.onerror = function () { fail('We couldn’t read that file. Try again, or email it to <a href="mailto:shivaya@lettherebe.com">shivaya@lettherebe.com</a>.'); };
+      reader.readAsDataURL(file);
+    } else { send(payload); }
   });
 })();
