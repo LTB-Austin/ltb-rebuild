@@ -2393,5 +2393,50 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 .job-post .case-copy p { font-size: 1.05rem !important; }
 .job-post .tick li, .job-post ul.tick li { font-size: 1.02rem !important; }
 
-/* CHPA membership logo (About) */
+/* CHPA membership (About) — centered + larger */
+.chpa-member { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 14px; margin-top: 8px; }
+.chpa-member .label { margin: 0; }
+.chpa-member .chpa-logo { height: 64px; width: auto; display: block; transition: opacity .2s ease; }
+.chpa-member a:hover .chpa-logo { opacity: .7; }
 .chpa-logo { height: 42px; width: auto; display: block; }
+
+/* CHPA footer badge (site-wide) */
+.footer-chpa { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; margin: 8px 0 4px; }
+.footer-chpa .footer-chpa-label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; opacity: .6; }
+.footer-chpa img { height: 34px; width: auto; opacity: .82; transition: opacity .2s ease; }
+.footer-chpa a:hover img { opacity: 1; }
+
+/* Consumer testing page — full-width headline + graphics */
+.page-testing .page-hero h1 { font-size: clamp(2.4rem, 6.2vw, 5rem) !important; line-height: 1.02; max-width: none; letter-spacing: -0.01em; }
+.testing-partner { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 8px; }
+.testing-partner .tp-label { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #6b6b6e; }
+.testing-partner img { height: 30px; width: auto; opacity: .85; }
+
+.viz-note { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: #9a9a9e; margin-top: 10px; }
+.viz-card { background: #fff; border: 1px solid #e4e4e6; border-radius: 16px; padding: 22px 22px 18px; box-shadow: 0 10px 30px rgba(12,13,16,.05); text-align: left; }
+.viz-card h3 { margin: 0 0 4px; }
+.viz-card .viz-sub { color: #6b6b6e; font-size: .95rem; margin: 0 0 14px; }
+
+/* highlighter heat-map mock */
+.heatmap-concept { font-size: 1.15rem; line-height: 2.05; color: var(--ink); }
+.heatmap-concept .hm-h { display: block; font-size: 1.4rem; font-weight: 700; line-height: 1.5; margin-bottom: 6px; }
+.hl-like { background: rgba(94,154,147,.34); border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hl-like-strong { background: rgba(94,154,147,.62); border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hl-dis { background: rgba(216,75,64,.28); border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hl-dis-strong { background: rgba(216,75,64,.5); border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hm-legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 18px; padding-top: 14px; border-top: 1px solid #ececee; font-size: .85rem; color: #555; }
+.hm-legend span { display: inline-flex; align-items: center; gap: 8px; }
+.hm-legend i { width: 16px; height: 16px; border-radius: 4px; display: inline-block; }
+
+/* metric gauges + bars */
+.gauge-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+.gauge { text-align: center; }
+.gauge svg { width: 100%; max-width: 150px; height: auto; }
+.gauge .g-label { font-weight: 600; margin-top: 6px; }
+.gauge .g-cap { color: #6b6b6e; font-size: .8rem; }
+.barset { display: flex; flex-direction: column; gap: 16px; }
+.barrow .bl { display: flex; justify-content: space-between; font-size: .92rem; margin-bottom: 6px; }
+.barrow .bl .bl-v { color: var(--teal-d); font-weight: 700; }
+.bartrack { height: 12px; background: #eef0f0; border-radius: 99px; overflow: hidden; }
+.barfill { height: 100%; border-radius: 99px; }
+@media (max-width: 640px){ .gauge-row { grid-template-columns: 1fr 1fr; } }
