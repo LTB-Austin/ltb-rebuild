@@ -2392,3 +2392,6 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 .job-post .hero-sub, .job-post .hero-sub.lead, .job-post .lead { font-size: 1.32rem !important; }
 .job-post .case-copy p { font-size: 1.05rem !important; }
 .job-post .tick li, .job-post ul.tick li { font-size: 1.02rem !important; }
+
+/* CHPA membership logo (About) */
+.chpa-logo { height: 42px; width: auto; display: block; }

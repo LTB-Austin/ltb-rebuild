@@ -555,7 +555,7 @@
 
   /* ---------- CLIENT LOGO MARQUEE ---------- */
   // Edit this list to add/remove client logos (files in assets/clients/).
-  var CLIENT_LOGOS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
+  var CLIENT_LOGOS = [1, 2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
   document.querySelectorAll("[data-client-logos]").forEach(function (track) {
     var imgs = "";
     [false, true].forEach(function (ghost) {
