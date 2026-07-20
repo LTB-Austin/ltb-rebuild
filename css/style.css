@@ -2400,17 +2400,13 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 .chpa-member a:hover .chpa-logo { opacity: .7; }
 .chpa-logo { height: 42px; width: auto; display: block; }
 
-/* CHPA footer badge (site-wide) */
-.footer-chpa { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; margin: 8px 0 4px; }
-.footer-chpa .footer-chpa-label { font-size: .72rem; letter-spacing: .12em; text-transform: uppercase; opacity: .6; }
-.footer-chpa img { height: 34px; width: auto; opacity: .82; transition: opacity .2s ease; }
-.footer-chpa a:hover img { opacity: 1; }
-
 /* Consumer testing page — full-width headline + graphics */
 .page-testing .page-hero h1 { font-size: clamp(2.4rem, 6.2vw, 5rem) !important; line-height: 1.02; max-width: none; letter-spacing: -0.01em; }
-.testing-partner { display: flex; flex-direction: column; align-items: center; gap: 10px; margin-top: 8px; }
-.testing-partner .tp-label { font-size: .72rem; letter-spacing: .14em; text-transform: uppercase; color: #6b6b6e; }
-.testing-partner img { height: 30px; width: auto; opacity: .85; }
+.page-hero .wrap .case-hero-top { width: 100%; }
+.partner-logo-link { display: inline-flex; align-items: center; transition: opacity .2s ease; }
+.partner-logo-link:hover { opacity: .7; }
+.case-logo.partner-logo-tr { width: auto; height: 60px; object-position: right center; }
+@media (max-width: 640px){ .case-logo.partner-logo-tr { height: 42px; } }
 
 .viz-note { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: #9a9a9e; margin-top: 10px; }
 .viz-card { background: #fff; border: 1px solid #e4e4e6; border-radius: 16px; padding: 22px 22px 18px; box-shadow: 0 10px 30px rgba(12,13,16,.05); text-align: left; }
