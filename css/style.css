@@ -1479,7 +1479,7 @@ main, footer { position: relative; z-index: 1; }
 .mb-2 { margin-bottom: var(--s8); }
 .mb-3 { margin-bottom: var(--s12); }
 .lead { font-size: 1.5rem; max-width: none; line-height: 1.6; text-wrap: pretty; }
-.measure { max-width: 72ch; }
+.measure { max-width: none; }
 .center { text-align: center; }
 .center p, .center .lead { margin-left: auto; margin-right: auto; }
 
@@ -2287,7 +2287,7 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 .hero-p { display:block; font-size:0.72rem; font-weight:700; letter-spacing:0.22em; text-transform:uppercase; color:#6b6b6e; margin-bottom:14px; }
 
 /* Case-study story body — one consistent, readable size + comfortable spacing */
-.case-copy p { font-size: 1.16rem; line-height: 1.75; margin-bottom: 1.15em; max-width: 68ch; }
+.case-copy p { font-size: 1.16rem; line-height: 1.75; margin-bottom: 1.15em; max-width: none; }
 .case-copy p:last-child { margin-bottom: 0; }
 
 /* ============================================================
@@ -2418,8 +2418,8 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 .heatmap-concept .hm-h { display: block; font-size: 1.4rem; font-weight: 700; line-height: 1.5; margin-bottom: 6px; }
 .hl-like { background: rgba(94,154,147,.34); border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .hl-like-strong { background: rgba(94,154,147,.62); border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-.hl-dis { background: rgba(216,75,64,.28); border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-.hl-dis-strong { background: rgba(216,75,64,.5); border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hl-dis { background: rgba(155,131,170,.30); border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hl-dis-strong { background: rgba(155,131,170,.55); border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .hm-legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 18px; padding-top: 14px; border-top: 1px solid #ececee; font-size: .85rem; color: #555; }
 .hm-legend span { display: inline-flex; align-items: center; gap: 8px; }
 .hm-legend i { width: 16px; height: 16px; border-radius: 4px; display: inline-block; }
