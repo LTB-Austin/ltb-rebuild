@@ -288,7 +288,7 @@
     var tEl=document.getElementById('ag-types');
     tEl.innerHTML=Object.keys(TYPES).map(function(k){
       var t=TYPES[k];
-      return '<div class="card reveal ag-typecard"><h3>'+t.label+'</h3><p>'+t.blurb+'</p><button class="btn" data-add="'+k+'">Add '+t.label+' →</button></div>';
+      return '<div class="card ag-typecard"><h3>'+t.label+'</h3><p>'+t.blurb+'</p><button class="btn" data-add="'+k+'">Add '+t.label+' →</button></div>';
     }).join('');
     var host=document.getElementById('ag-videos');
     var empty=document.getElementById('ag-empty');
