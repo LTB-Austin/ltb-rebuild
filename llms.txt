@@ -19,5 +19,8 @@
 - [About & team](https://lettherebe.com/about): Researchers, account managers, and animators — everyone here is fluent in science.
 - [Contact](https://lettherebe.com/contact): Start a Science Story™.
 
+## Guides
+- [IngredientAI vs. Let There Be](https://lettherebe.com/ingredientai-vs-lettherebe): An honest comparison for supplement and consumer-health brands: IngredientAI is self-serve AI formulation software your team operates; Let There Be is a full-service team that runs the literature review, develops MLR-ready claims tied to verified source studies, consumer-tests the story, and produces the creative. Includes a side-by-side table and FAQ on choosing between claims software and a science marketing service.
+
 ## Trusted by
 Bayer, Haleon, Kenvue, Opella, Karo Healthcare, Nestlé Health Science, Dr. Reddy's, and the CHPA.
