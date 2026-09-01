@@ -445,11 +445,11 @@
     // Per-page hero placement: shift / scale / rotate / flip so no two pages match.
     // Kept to the right & lower edge so it never crosses the left-aligned hero text.
     if (el.classList.contains("blob-hero") || /blob-corner/.test(el.className)) {
-      var sc = 1.0 + ((SEED >> 1) % 4) * 0.08;  // 1.00 .. 1.24
-      var rt = (28 + (((SEED >> 2) % 3) * 8)) * ((SEED % 2) ? -1 : 1); // +/-28..44 deg — always a clean diagonal
+      var sc = 1.0 + (((SEED >> 1) + i) % 4) * 0.08;  // 1.00 .. 1.24
+      var rt = (28 + ((((SEED >> 2) + i * 2) % 3) * 8)) * (((SEED + i) % 2) ? -1 : 1); // +/-28..44 deg — always a clean diagonal; i de-twins multiple hero cells on one page
       if (el.dataset.rot) rt = parseFloat(el.dataset.rot);   // per-page rotation override
       if (el.dataset.scale) sc = parseFloat(el.dataset.scale); // per-page scale override
-      var fx = (SEED % 2) ? -1 : 1;
+      var fx = ((SEED + i) % 2) ? -1 : 1;
       el.dataset.base = "rotate(" + rt + "deg) scale(" + (sc * fx) + "," + sc + ")";  // position handled by CSS (margins)
       el.style.transform = el.dataset.base;
       el.style.transformOrigin = "center";
@@ -522,12 +522,13 @@
       // per-page variety + rotation so the teal/red sides keep swapping down the
       // margins. Cells are NEVER left upright (0deg) — always tilted on the page.
       var fx = ((n >> 1) % 2) ? -1 : 1, fy = ((n >> 2) % 2) ? -1 : 1;
+      if (!left) fx = -fx;                                   // right margin mirrors the left so the two sides never show twin shapes
       var ROTS = [35, 145, 215, 305, 50, 130, 230, 320];     // diagonal-only — never axis-aligned (no 0/90/180/270)
-      var rot = ROTS[n % ROTS.length] + (((n * 23) % 13) - 6); // +/-6deg organic jitter
+      var rot = ROTS[(n + (left ? 0 : 5)) % ROTS.length] + (((n * 23) % 13) - 6); // +/-6deg organic jitter; sides use offset rotation streams
       cell.dataset.base = "scale(" + fx + "," + fy + ") rotate(" + rot + "deg)";
       cell.style.transform = cell.dataset.base;
       var palette = PALETTES[n % PALETTES.length];
-      cell.innerHTML = blobByType(BG_TYPES[n % BG_TYPES.length]);
+      cell.innerHTML = blobByType(BG_TYPES[(n * 3 + (left ? 0 : 4)) % BG_TYPES.length]);  // stride + side offset: left/right draw different shapes at the same height
       placed.push({ side: side, top: yy - pad, bot: yy + size + pad });
       layer.appendChild(cell);
       i++;
