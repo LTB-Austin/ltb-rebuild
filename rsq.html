@@ -81,6 +81,10 @@
     <h1 class="reveal reveal-d1" style="margin:10px 0 4px"><img src="assets/wordmarks/rsq-claims-lab.png" alt="RSQ Claims Lab™" style="display:block;width:min(100%,760px);height:auto"></h1>
     <hr class="divider reveal mt-2 mb-2">
     <p class="hero-sub lead reveal reveal-d2">Experience AI-powered literature review and claim development on <strong>your brand</strong>. Thirty minutes, your real product, real findings in hand.</p>
+    <div class="rsq-chpa reveal reveal-d2 mt-2">
+      <span class="label" style="margin:0">Proud member</span>
+      <a href="https://www.chpa.org/" target="_blank" rel="noopener" aria-label="Consumer Healthcare Products Association (CHPA)"><img class="chpa-logo" src="assets/chpa-black.png" alt="Consumer Healthcare Products Association (CHPA)"></a>
+    </div>
     <div class="btn-row reveal reveal-d2 mt-2">
       <a class="btn" href="#submit">Submit your challenge</a>
       <a class="btn-ghost" href="#team">Meet the Lab team</a>
@@ -94,10 +98,10 @@
   <h2 class="reveal reveal-d1 mb-2">Real brand challenges. Real literature. Real takeaways.</h2>
   <div class="grid grid-3 mt-2">
     <div class="card reveal"><h3>Real brand challenges</h3><p>You submit your actual product and claims question, not a hypothetical.</p></div>
-    <div class="card accent-sky reveal reveal-d1"><h3>Real literature review</h3><p>We run the review before the event and present what we actually found.</p></div>
+    <div class="card accent-sky reveal reveal-d1"><h3>Real literature review</h3><p>Our researchers run the review before the event, using AI the way we have refined it over years of client work, and present what we actually found.</p></div>
     <div class="card accent-coral reveal reveal-d2"><h3>Real takeaways</h3><p>Findings and candidate claims, in hand, at the end of the session. Printed copy and same-day email.</p></div>
   </div>
-  <p class="lead reveal mt-3">Manual literature reviews are slow, expensive, and bottleneck R&amp;D teams. So the review gets deferred, and new claims are never found. At the RSQ Claims Lab, experience first-hand how AI can help accelerate literature reviews and surface new claim opportunities faster and at scale. Walk away with real ideas for your brand.</p>
+  <p class="lead reveal mt-3">Manual literature reviews are slow, expensive, and bottleneck R&amp;D teams. So the review gets deferred, and new claims are never found. At the RSQ Claims Lab, experience first-hand how our team, and the way we have learned to put AI to work on the evidence, accelerates literature reviews and surfaces new claim opportunities faster and at scale. The tools are only half of it. The other half is knowing what to ask, what holds up, and what a regulator will accept. Walk away with real ideas for your brand.</p>
 </div></section>
 
 <section><div class="wrap">
@@ -116,15 +120,20 @@
   <span class="label reveal">Step 1 — Submit</span>
   <h2 class="reveal reveal-d1 mb-2">Tell us your product and your claims challenge.</h2>
   <p class="lead reveal mb-2">We run the literature review before the conference, so the more specific your challenge, the sharper your session.</p>
-  <form class="form reveal" id="rsq-form" action="#" method="POST" style="max-width:680px">
+  <div class="rsq-formwrap reveal">
+    <div class="rsq-formhead">
+      <h3>Claims Lab submission</h3>
+      <p>Every field marked * is required. Submit this form first, then book your slot.</p>
+    </div>
+  <form class="form" id="rsq-form" action="#" method="POST">
     <input type="text" name="company-website" id="r-hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
     <div><label for="r-name">Full name *</label><input id="r-name" name="name" type="text" required></div>
     <div><label for="r-company">Company / brand *</label><input id="r-company" name="company" type="text" required></div>
     <div><label for="r-role">Your role</label><input id="r-role" name="role" type="text" placeholder="e.g. Director of Regulatory Affairs"></div>
     <div><label for="r-email">Email *</label><input id="r-email" name="email" type="email" required></div>
     <div><label for="r-phone">Phone <span style="opacity:.55">(optional)</span></label><input id="r-phone" name="phone" type="tel"></div>
-    <div><label for="r-product">Product *</label><input id="r-product" name="product" type="text" required placeholder="Product name and active ingredient(s)"></div>
-    <div><label for="r-plink">Link to the product <span style="opacity:.55;font-weight:400">(so we review the right product and the right ingredient list)</span></label><input id="r-plink" name="productLink" type="text" placeholder="https://"></div>
+    <div><label for="r-product">Product *</label><input id="r-product" name="product" type="text" required placeholder="Product name"></div>
+    <div><label for="r-plink">Link to the product <span style="opacity:.55;font-weight:400">(so we review the right product)</span></label><input id="r-plink" name="productLink" type="text" placeholder="https://"></div>
     <div><label for="r-category">Regulatory category <span style="opacity:.55;font-weight:400">(type it, or pick from the list)</span></label>
       <input id="r-category" name="category" type="text" list="r-category-options" placeholder="e.g. OTC monograph drug, dietary supplement, cosmetic…" autocomplete="off">
       <datalist id="r-category-options">
@@ -154,9 +163,10 @@
     </div>
     <div><label for="r-notes">Anything else we should know</label><textarea id="r-notes" name="notes" rows="3" placeholder="Competitors you're up against, claims you've been told no on, markets you sell in…"></textarea></div>
     <div><label for="r-captcha" id="r-captcha-label">Quick check: what is 3 + 4?</label><input id="r-captcha" name="captcha" type="text" inputmode="numeric" required></div>
-    <button class="btn" type="submit">Submit your challenge</button>
-    <p style="font-size:0.8rem;opacity:0.7">Your submission goes straight to the Let There Be team. Submissions close September 21 so every report is ready before the conference.</p>
+    <button class="btn rsq-submit" type="submit">Submit your challenge &#8594;</button>
+    <p style="font-size:0.8rem;opacity:0.7;margin:0">Your submission goes straight to the Let There Be team. Submissions close September 21 so every report is ready before the conference.</p>
   </form>
+  </div>
 </div></section>
 
 <section><div class="wrap">
@@ -165,7 +175,7 @@
   <h2 class="reveal reveal-d1 mb-1">Pick your 30-minute slot.</h2>
   <div class="rsq-cols mt-2">
     <div class="rsq-col-left reveal">
-      <p class="lead">Sessions run all three days of RSQ. <strong>Please book outside the conference programming</strong> — networking breaks, meal windows, and the open blocks before and after sessions are ideal. The full program is on the right so you can pick a clean window.</p>
+      <p class="lead">Sessions run all three days of RSQ. CHPA has given us a set of <strong>recommended booking windows</strong> that sit clear of the conference programming, and our calendar only offers those times. The full program is on the right so you can see exactly where they fall.</p>
       <div class="btn-row mt-2"><a class="btn" href="https://calendly.com/austin-lettherebe/chpa-rsq-claims-lab-by-let-there-be" target="_blank" rel="noopener">Book your spot ↗</a></div>
     </div>
     <div class="rsq-sched reveal reveal-d1">
@@ -176,12 +186,14 @@
       <button class="rsq-tab" data-day="d3" role="tab">Wed · Sept 30</button>
     </div>
     <div class="rsq-day" id="d1">
+      <div class="rsq-recos"><p class="rsq-recos-h">Recommended booking windows &#183; provided by CHPA</p><div class="rsq-slots"><span class="rsq-slot">2:00–2:30</span><span class="rsq-slot">2:30–3:00</span><span class="rsq-slot">3:00–3:30</span><span class="rsq-slot">3:30–4:00</span><span class="rsq-slot">4:00–4:30</span><span class="rsq-slot">4:30–5:00</span><span class="rsq-slot">5:00–5:30</span></div></div>
       <div class="rsq-row rsq-open"><span>10:30 AM – 1:00 PM</span><span>RSAC / PPS Committee Meeting <em>(invitation only)</em></span><b>Open for most attendees</b></div>
       <div class="rsq-row rsq-open"><span>1:00 PM – 2:30 PM</span><span>Cross-Committee Meeting on Dietary Supplements &amp; OTC Quality <em>(invitation only)</em></span><b>Open for most attendees</b></div>
       <div class="rsq-row rsq-open"><span>2:30 PM – 5:00 PM</span><span>CHPA Joint Committee Meeting <em>(invitation only)</em></span><b>Open for most attendees</b></div>
       <div class="rsq-row rsq-prog"><span>5:00 PM – 6:00 PM</span><span>Registration and Early Arrivers Reception</span><b>Programming</b></div>
     </div>
     <div class="rsq-day" id="d2" hidden>
+      <div class="rsq-recos"><p class="rsq-recos-h">Recommended booking windows &#183; provided by CHPA</p><div class="rsq-slots"><span class="rsq-slot">7:15–7:45</span><span class="rsq-slot">7:45–8:15</span><span class="rsq-slot">12:45–1:15</span><span class="rsq-slot">3:30–4:00</span><span class="rsq-slot">5:00–5:30</span><span class="rsq-slot">6:00–6:30</span></div></div>
       <div class="rsq-row rsq-open"><span>7:00 AM – 8:00 AM</span><span>Breakfast and Networking</span><b>Open window</b></div>
       <div class="rsq-row rsq-prog"><span>8:00 AM – 8:15 AM</span><span>Welcome Remarks &amp; William Cooley Career Achievement Award</span><b>Programming</b></div>
       <div class="rsq-row rsq-prog"><span>8:15 AM – 9:00 AM</span><span>Keynote — The Connected Consumer</span><b>Programming</b></div>
@@ -198,6 +210,7 @@
       <div class="rsq-row rsq-open"><span>5:15 PM – 6:30 PM</span><span>Networking Reception</span><b>Open window</b></div>
     </div>
     <div class="rsq-day" id="d3" hidden>
+      <div class="rsq-recos"><p class="rsq-recos-h">Recommended booking windows &#183; provided by CHPA</p><div class="rsq-slots"><span class="rsq-slot">7:30–8:00</span><span class="rsq-slot">12:15–12:45</span><span class="rsq-slot">12:45–1:15</span></div></div>
       <div class="rsq-row rsq-open"><span>7:00 AM – 8:00 AM</span><span>Breakfast and Networking</span><b>Open window</b></div>
       <div class="rsq-row rsq-prog"><span>8:00 AM – 8:45 AM</span><span>General Session 6: Science, Safety, and Chemical Risk</span><b>Programming</b></div>
       <div class="rsq-row rsq-open"><span>9:00 AM – 10:00 AM</span><span>Breakout Sessions <em>(concurrent tracks)</em></span><b>Open window</b></div>
@@ -208,7 +221,7 @@
       <div class="rsq-row rsq-prog"><span>12:15 PM – 12:45 PM</span><span>Closing Remarks</span><b>Programming</b></div>
       <div class="rsq-row rsq-prog"><span>1:00 PM – 5:00 PM</span><span>RSQ Workshop: New Approach Methods for OTC Topical Safety Assessment</span><b>Programming</b></div>
     </div>
-    <p class="rsq-note">Schedule as published by CHPA and subject to change — check the <a href="https://www.chpa.org/events-education/regulatory-scientific-quality-conference" target="_blank" rel="noopener">official RSQ program</a> before you book. Breakout blocks run as concurrent tracks, so they are workable windows if the sessions in them are not ones you need. Claims Lab sessions run in the Let There Be room, off the programming floor.</p>
+    <p class="rsq-note">Schedule as published by CHPA and subject to change — check the <a href="https://www.chpa.org/events-education/regulatory-scientific-quality-conference" target="_blank" rel="noopener">official RSQ program</a> before you book. The recommended windows above come from CHPA. Breakout blocks run as concurrent tracks, so they are workable too if the sessions in them are not ones you need. Claims Lab sessions run in the Let There Be room, off the programming floor.</p>
     </div>
   </div>
 </div></section>
@@ -237,6 +250,14 @@
   </div>
 </div></section>
 
+<section><div class="wrap">
+  <div class="rsq-chpa rsq-chpa-foot">
+    <span class="label" style="margin:0">In partnership with the industry we serve</span>
+    <a href="https://www.chpa.org/" target="_blank" rel="noopener" aria-label="Consumer Healthcare Products Association (CHPA)"><img class="chpa-logo" src="assets/chpa-black.png" alt="Consumer Healthcare Products Association (CHPA)"></a>
+    <p>Let There Be is a proud member of the Consumer Healthcare Products Association. The RSQ Claims Lab runs alongside the CHPA Regulatory, Scientific &amp; Quality Conference.</p>
+  </div>
+</div></section>
+
 <section class="cta-band"><div class="wrap">
   <hr class="divider center mb-2">
   <h2 class="reveal">Unlock your scientific potential at the RSQ Claims Lab.</h2>
@@ -260,7 +281,26 @@
 .rsq-prog b{color:#E87722}
 .rsq-open b{color:#5E9A93}
 .rsq-note{font-size:.85rem;color:#6b6b6e;margin:14px 4px 0}
-.rsq-hero-field{background:#fff;border:2px solid #12233F;border-radius:16px;padding:20px}
+.rsq-chpa{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.rsq-chpa .chpa-logo{height:52px}
+.rsq-chpa a{display:block;transition:opacity .2s ease}
+.rsq-chpa a:hover{opacity:.7}
+.rsq-chpa-foot{align-items:center;text-align:center;gap:14px;padding:34px 20px;border:1px solid #e4e4e6;border-radius:18px;background:#fff}
+.rsq-chpa-foot .chpa-logo{height:64px}
+.rsq-chpa-foot p{max-width:620px;font-size:.9rem;color:#6b6b6e;margin:0}
+.rsq-recos{background:#eef4f3;border-left:4px solid #5E9A93;border-radius:12px;padding:14px 16px;margin:0 0 14px}
+.rsq-recos-h{margin:0 0 10px;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#3d6b66}
+.rsq-slots{display:flex;flex-wrap:wrap;gap:8px}
+.rsq-slot{font-size:.86rem;font-weight:700;color:#12233F;background:#fff;border:1px solid #cbdedb;border-radius:999px;padding:6px 12px;white-space:nowrap}
+.rsq-formwrap{background:linear-gradient(150deg,#eef4f3 0%,#f4f1f6 52%,#fdf0ec 100%);border:1px solid #dcdce0;border-radius:18px;padding:0;max-width:760px;overflow:hidden}
+.rsq-formhead{background:#12233F;color:#fff;padding:20px 26px;border-radius:18px 18px 0 0}
+.rsq-formhead h3{margin:0;color:#fff}
+.rsq-formhead p{margin:6px 0 0;font-size:.9rem;color:#c8d2e0}
+.rsq-formwrap .form{padding:26px;max-width:none;margin:0}
+.rsq-formwrap .form input,.rsq-formwrap .form textarea{background:#fff;border-radius:12px}
+@media(max-width:640px){.rsq-formwrap .form{padding:18px}.rsq-formhead{padding:16px 18px}}
+.rsq-submit{width:100%;justify-content:center;text-align:center}
+.rsq-hero-field{background:#fff;border:2px solid #12233F;border-radius:18px;padding:20px}
 .rsq-hero-field label{font-weight:700}
 .rsq-hero-help{font-size:.88rem;color:#5a5a5e;margin:6px 0 10px;line-height:1.5}
 .rsq-chips{display:flex;flex-wrap:wrap;gap:8px}
