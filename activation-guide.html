@@ -152,7 +152,9 @@
 </main>
 
 <style>
+[hidden]{display:none!important}
 .ag-typecard{cursor:pointer;text-align:left}
+.ag-typecard .ag-count{font-size:.82rem;font-weight:700;color:#5E9A93;letter-spacing:.04em}
 .ag-typecard .btn{margin-top:12px}
 .ag-overall{max-width:none}
 .ag-overall-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
@@ -288,7 +290,10 @@
     var tEl=document.getElementById('ag-types');
     tEl.innerHTML=Object.keys(TYPES).map(function(k){
       var t=TYPES[k];
-      return '<div class="card ag-typecard"><h3>'+t.label+'</h3><p>'+t.blurb+'</p><button class="btn" data-add="'+k+'">Add '+t.label+' →</button></div>';
+      var have=state.videos.filter(function(v){return v.typeKey===k}).length;
+      return '<div class="card ag-typecard"><h3>'+t.label+'</h3><p>'+t.blurb+'</p>'+
+        (have?'<span class="ag-count">'+have+' added</span>':'')+
+        '<button class="btn" data-add="'+k+'">Add '+(have?'another ':'')+t.label+' →</button></div>';
     }).join('');
     var host=document.getElementById('ag-videos');
     var empty=document.getElementById('ag-empty');
@@ -333,16 +338,23 @@
   document.addEventListener('click',function(e){
     var b=e.target.closest('[data-add]');
     if(b){var tk=b.getAttribute('data-add');var n=state.videos.filter(function(v){return v.typeKey===tk}).length+1;
-      state.videos.push({id:'v'+Date.now(),typeKey:tk,name:TYPES[tk].label+' '+n,checks:{}});save();render();return;}
+      var nid='v'+Date.now();
+      state.videos.push({id:nid,typeKey:tk,name:TYPES[tk].label+' '+n,checks:{}});save();render();
+      var el=document.querySelector('[data-rename="'+nid+'"]');
+      if(el&&el.closest('.ag-video'))el.closest('.ag-video').scrollIntoView({behavior:'smooth',block:'center'});
+      return;}
     b=e.target.closest('[data-remove]');
-    if(b){var id=b.getAttribute('data-remove');state.videos=state.videos.filter(function(v){return v.id!==id});save();render();return;}
+    if(b){var id=b.getAttribute('data-remove');
+      var vv=state.videos.filter(function(v){return v.id===id})[0];
+      if(vv&&Object.keys(vv.checks).length&&!confirm('Remove "'+vv.name+'" and its checked placements?'))return;
+      state.videos=state.videos.filter(function(v){return v.id!==id});save();render();return;}
     b=e.target.closest('[data-toggle]');
     if(b){var vid=b.getAttribute('data-toggle'),key=b.getAttribute('data-key');
       state.videos.forEach(function(v){if(v.id===vid){if(v.checks[key])delete v.checks[key];else v.checks[key]=true;}});save();render();return;}
     b=e.target.closest('[data-open]');
     if(b){var k=b.getAttribute('data-open');if(state.open[k])delete state.open[k];else state.open[k]=true;render();return;}
   });
-  document.addEventListener('change',function(e){
+  document.addEventListener('input',function(e){
     var i=e.target.closest('[data-rename]');
     if(i){var id=i.getAttribute('data-rename');state.videos.forEach(function(v){if(v.id===id)v.name=i.value||v.name});save();}
   });
