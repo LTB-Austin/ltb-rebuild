@@ -962,14 +962,16 @@ main, footer { position: relative; z-index: 1; }
 .band::before, .band::after {
   content: "";
   position: absolute;
-  width: 480px; height: 480px;
+  width: 660px; height: 660px;
   border-radius: 50%;
-  filter: blur(90px);
   opacity: 0.16;
   pointer-events: none;
 }
-.band::before { background: radial-gradient(circle, #87CCCB, #9B83AA); top: -240px; left: -120px; }
-.band::after  { background: radial-gradient(circle, #E66E52, #869FBC); bottom: -260px; right: -100px; }
+/* Soft falloff is baked into the gradient itself — no filter: blur(). A large
+   blur radius here forced the compositor to re-rasterize the band (and the
+   marquee layer over it) whenever either was partially in view. */
+.band::before { background: radial-gradient(circle closest-side, #87CCCB 0%, #9B83AA 42%, rgba(155,131,170,0) 72%); top: -330px; left: -210px; }
+.band::after  { background: radial-gradient(circle closest-side, #E66E52 0%, #869FBC 42%, rgba(134,159,188,0) 72%); bottom: -350px; right: -190px; }
 .band .label { color: var(--text); }
 .band .label::before { background: var(--text); }
 .band .wrap { position: relative; z-index: 2; }
@@ -979,13 +981,23 @@ main, footer { position: relative; z-index: 1; }
   overflow: hidden;
   position: relative;
   z-index: 2;
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   /* Own compositor layer, isolated from the animated SVG-filter cells behind the
      page. Without this, every mitosis repaint re-rasterizes the marquee too. */
   transform: translateZ(0);
   contain: paint;
+  isolation: isolate;
 }
+/* Edge fades as static overlays rather than a mask on the moving track. */
+.marquee::before, .marquee::after {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  width: 9%;
+  z-index: 2;
+  pointer-events: none;
+}
+.marquee::before { left: 0;  background: linear-gradient(90deg, var(--bg), rgba(240,240,240,0)); }
+.marquee::after  { right: 0; background: linear-gradient(270deg, var(--bg), rgba(240,240,240,0)); }
 .marquee-track {
   display: flex;
   align-items: center;
@@ -1011,6 +1023,10 @@ main, footer { position: relative; z-index: 1; }
   to   { transform: translate3d(-50%, 0, 0); }
 }
 .marquee-track.marquee-go { animation-play-state: running; }
+/* While the logo band is on screen, pause the background mitosis morphs. They
+   animate SVG blur filters (CPU repaints) and were stealing frames from the
+   marquee whenever the band sat partially in view. */
+body.marquee-view .bg-cell .mito { animation-play-state: paused; }
 /* marquee no longer pauses on hover (per 7/1 review) */
 
 /* Work tiles — autoplaying GIF showcase */

@@ -578,6 +578,16 @@
     if (!left) { track.classList.add("marquee-go"); return; }
     // Safety net: never leave the marquee stalled if an image never resolves.
     setTimeout(function () { track.classList.add("marquee-go"); }, 4000);
+
+    // While the band is anywhere near the viewport, pause the background mitosis
+    // cells. Their SVG blur filters repaint on the CPU, and that was what made the
+    // marquee stutter when the band was only partially on screen.
+    var band = track.closest(".marquee") || track;
+    if (window.IntersectionObserver) {
+      new IntersectionObserver(function (es) {
+        document.body.classList.toggle("marquee-view", es[0].isIntersecting);
+      }, { rootMargin: "45% 0px" }).observe(band);
+    }
     function ready() { if (--left <= 0) track.classList.add("marquee-go"); }
     imgsEls.forEach(function (im) {
       if (im.complete) ready();
