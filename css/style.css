@@ -981,6 +981,10 @@ main, footer { position: relative; z-index: 1; }
   z-index: 2;
   -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
   mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  /* Own compositor layer, isolated from the animated SVG-filter cells behind the
+     page. Without this, every mitosis repaint re-rasterizes the marquee too. */
+  transform: translateZ(0);
+  contain: paint;
 }
 .marquee-track {
   display: flex;
@@ -988,6 +992,7 @@ main, footer { position: relative; z-index: 1; }
   gap: 0;
   width: max-content;
   animation: marquee 66s linear infinite;
+  animation-play-state: paused;
   /* promote to its own GPU layer so the scroll stays smooth and crisp (no re-raster blur) */
   will-change: transform;
   transform: translate3d(0, 0, 0);
@@ -1005,6 +1010,7 @@ main, footer { position: relative; z-index: 1; }
   from { transform: translate3d(0, 0, 0); }
   to   { transform: translate3d(-50%, 0, 0); }
 }
+.marquee-track.marquee-go { animation-play-state: running; }
 /* marquee no longer pauses on hover (per 7/1 review) */
 
 /* Work tiles — autoplaying GIF showcase */
@@ -1926,7 +1932,8 @@ img, video, iframe, svg { max-width: 100%; }
 
 /* light-band logos: white client logos rendered as dark silhouettes on the light ribbon */
 .marquee-track img { filter: brightness(0); opacity: 1; }
-.marquee-track img:hover { opacity: 0.85; }
+/* no hover state: the track is always moving, so a hover repaint fires on
+   every logo that slides under the pointer and shows up as stutter. */
 
 /* Engine phase carousel (horizontal) */
 .phase-carousel { display: flex; gap: var(--s6); overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; padding-bottom: var(--s4); margin-top: var(--s6); scrollbar-width: none; }

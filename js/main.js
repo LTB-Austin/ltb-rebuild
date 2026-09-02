@@ -541,7 +541,7 @@
     if (window.IntersectionObserver) {
       var vio = new IntersectionObserver(function (es) {
         es.forEach(function (e) { e.target.classList.toggle("offscreen", !e.isIntersecting); });
-      }, { rootMargin: "300px 0px" });
+      }, { rootMargin: "80px 0px" });
       Array.prototype.forEach.call(layer.querySelectorAll(".bg-cell"), function (c) { vio.observe(c); });
     }
   }
@@ -559,13 +559,30 @@
   var CLIENT_LOGOS = [1, 2, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23];
   document.querySelectorAll("[data-client-logos]").forEach(function (track) {
     var imgs = "";
+    // NOTE: these are deliberately NOT lazy-loaded. The track scrolls continuously,
+    // so a lazy image decoding as it slides into view stalls the frame and the
+    // marquee visibly stutters. Eager + async decode keeps the scroll smooth.
     [false, true].forEach(function (ghost) {
       CLIENT_LOGOS.forEach(function (n) {
         var f = "assets/clients/client-" + (n < 10 ? "0" + n : n) + ".png";
-        imgs += '<img src="' + f + '" alt="' + (ghost ? '" aria-hidden="true"' : 'Client logo"') + ' loading="lazy">';
+        imgs += '<img src="' + f + '"' +
+          (ghost ? ' alt="" aria-hidden="true"' : ' alt="Client logo"') +
+          ' width="340" height="110" decoding="async" fetchpriority="low" draggable="false">';
       });
     });
     track.innerHTML = imgs;
+    // Start the animation only once every logo has decoded, so the loop never
+    // begins mid-load (which is what made the first pass look like it stuttered).
+    var imgsEls = Array.prototype.slice.call(track.querySelectorAll("img"));
+    var left = imgsEls.length;
+    if (!left) { track.classList.add("marquee-go"); return; }
+    // Safety net: never leave the marquee stalled if an image never resolves.
+    setTimeout(function () { track.classList.add("marquee-go"); }, 4000);
+    function ready() { if (--left <= 0) track.classList.add("marquee-go"); }
+    imgsEls.forEach(function (im) {
+      if (im.complete) ready();
+      else { im.addEventListener("load", ready); im.addEventListener("error", ready); }
+    });
   });
 
   /* ---------- PHASE HOVER DELEGATION (home model) ---------- */

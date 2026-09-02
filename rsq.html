@@ -115,7 +115,7 @@
   <hr class="divider mb-3">
   <span class="label reveal">Step 1 — Submit</span>
   <h2 class="reveal reveal-d1 mb-2">Tell us your product and your claims challenge.</h2>
-  <p class="lead reveal mb-2">We run the literature search before the conference, so the more specific your challenge, the sharper your session.</p>
+  <p class="lead reveal mb-2">We run the literature review before the conference, so the more specific your challenge, the sharper your session.</p>
   <form class="form reveal" id="rsq-form" action="#" method="POST" style="max-width:680px">
     <input type="text" name="company-website" id="r-hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
     <div><label for="r-name">Full name *</label><input id="r-name" name="name" type="text" required></div>
@@ -124,10 +124,34 @@
     <div><label for="r-email">Email *</label><input id="r-email" name="email" type="email" required></div>
     <div><label for="r-phone">Phone <span style="opacity:.55">(optional)</span></label><input id="r-phone" name="phone" type="tel"></div>
     <div><label for="r-product">Product *</label><input id="r-product" name="product" type="text" required placeholder="Product name and active ingredient(s)"></div>
-    <div><label for="r-plink">Link to the product</label><input id="r-plink" name="productLink" type="text" placeholder="https://"></div>
-    <div><label for="r-category">Regulatory category</label>
-      <select id="r-category" name="category"><option>Select one…</option><option>OTC monograph drug</option><option>Dietary supplement</option><option>Medical device</option><option>Cosmetic</option><option>Rx</option><option>Not sure</option></select></div>
-    <div><label for="r-challenge">Your claims challenge *</label><textarea id="r-challenge" name="challenge" rows="5" required placeholder="e.g. We want to say our melatonin-free sleep aid works as fast as melatonin products, but our regulatory team isn't sure the evidence is there. What can we actually claim?"></textarea></div>
+    <div><label for="r-plink">Link to the product <span style="opacity:.55;font-weight:400">(so we review the right product and the right ingredient list)</span></label><input id="r-plink" name="productLink" type="text" placeholder="https://"></div>
+    <div><label for="r-category">Regulatory category <span style="opacity:.55;font-weight:400">(type it, or pick from the list)</span></label>
+      <input id="r-category" name="category" type="text" list="r-category-options" placeholder="e.g. OTC monograph drug, dietary supplement, cosmetic…" autocomplete="off">
+      <datalist id="r-category-options">
+        <option value="OTC monograph drug"></option>
+        <option value="OTC NDA / ANDA drug"></option>
+        <option value="Dietary supplement"></option>
+        <option value="Medical device"></option>
+        <option value="Medical food"></option>
+        <option value="Cosmetic"></option>
+        <option value="Food or beverage"></option>
+        <option value="Rx"></option>
+        <option value="Combination product"></option>
+        <option value="Not sure"></option>
+      </datalist></div>
+    <div class="rsq-hero-field">
+      <label for="r-challenge">Your claims challenge *</label>
+      <p class="rsq-hero-help">This is the field that shapes your whole session. We build the literature review around what you write here, so the more specific you are, the more useful your report will be. Name the product, the claim you want to make, and what is standing in the way.</p>
+      <textarea id="r-challenge" name="challenge" rows="7" required placeholder="e.g. We want to say our melatonin-free sleep aid helps people fall asleep as fast as melatonin products, but our regulatory team isn't sure the evidence supports it. What can we actually claim, and what would we need to say it?"></textarea>
+      <p class="rsq-hero-help" style="margin-top:12px">Not sure where to start? Pick the one closest to your situation and edit it.</p>
+      <div class="rsq-chips">
+        <button type="button" class="rsq-chip" data-fill="We want to make a specific claim about [ingredient] in [product], and we are not sure the published evidence supports it. What can we say, and how strongly?">A claim we&#8217;re not sure we can support</button>
+        <button type="button" class="rsq-chip" data-fill="A competitor is claiming [claim] on a product like ours. We want to know whether the science lets us say the same thing, or something stronger.">Matching or beating a competitor&#8217;s claim</button>
+        <button type="button" class="rsq-chip" data-fill="Our regulatory or MLR team rejected [claim] on [product]. We want to know whether there is evidence that would get a version of it approved.">A claim MLR turned down</button>
+        <button type="button" class="rsq-chip" data-fill="We are reformulating [product] with [ingredient] and want to know what claims that ingredient could open up before we finalise the formula.">New formula, what could we claim?</button>
+        <button type="button" class="rsq-chip" data-fill="We have studies on [product or ingredient] but have never used them in marketing. We want to know what is in there that we are not saying.">We have studies we&#8217;re not using</button>
+      </div>
+    </div>
     <div><label for="r-notes">Anything else we should know</label><textarea id="r-notes" name="notes" rows="3" placeholder="Competitors you're up against, claims you've been told no on, markets you sell in…"></textarea></div>
     <div><label for="r-captcha" id="r-captcha-label">Quick check: what is 3 + 4?</label><input id="r-captcha" name="captcha" type="text" inputmode="numeric" required></div>
     <button class="btn" type="submit">Submit your challenge</button>
@@ -164,10 +188,10 @@
       <div class="rsq-row rsq-prog"><span>9:00 AM – 10:00 AM</span><span>General Session 2: FDA Leadership Panel</span><b>Programming</b></div>
       <div class="rsq-row rsq-open"><span>10:00 AM – 10:15 AM</span><span>Networking Break</span><b>Open window</b></div>
       <div class="rsq-row rsq-prog"><span>10:15 AM – 11:00 AM</span><span>General Session 3: From Source to Shelf — Supply Chains</span><b>Programming</b></div>
-      <div class="rsq-row rsq-prog"><span>11:15 AM – 12:15 PM</span><span>Breakout Sessions</span><b>Programming</b></div>
+      <div class="rsq-row rsq-open"><span>11:15 AM – 12:15 PM</span><span>Breakout Sessions <em>(concurrent tracks)</em></span><b>Open window</b></div>
       <div class="rsq-row rsq-open"><span>12:15 PM – 1:30 PM</span><span>Networking Lunch</span><b>Open window</b></div>
       <div class="rsq-row rsq-prog"><span>1:30 PM – 2:15 PM</span><span>General Session 4: Use of AI in the Public &amp; Private Sector</span><b>Programming</b></div>
-      <div class="rsq-row rsq-prog"><span>2:30 PM – 3:30 PM</span><span>Breakout Sessions</span><b>Programming</b></div>
+      <div class="rsq-row rsq-open"><span>2:30 PM – 3:30 PM</span><span>Breakout Sessions <em>(concurrent tracks)</em></span><b>Open window</b></div>
       <div class="rsq-row rsq-open"><span>3:30 PM – 4:00 PM</span><span>Networking Break</span><b>Open window</b></div>
       <div class="rsq-row rsq-prog"><span>4:00 PM – 5:00 PM</span><span>General Session 5: FDA Enforcement Trends &amp; Risks</span><b>Programming</b></div>
       <div class="rsq-row rsq-prog"><span>5:00 PM – 5:15 PM</span><span>Chair Closing Remarks</span><b>Programming</b></div>
@@ -176,15 +200,15 @@
     <div class="rsq-day" id="d3" hidden>
       <div class="rsq-row rsq-open"><span>7:00 AM – 8:00 AM</span><span>Breakfast and Networking</span><b>Open window</b></div>
       <div class="rsq-row rsq-prog"><span>8:00 AM – 8:45 AM</span><span>General Session 6: Science, Safety, and Chemical Risk</span><b>Programming</b></div>
-      <div class="rsq-row rsq-prog"><span>9:00 AM – 10:00 AM</span><span>Breakout Sessions</span><b>Programming</b></div>
+      <div class="rsq-row rsq-open"><span>9:00 AM – 10:00 AM</span><span>Breakout Sessions <em>(concurrent tracks)</em></span><b>Open window</b></div>
       <div class="rsq-row rsq-open"><span>10:00 AM – 10:15 AM</span><span>Networking Break</span><b>Open window</b></div>
-      <div class="rsq-row rsq-prog"><span>10:15 AM – 11:15 AM</span><span>Breakout Sessions</span><b>Programming</b></div>
+      <div class="rsq-row rsq-open"><span>10:15 AM – 11:15 AM</span><span>Breakout Sessions <em>(concurrent tracks)</em></span><b>Open window</b></div>
       <div class="rsq-row rsq-open"><span>11:15 AM – 11:30 AM</span><span>Networking Break</span><b>Open window</b></div>
       <div class="rsq-row rsq-prog"><span>11:30 AM – 12:15 PM</span><span>Closing General Session: FDA and USP Leadership</span><b>Programming</b></div>
       <div class="rsq-row rsq-prog"><span>12:15 PM – 12:45 PM</span><span>Closing Remarks</span><b>Programming</b></div>
       <div class="rsq-row rsq-prog"><span>1:00 PM – 5:00 PM</span><span>RSQ Workshop: New Approach Methods for OTC Topical Safety Assessment</span><b>Programming</b></div>
     </div>
-    <p class="rsq-note">Schedule as published by CHPA and subject to change — check the <a href="https://www.chpa.org/events-education/regulatory-scientific-quality-conference" target="_blank" rel="noopener">official RSQ program</a> before you book. Claims Lab sessions run in the Let There Be room, off the programming floor.</p>
+    <p class="rsq-note">Schedule as published by CHPA and subject to change — check the <a href="https://www.chpa.org/events-education/regulatory-scientific-quality-conference" target="_blank" rel="noopener">official RSQ program</a> before you book. Breakout blocks run as concurrent tracks, so they are workable windows if the sessions in them are not ones you need. Claims Lab sessions run in the Let There Be room, off the programming floor.</p>
     </div>
   </div>
 </div></section>
@@ -236,6 +260,12 @@
 .rsq-prog b{color:#E87722}
 .rsq-open b{color:#5E9A93}
 .rsq-note{font-size:.85rem;color:#6b6b6e;margin:14px 4px 0}
+.rsq-hero-field{background:#fff;border:2px solid #12233F;border-radius:16px;padding:20px}
+.rsq-hero-field label{font-weight:700}
+.rsq-hero-help{font-size:.88rem;color:#5a5a5e;margin:6px 0 10px;line-height:1.5}
+.rsq-chips{display:flex;flex-wrap:wrap;gap:8px}
+.rsq-chip{font-family:inherit;font-size:.85rem;font-weight:600;color:#12233F;background:#f2f5f8;border:1px solid #d6dee6;border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .18s ease,border-color .18s ease}
+.rsq-chip:hover,.rsq-chip:focus-visible{background:#e4ecf3;border-color:#12233F}
 #team .team-grid{grid-template-columns:repeat(3,1fr);max-width:920px}
 @media(max-width:640px){#team .team-grid{grid-template-columns:1fr}}
 @media(max-width:700px){.rsq-row{grid-template-columns:1fr;gap:2px}.rsq-row b{text-align:left}}
@@ -277,6 +307,18 @@
 <script src="js/main.js"></script>
 <script>
 (function(){
+  // claims-challenge starter chips
+  document.querySelectorAll('.rsq-chip').forEach(function(c){
+    c.addEventListener('click',function(){
+      var ta=document.getElementById('r-challenge');
+      if(!ta)return;
+      if(ta.value.trim()&&!confirm('Replace what you have written with this starting point?'))return;
+      ta.value=c.getAttribute('data-fill');
+      ta.focus();
+      ta.setSelectionRange(ta.value.length,ta.value.length);
+    });
+  });
+
   // schedule tabs
   var tabs=document.querySelectorAll('.rsq-tab');
   tabs.forEach(function(t){
