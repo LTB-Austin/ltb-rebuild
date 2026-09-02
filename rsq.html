@@ -81,10 +81,6 @@
     <h1 class="reveal reveal-d1" style="margin:10px 0 4px"><img src="assets/wordmarks/rsq-claims-lab.png" alt="RSQ Claims Lab™" style="display:block;width:min(100%,760px);height:auto"></h1>
     <hr class="divider reveal mt-2 mb-2">
     <p class="hero-sub lead reveal reveal-d2">Experience AI-powered literature review and claim development on <strong>your brand</strong>. Thirty minutes, your real product, real findings in hand.</p>
-    <div class="rsq-chpa reveal reveal-d2 mt-2">
-      <span class="label" style="margin:0">Proud member</span>
-      <a href="https://www.chpa.org/" target="_blank" rel="noopener" aria-label="Consumer Healthcare Products Association (CHPA)"><img class="chpa-logo" src="assets/chpa-black.png" alt="Consumer Healthcare Products Association (CHPA)"></a>
-    </div>
     <div class="btn-row reveal reveal-d2 mt-2">
       <a class="btn" href="#submit">Submit your challenge</a>
       <a class="btn-ghost" href="#team">Meet the Lab team</a>
@@ -150,7 +146,7 @@
       </datalist></div>
     <div class="rsq-hero-field">
       <label for="r-challenge">Your claims challenge *</label>
-      <p class="rsq-hero-help">This is the field that shapes your whole session. We build the literature review around what you write here, so the more specific you are, the more useful your report will be. Name the product, the claim you want to make, and what is standing in the way.</p>
+      <p class="rsq-hero-help">This is the field that shapes your whole session. We build the literature review around what you write here, so the more specific you are, the more useful your report will be. Tell us the claim you want to make and what is standing in the way.</p>
       <textarea id="r-challenge" name="challenge" rows="7" required placeholder="e.g. We want to say our melatonin-free sleep aid helps people fall asleep as fast as melatonin products, but our regulatory team isn't sure the evidence supports it. What can we actually claim, and what would we need to say it?"></textarea>
       <p class="rsq-hero-help" style="margin-top:12px">Not sure where to start? Pick the one closest to your situation and edit it.</p>
       <div class="rsq-chips">
@@ -179,7 +175,7 @@
       <div class="btn-row mt-2"><a class="btn" href="https://calendly.com/austin-lettherebe/chpa-rsq-claims-lab-by-let-there-be" target="_blank" rel="noopener">Book your spot ↗</a></div>
     </div>
     <div class="rsq-sched reveal reveal-d1">
-      <p style="margin:0 0 10px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#12233F">The RSQ Program · Sept 28–30</p>
+      <p style="margin:0 0 10px;font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--teal-d)">The RSQ Program · Sept 28–30</p>
       <div class="rsq-tabs" role="tablist">
       <button class="rsq-tab on" data-day="d1" role="tab">Mon · Sept 28</button>
       <button class="rsq-tab" data-day="d2" role="tab">Tue · Sept 29</button>
@@ -271,15 +267,15 @@
 .rsq-sched{background:#fff;border:1px solid #e4e4e6;border-radius:18px;padding:22px}
 .rsq-cols{display:grid;grid-template-columns:minmax(280px,1fr) minmax(0,1.6fr);gap:36px;align-items:start}
 @media(max-width:900px){.rsq-cols{grid-template-columns:1fr}}
-.rsq-tabs{display:flex;gap:8px;border-bottom:3px solid #12233F;margin-bottom:6px;flex-wrap:wrap}
+.rsq-tabs{display:flex;gap:8px;border-bottom:3px solid var(--ink);margin-bottom:6px;flex-wrap:wrap}
 .rsq-tab{font-family:inherit;font-weight:600;font-size:.92rem;padding:10px 18px;border:none;background:#f0f0f0;color:#6b6b6e;border-radius:10px 10px 0 0;cursor:pointer}
-.rsq-tab.on{background:#12233F;color:#fff}
+.rsq-tab.on{background:var(--ink);color:#fff}
 .rsq-row{display:grid;grid-template-columns:170px 1fr 150px;gap:12px;align-items:baseline;padding:10px 8px;border-bottom:1px solid #ececee;font-size:.95rem}
 .rsq-row span:first-child{font-weight:600;white-space:nowrap}
 .rsq-row em{color:#6b6b6e;font-style:italic}
 .rsq-row b{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;font-weight:700;text-align:right}
-.rsq-prog b{color:#E87722}
-.rsq-open b{color:#5E9A93}
+.rsq-prog b{color:var(--coral)}
+.rsq-open b{color:var(--teal-d)}
 .rsq-note{font-size:.85rem;color:#6b6b6e;margin:14px 4px 0}
 .rsq-chpa{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
 .rsq-chpa .chpa-logo{height:52px}
@@ -288,24 +284,24 @@
 .rsq-chpa-foot{align-items:center;text-align:center;gap:14px;padding:34px 20px;border:1px solid #e4e4e6;border-radius:18px;background:#fff}
 .rsq-chpa-foot .chpa-logo{height:64px}
 .rsq-chpa-foot p{max-width:620px;font-size:.9rem;color:#6b6b6e;margin:0}
-.rsq-recos{background:#eef4f3;border-left:4px solid #5E9A93;border-radius:12px;padding:14px 16px;margin:0 0 14px}
-.rsq-recos-h{margin:0 0 10px;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#3d6b66}
+.rsq-recos{background:rgba(154,217,204,.22);border-left:4px solid var(--teal-d);border-radius:12px;padding:14px 16px;margin:0 0 14px}
+.rsq-recos-h{margin:0 0 10px;font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--teal-d)}
 .rsq-slots{display:flex;flex-wrap:wrap;gap:8px}
-.rsq-slot{font-size:.86rem;font-weight:700;color:#12233F;background:#fff;border:1px solid #cbdedb;border-radius:999px;padding:6px 12px;white-space:nowrap}
-.rsq-formwrap{background:linear-gradient(150deg,#eef4f3 0%,#f4f1f6 52%,#fdf0ec 100%);border:1px solid #dcdce0;border-radius:18px;padding:0;max-width:760px;overflow:hidden}
-.rsq-formhead{background:#12233F;color:#fff;padding:20px 26px;border-radius:18px 18px 0 0}
+.rsq-slot{font-size:.86rem;font-weight:700;color:var(--ink);background:#fff;border:1px solid rgba(94,154,147,.45);border-radius:999px;padding:6px 12px;white-space:nowrap}
+.rsq-formwrap{background:linear-gradient(150deg,rgba(154,217,204,.30) 0%,rgba(135,204,203,.24) 34%,rgba(134,159,188,.22) 68%,rgba(155,131,170,.20) 100%);border:1px solid rgba(12,13,16,.12);border-radius:18px;padding:0;max-width:760px;overflow:hidden}
+.rsq-formhead{background:var(--ink);color:#fff;padding:20px 26px;border-radius:18px 18px 0 0}
 .rsq-formhead h3{margin:0;color:#fff}
-.rsq-formhead p{margin:6px 0 0;font-size:.9rem;color:#c8d2e0}
+.rsq-formhead p{margin:6px 0 0;font-size:.9rem;color:rgba(255,255,255,.72)}
 .rsq-formwrap .form{padding:26px;max-width:none;margin:0}
 .rsq-formwrap .form input,.rsq-formwrap .form textarea{background:#fff;border-radius:12px}
 @media(max-width:640px){.rsq-formwrap .form{padding:18px}.rsq-formhead{padding:16px 18px}}
 .rsq-submit{width:100%;justify-content:center;text-align:center}
-.rsq-hero-field{background:#fff;border:2px solid #12233F;border-radius:18px;padding:20px}
+.rsq-hero-field{background:#fff;border:2px solid var(--teal-d);border-radius:18px;padding:20px}
 .rsq-hero-field label{font-weight:700}
 .rsq-hero-help{font-size:.88rem;color:#5a5a5e;margin:6px 0 10px;line-height:1.5}
 .rsq-chips{display:flex;flex-wrap:wrap;gap:8px}
-.rsq-chip{font-family:inherit;font-size:.85rem;font-weight:600;color:#12233F;background:#f2f5f8;border:1px solid #d6dee6;border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .18s ease,border-color .18s ease}
-.rsq-chip:hover,.rsq-chip:focus-visible{background:#e4ecf3;border-color:#12233F}
+.rsq-chip{font-family:inherit;font-size:.85rem;font-weight:600;color:var(--ink);background:rgba(154,217,204,.24);border:1px solid rgba(94,154,147,.45);border-radius:999px;padding:8px 14px;cursor:pointer;transition:background .18s ease,border-color .18s ease}
+.rsq-chip:hover,.rsq-chip:focus-visible{background:rgba(154,217,204,.5);border-color:var(--teal-d)}
 #team .team-grid{grid-template-columns:repeat(3,1fr);max-width:920px}
 @media(max-width:640px){#team .team-grid{grid-template-columns:1fr}}
 @media(max-width:700px){.rsq-row{grid-template-columns:1fr;gap:2px}.rsq-row b{text-align:left}}
