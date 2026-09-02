@@ -85,21 +85,13 @@
   </div>
 </section>
 
-<section><div class="wrap">
-  <span class="label reveal">The Three Formats</span>
-  <h2 class="reveal reveal-d1 mb-2">Every cut has a home.</h2>
-  <div class="grid grid-3 mt-2">
-    <div class="card reveal"><h3>16:9</h3><p>Horizontal. Amazon and retailer product pages, YouTube, connected TV, linear TV, website embeds and email.</p></div>
-    <div class="card accent-sky reveal reveal-d1"><h3>9:16</h3><p>Vertical, full screen. YouTube Shorts, Reels, Stories, TikTok, Pinterest and vertical paid placements.</p></div>
-    <div class="card accent-coral reveal reveal-d2"><h3>1:1</h3><p>Square. Feed placements on Meta, X, LinkedIn and Pinterest, and inline email units.</p></div>
-  </div>
-</div></section>
+
 
 <section><div class="wrap">
   <hr class="divider mb-3">
   <span class="label reveal">Add a Video</span>
-  <h2 class="reveal reveal-d1 mb-1">Choose the type. Each one gets its own checklist.</h2>
-  <p class="lead reveal mb-2">An ad runs everywhere. An education video runs in organic and owned channels. An MOA Moment&#8482; mostly goes to partners, who build it into other content.</p>
+  <h2 class="reveal reveal-d1 mb-1">Step 1 &#8212; Add the videos you received.</h2>
+  <p class="lead reveal mb-2">Pick the type that matches each video your Let There Be team delivered. Every video you add gets its own checklist below, and you can add as many as you like. An ad runs everywhere. An education video runs in organic and owned channels. An MOA Moment&#8482; mostly goes to partners, who build it into other content.</p>
   <div class="grid grid-3 mt-2" id="ag-types"></div>
   <div class="ag-overall mt-3" id="ag-overall" hidden>
     <div class="ag-overall-row"><span class="label" style="margin:0">Overall progress</span><strong id="ag-overall-text"></strong></div>
@@ -110,6 +102,8 @@
 <section><div class="wrap">
   <hr class="divider mb-3">
   <span class="label reveal">Your Videos</span>
+  <h2 class="reveal reveal-d1 mb-1">Step 2 &#8212; Tick off each placement as you post it.</h2>
+  <p class="lead reveal mb-2">Under every video you will find its placements, grouped by channel. Each placement lists the formats it needs. <strong>Click a format button to mark it done</strong> &#8212; it turns green with a check. Click it again to undo. &#8220;How to&#8221; opens a short guide for that placement. Everything saves on this device as you go.</p>
   <div id="ag-empty" class="card reveal mt-2" style="text-align:center">
     <h3>No videos added yet.</h3>
     <p>Pick Ad, Education or MOA Moment above to start a checklist.</p>
@@ -117,28 +111,17 @@
   <div id="ag-videos" class="mt-2"></div>
 </div></section>
 
+
+
 <section><div class="wrap">
   <hr class="divider mb-3">
-  <span class="label reveal">Before You Go Live</span>
-  <h2 class="reveal reveal-d1 mb-1">Tag your links.</h2>
-  <div class="two mt-2">
-    <div class="col">
-      <p>Add UTM tags to every link so you can see which placements drive results. A UTM tag is a short snippet on the end of a link. The viewer never sees it, but your analytics will know exactly where each click came from, so you can tell TikTok traffic from email traffic at a glance.</p>
-      <ul class="tick mt-2">
-        <li><strong>utm_source</strong> — where the click came from. <em>tiktok, youtube, email</em></li>
-        <li><strong>utm_medium</strong> — the type of channel. <em>social, cpc, email</em></li>
-        <li><strong>utm_campaign</strong> — which campaign it belongs to. <em>spring_launch</em></li>
-      </ul>
-    </div>
-    <div class="col">
-      <div class="card">
-        <h3>Before</h3>
-        <p style="font-family:monospace;font-size:.92rem">yourbrand.com/product</p>
-        <h3 class="mt-1">After</h3>
-        <p style="font-family:monospace;font-size:.92rem;word-break:break-all">yourbrand.com/product<strong>?utm_source=tiktok&amp;utm_medium=social&amp;utm_campaign=spring_launch</strong></p>
-      </div>
-      <p class="mt-2" style="color:#6b6b6e">You do not have to build these by hand. Google&#8217;s free <a href="https://ga-dev-tools.google/campaign-url-builder/" target="_blank" rel="noopener">Campaign URL Builder</a> creates a tagged link for you. Keep names lowercase and consistent so reports stay clean. Ask your Let There Be team if you want a tagging system set up for the campaign.</p>
-    </div>
+  <span class="label reveal">Reference &#8212; The Three Formats</span>
+  <h2 class="reveal reveal-d1 mb-1">What each format is for.</h2>
+  <p class="lead reveal mb-2">Every video is delivered in the shapes its placements need. This is what each one is used for.</p>
+  <div class="grid grid-3 mt-2">
+    <div class="card reveal"><h3>16:9</h3><p>Horizontal. Amazon and retailer product pages, YouTube, connected TV, linear TV, website embeds and email.</p></div>
+    <div class="card accent-sky reveal reveal-d1"><h3>9:16</h3><p>Vertical, full screen. YouTube Shorts, Reels, Stories, TikTok, Pinterest and vertical paid placements.</p></div>
+    <div class="card accent-coral reveal reveal-d2"><h3>1:1</h3><p>Square. Feed placements on Meta, X, LinkedIn and Pinterest, and inline email units.</p></div>
   </div>
 </div></section>
 
@@ -178,8 +161,14 @@
 .ag-place{border-bottom:1px solid #ececee;padding:10px 0}
 .ag-prow{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
 .ag-pname{flex:1;font-weight:400;font-size:.98rem}
-.ag-fmt{display:inline-flex;align-items:center;gap:5px;border:1px solid #c9c9cd;border-radius:999px;padding:4px 11px;font-size:.78rem;cursor:pointer;user-select:none;background:#fff;font-family:inherit}
-.ag-fmt.on{background:#0c0d10;color:#fff;border-color:#0c0d10}
+.ag-fmt{display:inline-flex;align-items:center;gap:6px;border:1.5px solid #c9c9cd;border-radius:999px;padding:5px 12px;font-size:.8rem;font-weight:600;cursor:pointer;user-select:none;background:#fff;font-family:inherit;transition:background .15s ease,border-color .15s ease,color .15s ease}
+.ag-fmt:hover{border-color:var(--teal-d);background:rgba(154,217,204,.2)}
+.ag-fmt .ag-box{display:inline-block;width:13px;height:13px;border:1.5px solid #b6b6ba;border-radius:3px;background:#fff;flex:0 0 auto}
+.ag-fmt.on{background:var(--teal-d);color:#fff;border-color:var(--teal-d)}
+.ag-fmt.on:hover{background:var(--teal-d)}
+.ag-fmt.on .ag-box{border-color:#fff;background:#fff;position:relative}
+.ag-fmt.on .ag-box:after{content:"";position:absolute;left:4px;top:0;width:4px;height:9px;border:solid var(--teal-d);border-width:0 2px 2px 0;transform:rotate(45deg)}
+.ag-fmthint{font-size:.78rem;color:#6b6b6e;margin:0 0 10px}
 .ag-howto{background:none;border:none;color:#6b6b6e;cursor:pointer;font-size:.8rem;text-decoration:underline;font-family:inherit}
 .ag-guide{background:#f7f7f8;border-radius:12px;padding:14px 16px;margin-top:10px;font-size:.92rem;line-height:1.55}
 .ag-guide p{margin:0 0 8px;max-width:none}
@@ -215,7 +204,7 @@
         <li><a href="contact.html">Get Started</a></li></ul></div>
     </div>
     <div class="footer-legal">
-      <p>Science Story&#8482;, What&#8217;s Your Science Story?&#8482;, Science Intelligence&#8482;, Science Studio&#8482;, Gem Discovery&#8482;, Polishing Gems&#8482;, MOA Moment&#8482;, Influencer Science Kit&#8482;, Ad-to-Education Sequence&#8482;, Lit Review&#8482;, Claim Dev&#8482;, and Claims Lab&#8482; are trademarks of Let There Be.</p>
+      <p>Science Story&#8482;, What&#8217;s Your Science Story?&#8482;, Science Intelligence&#8482;, Science Studio&#8482;, MOA Moment&#8482;, Influencer Science Kit&#8482;, Ad-to-Education Sequence&#8482;, Lit Review&#8482;, Claim Dev&#8482;, and Claims Lab&#8482; are trademarks of Let There Be.</p>
       <p>&#169; <span data-year>2026</span> Let There Be. All Rights Reserved. — lettherebe.com</p>
     </div>
   </div>
@@ -312,12 +301,12 @@
             var fmts=p.formats.map(function(f){
               var key=id+'|'+f, on=!!v.checks[key];
               cTotal++; if(on){cDone++;vDone++;}
-              return '<button class="ag-fmt'+(on?' on':'')+'" data-toggle="'+v.id+'" data-key="'+esc(key)+'">'+(on?'✓ ':'')+f+'</button>';
+              return '<button type="button" class="ag-fmt'+(on?' on':'')+'" data-toggle="'+v.id+'" data-key="'+esc(key)+'" aria-pressed="'+(on?'true':'false')+'" title="'+(on?'Posted — click to undo':'Click when this cut is posted')+'"><span class="ag-box" aria-hidden="true"></span>'+f+'</button>';
             }).join('');
             var guide=isOpen?('<div class="ag-guide"><p>'+esc(link.blurb||'')+'</p><p class="ag-why"><strong>Why it’s on the list:</strong> '+esc(link.why||'')+'</p>'+(link.url?'<a href="'+esc(link.url)+'" target="_blank" rel="noopener">Open the platform guide →</a>':'<em>No public documentation. Your Let There Be team or media partner sets this up.</em>')+'</div>'):'';
             return '<div class="ag-place"><div class="ag-prow"><span class="ag-pname">'+esc(p.name)+'</span>'+fmts+'<button class="ag-howto" data-open="'+esc(openKey)+'">'+(isOpen?'Hide':'How to')+'</button></div>'+guide+'</div>';
           }).join('');
-          return '<div class="ag-channel"><div class="ag-chead"><h4>'+cn+'</h4><span>'+cDone+' / '+cTotal+'</span></div>'+rows+'</div>';
+          return '<div class="ag-channel"><div class="ag-chead"><h4>'+cn+'</h4><span>'+cDone+' / '+cTotal+'</span></div><p class="ag-fmthint">Click a format to mark it posted.</p>'+rows+'</div>';
         }).join('');
         return '<div>'+ch+'</div>';
       }).join('');
