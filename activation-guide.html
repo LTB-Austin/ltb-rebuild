@@ -85,10 +85,7 @@
   </div>
 </section>
 
-
-
-<section><div class="wrap">
-  <hr class="divider mb-3">
+<section style="padding-top:clamp(16px,2vw,26px)"><div class="wrap">
   <span class="label reveal">Add a Video</span>
   <h2 class="reveal reveal-d1 mb-1">Step 1 &#8212; Add the videos you received.</h2>
   <p class="lead reveal mb-2">Pick the type that matches each video your Let There Be team delivered. Every video you add gets its own checklist below, and you can add as many as you like. An ad runs everywhere. An education video runs in organic and owned channels. An MOA Moment&#8482; mostly goes to partners, who build it into other content.</p>
@@ -244,21 +241,21 @@
     moa:{label:"MOA Moment™",blurb:"Mechanism-of-action explainers for science and HCP audiences.",placements:["yt_organic","linkedin","influencer","landing","hcp_website","email","hcp_deck"]}
   };
   var LINKS={
-    amzn_pdp:{blurb:"Add the video to the listing's media gallery in Seller Central. Brand Registry is required.",why:"It sits on the page where the purchase decision is made.",url:"https://sellercentral.amazon.com/help/hub/reference/external/G6K6RQKKZ8V4KYNH"},
-    amzn_store:{blurb:"Add a video tile to your Amazon Store in the Store builder.",why:"Shoppers who reach the Store see it alongside the full range.",url:"https://advertising.amazon.com/help/GHTRFwYtppSFrjJH"},
+    amzn_pdp:{blurb:"Add the video to the listing's media gallery in Seller Central. Brand Registry is required.",why:"It sits on the page where the purchase decision is made.",url:"https://sellercentral.amazon.com/help/hub/reference/external/GY4LL3M3WJEFE8MZ"},
+    amzn_store:{blurb:"Add a video tile to your Amazon Store in the Store builder.",why:"Shoppers who reach the Store see it alongside the full range.",url:"https://advertising.amazon.com/help/GBX4ZFVHAKXKA5WM"},
     retailer_pdp:{blurb:"Syndicate the video to retailer product pages through your content platform, such as Salsify or Syndigo, or the retailer's vendor portal.",why:"Retailer product pages accept rich media; most competing listings carry stills only.",url:""},
     amzn_sbv:{blurb:"Run Sponsored Brands video in the Amazon Ads console.",why:"The placement appears in search results, against category keywords.",url:"https://advertising.amazon.com/solutions/products/sponsored-brands"},
-    wmt_sbv:{blurb:"Run Sponsored Brand video through Walmart Connect.",why:"Reaches shoppers searching the category on Walmart.com.",url:"https://advertising.walmart.com/solutions/sponsored-search"},
+    wmt_sbv:{blurb:"Run Sponsored Brand video through Walmart Connect.",why:"Reaches shoppers searching the category on Walmart.com.",url:"https://www.walmartconnect.com/solutions/sponsored-search"},
     yt_organic:{blurb:"Upload to your YouTube channel as a standard public video.",why:"It stays searchable after the campaign ends.",url:"https://support.google.com/youtube/answer/57407"},
     yt_paid:{blurb:"Create a video campaign in Google Ads and point it at your uploaded video.",why:"Audience and keyword targeting control who sees it.",url:"https://support.google.com/google-ads/answer/2375497"},
     yt_shorts:{blurb:"Upload a vertical 9:16 video under 3 minutes. YouTube files it as a Short.",why:"Shorts are distributed to the feed, not only to subscribers.",url:"https://support.google.com/youtube/answer/10059070"},
-    meta_organic:{blurb:"Publish to your Facebook Page and Instagram feed through Meta Business Suite.",why:"Reaches your existing followers at no media cost.",url:"https://www.facebook.com/business/help/1637120202131974"},
+    meta_organic:{blurb:"Publish to your Facebook Page and Instagram feed through Meta Business Suite.",why:"Reaches your existing followers at no media cost.",url:"https://www.facebook.com/business/help/942827662903020"},
     meta_paid:{blurb:"Create a video ad in Meta Ads Manager.",why:"The largest addressable audience of the paid channels on this list.",url:"https://www.facebook.com/business/tools/ads-manager"},
-    meta_reels:{blurb:"Post a Reel or Story from Instagram or through Meta Business Suite.",why:"Full-screen vertical inventory, separate from the feed.",url:"https://www.facebook.com/business/help/instagram/416456379314254"},
-    tiktok:{blurb:"Post organically in the app, or promote through TikTok Ads Manager.",why:"The vertical cut matches the native format of the feed.",url:"https://ads.tiktok.com/help/article/get-started-tiktok-ads-manager"},
-    x_post:{blurb:"Create a promoted video post in X Ads.",why:"Use it when the campaign ties to a news or conversation moment.",url:"https://business.x.com/en/advertising/campaign-types/video-ads"},
-    linkedin:{blurb:"Post to the company page, or run video in LinkedIn Campaign Manager.",why:"The channel for HCP, trade and B2B audiences.",url:"https://www.linkedin.com/help/lms/answer/a424655"},
-    pinterest:{blurb:"Publish a video Pin, or run a video campaign in Pinterest Ads.",why:"Users search Pinterest for health and wellness products.",url:"https://help.pinterest.com/en/business/article/video-ads"},
+    meta_reels:{blurb:"Post a Reel or Story from Instagram or through Meta Business Suite.",why:"Full-screen vertical inventory, separate from the feed.",url:"https://www.facebook.com/business/help/794942355314453"},
+    tiktok:{blurb:"Post organically in the app, or promote through TikTok Ads Manager.",why:"The vertical cut matches the native format of the feed.",url:"https://ads.tiktok.com/help/article/tiktok-ads-manager-intro?lang=en"},
+    x_post:{blurb:"Create a promoted video post in X Ads.",why:"Use it when the campaign ties to a news or conversation moment.",url:"https://business.x.com/en/help/campaign-setup/create-a-video-views-campaign"},
+    linkedin:{blurb:"Post to the company page, or run video in LinkedIn Campaign Manager.",why:"The channel for HCP, trade and B2B audiences.",url:"https://www.linkedin.com/help/lms/answer/a426664"},
+    pinterest:{blurb:"Publish a video Pin, or run a video campaign in Pinterest Ads.",why:"Users search Pinterest for health and wellness products.",url:"https://help.pinterest.com/en/business/article/promoted-video-with-autoplay"},
     influencer:{blurb:"Hand the cut to a vetted creator to post from their own account, or co-create with them.",why:"A creator explaining the science reaches an audience the brand account does not.",url:""},
     landing:{blurb:"Embed the video above the fold on a campaign landing page.",why:"It explains the product before the visitor scrolls.",url:""},
     product_page:{blurb:"Embed on the product detail page of your brand site.",why:"It answers product questions at the point of purchase.",url:""},
@@ -303,7 +300,7 @@
               cTotal++; if(on){cDone++;vDone++;}
               return '<button type="button" class="ag-fmt'+(on?' on':'')+'" data-toggle="'+v.id+'" data-key="'+esc(key)+'" aria-pressed="'+(on?'true':'false')+'" title="'+(on?'Posted — click to undo':'Click when this cut is posted')+'"><span class="ag-box" aria-hidden="true"></span>'+f+'</button>';
             }).join('');
-            var guide=isOpen?('<div class="ag-guide"><p>'+esc(link.blurb||'')+'</p><p class="ag-why"><strong>Why it’s on the list:</strong> '+esc(link.why||'')+'</p>'+(link.url?'<a href="'+esc(link.url)+'" target="_blank" rel="noopener">Open the platform guide →</a>':'<em>No public documentation. Your Let There Be team or media partner sets this up.</em>')+'</div>'):'';
+            var guide=isOpen?('<div class="ag-guide"><p>'+esc(link.blurb||'')+'</p><p class="ag-why"><strong>Why it’s on the list:</strong> '+esc(link.why||'')+'</p>'+(link.url?'<a href="'+esc(link.url)+'" target="_blank" rel="noopener">Open the platform guide →</a>':'<em>No public documentation. Your media partner sets this up.</em>')+'</div>'):'';
             return '<div class="ag-place"><div class="ag-prow"><span class="ag-pname">'+esc(p.name)+'</span>'+fmts+'<button class="ag-howto" data-open="'+esc(openKey)+'">'+(isOpen?'Hide':'How to')+'</button></div>'+guide+'</div>';
           }).join('');
           return '<div class="ag-channel"><div class="ag-chead"><h4>'+cn+'</h4><span>'+cDone+' / '+cTotal+'</span></div><p class="ag-fmthint">Click a format to mark it posted.</p>'+rows+'</div>';
