@@ -2186,13 +2186,11 @@ section[id]{scroll-margin-top:120px}
 .sizzle-stage .wrap{width:100%}
 .sz-head{text-align:center;margin-bottom:22px}
 .sz-head h1{margin-bottom:8px}
-/* Sizzle reel: breaks out of the .wrap so it plays large. The old rule capped it
-   to the viewport height minus the surrounding chrome, which kept it small. */
-/* Sizzle reel: widened past the .wrap using margin math only. Do NOT centre this
-   with transform:translateX(-50%) — the element also carries .reveal, and
-   .reveal.in sets transform:none, which wipes the centring once it animates in. */
-.sizzle-video{--sz:min(100vw - 48px, 1560px);position:relative;width:var(--sz);margin:0 0 0 calc(50% - var(--sz) / 2);aspect-ratio:16/9;border-radius:16px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.20)}
-@media (max-width:700px){.sizzle-video{--sz:calc(100vw - 24px);border-radius:12px}}
+/* Sizzle reel: sized to the content column — the same width as the page dividers.
+   Do NOT centre this with transform:translateX(-50%): the element also carries
+   .reveal, and .reveal.in sets transform:none, which would wipe the centring. */
+.sizzle-video{position:relative;width:100%;aspect-ratio:16/9;margin:0;border-radius:16px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.20)}
+@media (max-width:700px){.sizzle-video{border-radius:12px}}
 .sizzle-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 
 /* ---- 7/1 review: case-study tiles + need tags ---- */
