@@ -377,7 +377,7 @@
       .then(function(r){return r.json().then(function(j){return {ok:r.ok,j:j}})})
       .then(function(res){
         if(res.ok){
-          form.innerHTML='<div class="card" style="text-align:center"><h3>Challenge received.</h3><p>Now pick your 30-minute slot.</p><a class="btn" href="https://calendly.com/austin-lettherebe/chpa-rsq-claims-lab-by-let-there-be" target="_blank" rel="noopener">Book your spot ↗</a><p style="font-size:.85rem;color:#6b6b6e;margin-top:14px">Remember to book outside the conference programming — the full schedule is beside the calendar link on the page.</p></div>';
+          form.innerHTML='<div class="card" style="text-align:center"><h3>Challenge received.</h3><p>Now scroll down to <strong>Step 2</strong> and book your 30-minute slot. The RSQ program is there beside the calendar, so you can check your time against the conference schedule before you book.</p></div>';
           document.getElementById('submit').scrollIntoView({behavior:'smooth'});
         }else{
           alert((res.j&&res.j.error)||'Could not send — please try again, or email alex@lettherebe.com.');
