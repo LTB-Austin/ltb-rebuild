@@ -2445,8 +2445,8 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 .heatmap-concept .hm-h { display: block; font-size: 1.4rem; font-weight: 700; line-height: 1.5; margin-bottom: 6px; }
 .hl-like { background-image: linear-gradient(var(--stg-soft), var(--stg-soft)); background-repeat: no-repeat; background-size: 100% 100%; border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .hl-like-strong { background-image: linear-gradient(var(--stg-line), var(--stg-line)); background-repeat: no-repeat; background-size: 100% 100%; border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-.hl-dis { background-image: linear-gradient(rgba(155,131,170,.30), rgba(155,131,170,.30)); background-repeat: no-repeat; background-size: 100% 100%; border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
-.hl-dis-strong { background-image: linear-gradient(rgba(155,131,170,.55), rgba(155,131,170,.55)); background-repeat: no-repeat; background-size: 100% 100%; border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hl-dis { background-image: linear-gradient(var(--hl-neg), var(--hl-neg)); background-repeat: no-repeat; background-size: 100% 100%; border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hl-dis-strong { background-image: linear-gradient(var(--hl-neg-strong), var(--hl-neg-strong)); background-repeat: no-repeat; background-size: 100% 100%; border-radius: 4px; padding: .06em .18em; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
 .hm-legend { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 18px; padding-top: 14px; border-top: 1px solid #ececee; font-size: .85rem; color: #555; }
 .hm-legend span { display: inline-flex; align-items: center; gap: 8px; }
 .hm-legend i { width: 16px; height: 16px; border-radius: 4px; display: inline-block; }
@@ -2648,9 +2648,12 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 
 .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
 .tile { aspect-ratio: 1/1; border-radius: 10px; overflow: hidden; position: relative; background: #fff;
-  border: 1px solid #ececee; display: flex; flex-direction: column; padding: 11%; box-sizing: border-box; }
-.tile-cap { position: absolute; left: 0; right: 0; bottom: 0; font-size: .56rem; font-weight: 700;
-  letter-spacing: .06em; text-transform: uppercase; padding: 5px 4px; text-align: center;
+  border: 1px solid #ececee; display: flex; flex-direction: column; box-sizing: border-box;
+  /* the caption strip is absolutely positioned, so the bottom padding reserves its height */
+  padding: 11% 11% calc(11% + 20px); }
+.tile-cap { position: absolute; left: 0; right: 0; bottom: 0; height: 20px; display: flex;
+  align-items: center; justify-content: center; font-size: .56rem; font-weight: 700;
+  letter-spacing: .06em; text-transform: uppercase; text-align: center;
   background: rgba(255,255,255,.94); color: #9a9a9e; }
 
 /* a consistent brand bar sits on every tile in both sets — both are branded */
@@ -2659,8 +2662,8 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 .tile .brandbar span { font-size: .42rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #9a9a9e; }
 
 /* --- assembled: branded, tidy, and saying nothing in particular --- */
-.tile.b .hd { font-size: .62rem; font-weight: 700; line-height: 1.2; margin-bottom: 5px; }
-.tile.b .sm { font-size: .44rem; line-height: 1.5; color: #7a7a7e; }
+.tile.b .hd { font-size: .6rem; font-weight: 700; line-height: 1.22; margin-bottom: 5px; }
+.tile.b .sm { font-size: .43rem; line-height: 1.45; color: #7a7a7e; overflow: hidden; }
 .tile.b .pk { margin: auto; width: 38%; height: 54%; border-radius: 4px; background: linear-gradient(180deg,#d6dade,#b6bec5); }
 .tile.b .chips { display: flex; flex-wrap: wrap; gap: 3px; margin-top: auto; }
 .tile.b .chips i { font-size: .38rem; font-weight: 700; padding: 2px 5px; border-radius: 99px;
@@ -2673,7 +2676,7 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 /* --- designed: one system, each frame doing a job --- */
 .tile.g { border-color: rgba(12,13,16,.08); }
 .tile.g .n { font-size: .48rem; font-weight: 700; letter-spacing: .16em; margin-left: auto; }
-.tile.g h5 { margin: 0 0 6px; font-size: .78rem; line-height: 1.2; letter-spacing: -.01em; }
+.tile.g h5 { margin: 0; font-size: .78rem; line-height: 1.22; letter-spacing: -.01em; }
 .tile.g p { margin: 0; font-size: .5rem; line-height: 1.45; color: #6b6b6e; }
 .tile.g .art { flex: 1; display: flex; align-items: center; justify-content: center; margin: 4px 0; }
 .tile.g .mini { width: 100%; display: flex; flex-direction: column; gap: 4px; }
@@ -2712,6 +2715,9 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
   --stg-line: rgba(94,154,147,.5);
   --stg-dot:  rgba(94,154,147,.55);
   --stg-wash: linear-gradient(135deg, rgba(154,217,204,.18), rgba(134,159,188,.14));
+  /* disliked always reads as the red end of the master gradient, so it reads against
+     the liked marks whatever stage the page is in */
+  --hl-neg: rgba(201,81,79,.26); --hl-neg-strong: rgba(201,81,79,.48);
 }
 /* 01 · Science Intelligence — the Intelligence wordmark ramp */
 body.stage-intel {
