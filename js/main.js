@@ -1143,4 +1143,145 @@
       reader.readAsDataURL(file);
     } else { send(payload); }
   });
+
+
+
 })();
+
+/* Standalone: must not sit inside a page-specific block that early-returns. */
+(function () {
+  /* ---------- SCROLL-ANIMATED DIAGRAMS ----------
+     Any .viz-animate block animates once when it scrolls into view. The end state is
+     read straight out of the existing markup — gauge arcs from their stroke-dashoffset,
+     bars from their inline width — so diagrams don't need data attributes bolted on. */
+  (function () {
+    var blocks = document.querySelectorAll(".viz-animate");
+    if (!blocks.length) return;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    blocks.forEach(function (block) {
+      // Gauges: remember the target, then wind the arc back to empty.
+      block.querySelectorAll(".gauge svg circle[stroke-dasharray]").forEach(function (c) {
+        var dash = parseFloat(c.getAttribute("stroke-dasharray"));
+        var target = parseFloat(c.getAttribute("stroke-dashoffset") || "0");
+        if (!dash) return;
+        c.classList.add("g-arc");
+        c.dataset.target = target;
+        var txt = c.parentNode.querySelector("text");
+        if (txt) { c.dataset.num = (txt.textContent.match(/\d+/) || [""])[0]; txt.dataset.suffix = txt.textContent.replace(/\d+/, ""); }
+        if (!reduce) c.setAttribute("stroke-dashoffset", dash);
+      });
+      // Bars: remember the target width, then collapse to zero.
+      block.querySelectorAll(".barfill").forEach(function (b) {
+        b.dataset.target = b.style.width || "";
+        if (!reduce) b.style.width = "0%";
+      });
+    });
+
+    function run(block) {
+      block.classList.add("viz-in");
+      block.querySelectorAll(".g-arc").forEach(function (c) {
+        c.setAttribute("stroke-dashoffset", c.dataset.target);
+        var txt = c.parentNode.querySelector("text");
+        if (!txt || !c.dataset.num) return;
+        var end = parseInt(c.dataset.num, 10), suffix = txt.dataset.suffix || "", t0 = null;
+        function tick(ts) {
+          if (!t0) t0 = ts;
+          var p = Math.min((ts - t0) / 1250, 1);
+          p = 1 - Math.pow(1 - p, 3);                       // ease out, matches the arc
+          txt.textContent = Math.round(end * p) + suffix;
+          if (p < 1) requestAnimationFrame(tick);
+        }
+        txt.textContent = "0" + suffix;
+        requestAnimationFrame(tick);
+      });
+      block.querySelectorAll(".barfill").forEach(function (b) { b.style.width = b.dataset.target; });
+    }
+
+    if (reduce || !window.IntersectionObserver) { blocks.forEach(run); return; }
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        run(e.target);
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0.25 });
+    blocks.forEach(function (b) { io.observe(b); });
+  })();
+})();
+
+
+/* ---------- CAROUSELS ----------
+   Scroll-snap handles the swipe. This only keeps arrows/dots in sync, moves the
+   viewport on click, and adds keyboard support. */
+(function () {
+  document.querySelectorAll(".carousel").forEach(function (car) {
+    var vp = car.querySelector(".car-viewport");
+    var slides = Array.prototype.slice.call(car.querySelectorAll(".car-slide"));
+    if (!vp || slides.length < 2) return;
+
+    var prev = car.querySelector("[data-car-prev]");
+    var next = car.querySelector("[data-car-next]");
+    var dotWrap = car.querySelector(".car-dots");
+    var counter = car.querySelector(".car-count");
+    var i = 0;
+
+    if (dotWrap) {
+      slides.forEach(function (s, n) {
+        var b = document.createElement("button");
+        b.className = "car-dot" + (n === 0 ? " on" : "");
+        b.type = "button";
+        b.setAttribute("aria-label", "Go to slide " + (n + 1) + " of " + slides.length);
+        b.addEventListener("click", function () { go(n); });
+        dotWrap.appendChild(b);
+      });
+    }
+
+    function paint() {
+      if (dotWrap) {
+        Array.prototype.forEach.call(dotWrap.children, function (d, n) {
+          d.classList.toggle("on", n === i);
+          d.setAttribute("aria-current", n === i ? "true" : "false");
+        });
+      }
+      if (prev) prev.disabled = i === 0;
+      if (next) next.disabled = i === slides.length - 1;
+      if (counter) counter.textContent = (i + 1) + " / " + slides.length;
+    }
+
+    function go(n) {
+      i = Math.max(0, Math.min(slides.length - 1, n));
+      vp.scrollTo({ left: slides[i].offsetLeft - slides[0].offsetLeft, behavior: "smooth" });
+      paint();
+    }
+
+    if (prev) prev.addEventListener("click", function () { go(i - 1); });
+    if (next) next.addEventListener("click", function () { go(i + 1); });
+
+    // keep state honest when the user swipes or scrolls the track directly
+    var t;
+    vp.addEventListener("scroll", function () {
+      clearTimeout(t);
+      t = setTimeout(function () {
+        var base = slides[0].offsetLeft, x = vp.scrollLeft + base, best = 0, bd = Infinity;
+        slides.forEach(function (s, n) {
+          var d = Math.abs(s.offsetLeft - x);
+          if (d < bd) { bd = d; best = n; }
+        });
+        if (best !== i) { i = best; paint(); }
+      }, 90);
+    }, { passive: true });
+
+    car.setAttribute("tabindex", "0");
+    car.setAttribute("role", "group");
+    car.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") { e.preventDefault(); go(i + 1); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); go(i - 1); }
+    });
+
+    paint();
+  });
+})();
+
+
+
