@@ -2483,15 +2483,6 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
   .viz-animate .hl-dis, .viz-animate .hl-dis-strong { background-size: 100% 100%; transition: none; }
 }
 
-/* ---- Evidence file (Lit Review) ---- */
-.ev-table { width: 100%; border-collapse: collapse; font-size: .93rem; }
-.ev-table th { text-align: left; font-size: .7rem; letter-spacing: .1em; text-transform: uppercase;
-  color: #9a9a9e; font-weight: 700; padding: 0 12px 10px; border-bottom: 2px solid var(--ink); }
-.ev-table td { padding: 13px 12px; border-bottom: 1px solid #ececee; vertical-align: top; }
-.ev-table tr:last-child td { border-bottom: 0; }
-.ev-id { font-size: .8rem; color: #6b6b6e; white-space: nowrap; }
-.ev-id b { display: block; color: var(--ink); font-size: .93rem; font-weight: 600; }
-.ev-redact { filter: blur(3.6px); user-select: none; }
 .pill { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .04em;
   text-transform: uppercase; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
 .pill-pos { background: var(--stg-soft); color: var(--stg-ink); }
@@ -2499,8 +2490,6 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 .pill-mixed { background: rgba(190,192,216,.5); color: #46496b; }
 .pill-full { background: rgba(134,159,188,.35); color: #2b435e; }
 .pill-abs { background: rgba(12,13,16,.06); color: #6b6b6e; }
-.ev-scroll { overflow-x: auto; }
-.ev-scroll .ev-table { min-width: 720px; }
 
 /* ---- Step / funnel strip ---- */
 .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
@@ -2510,26 +2499,6 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 .flow-step p { margin: 0; font-size: .9rem; color: #5a5a5e; line-height: 1.5; }
 @media (max-width: 900px){ .flow { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 560px){ .flow { grid-template-columns: 1fr; } }
-
-/* ---- Claim workshop (Claim Dev) ---- */
-.cw { display: grid; grid-template-columns: 1fr 26px 1fr 26px 1fr; gap: 0; align-items: stretch; }
-.cw-col { background: #fff; border: 1px solid #e4e4e6; border-radius: 16px; padding: 18px; }
-.cw-arrow { display: flex; align-items: center; justify-content: center; color: #c2c2c6; font-size: 1.3rem; }
-.cw-kicker { font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; font-weight: 700; color: #9a9a9e; margin-bottom: 8px; }
-.cw-col p { margin: 0 0 10px; font-size: .93rem; line-height: 1.55; }
-.cw-col p:last-child { margin-bottom: 0; }
-.cw-parts { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-.cw-parts li { font-size: .9rem; padding-left: 20px; position: relative; line-height: 1.45; }
-.cw-parts li::before { content: ""; position: absolute; left: 0; top: .45em; width: 9px; height: 9px;
-  border-radius: 50%; background: var(--stg-dot); }
-.cw-claim { font-size: 1.02rem; font-weight: 600; line-height: 1.45; }
-.cw-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
-.cw-guard { margin-top: 12px; padding-top: 12px; border-top: 1px solid #ececee; font-size: .85rem; color: #6b6b6e; }
-.cw-guard b { color: var(--coral); }
-@media (max-width: 900px){
-  .cw { grid-template-columns: 1fr; gap: 12px; }
-  .cw-arrow { transform: rotate(90deg); height: 20px; }
-}
 
 /* ---- Worked-example story card (Science Story) ---- */
 .story-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap: 26px; align-items: stretch; }
@@ -2633,75 +2602,86 @@ html.mnav-lock, html.mnav-lock body { overflow: hidden; }
 
 
 
-/* ============ BEFORE / AFTER CAROUSEL COMPARISON (Science Carousel) ============ */
-.cmp2 { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: stretch; }
-@media (max-width: 900px){ .cmp2 { grid-template-columns: 1fr; gap: 30px; } }
+/* ============ BEFORE / AFTER CAROUSEL COMPARISON (Science Carousel) ============
+   Tile type is sized in cqw (a percentage of the tile's own width) so the frames stay
+   readable whether they are 3-up on a desktop or 2-up on a phone. */
+.cmp2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: stretch; }
+@media (max-width: 980px){ .cmp2 { grid-template-columns: 1fr; gap: 28px; } }
 
 .strip { background: #fff; border: 1px solid #e4e4e6; border-radius: 18px; padding: 24px; height: 100%;
   display: flex; flex-direction: column; }
+@media (max-width: 560px){ .strip { padding: 16px; } }
 .strip-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
-.strip-tag { font-size: .68rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
-  padding: 6px 12px; border-radius: 999px; background: rgba(12,13,16,.07); color: #6b6b6e; }
+.strip-tag { font-size: .7rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase;
+  padding: 6px 13px; border-radius: 999px; background: rgba(12,13,16,.07); color: #6b6b6e; }
 .strip.good .strip-tag { color: #fff; background-image: var(--stg-grad); }
-.strip h3 { margin: 0; font-size: 1.26rem; letter-spacing: -.01em; }
-.strip-sub { font-size: .98rem; color: #6b6b6e; margin: 8px 0 18px; line-height: 1.55; }
+.strip h3 { margin: 0; font-size: clamp(1.15rem, 2.1vw, 1.3rem); letter-spacing: -.01em; }
+.strip-sub { font-size: 1rem; color: #6b6b6e; margin: 8px 0 18px; line-height: 1.55; }
 
 .tiles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.tile { aspect-ratio: 1/1; border-radius: 10px; overflow: hidden; position: relative; background: #fff;
-  border: 1px solid #ececee; display: flex; flex-direction: column; box-sizing: border-box;
-  /* the caption strip is absolutely positioned, so the bottom padding reserves its height */
-  padding: 11% 11% calc(11% + 20px); }
-.tile-cap { position: absolute; left: 0; right: 0; bottom: 0; height: 20px; display: flex;
-  align-items: center; justify-content: center; font-size: .56rem; font-weight: 700;
-  letter-spacing: .06em; text-transform: uppercase; text-align: center;
-  background: rgba(255,255,255,.94); color: #9a9a9e; }
+@media (max-width: 1180px){ .tiles { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 980px){ .tiles { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 680px){ .tiles { grid-template-columns: repeat(2, 1fr); gap: 8px; } }
+@media (max-width: 430px){ .tiles { grid-template-columns: 1fr; gap: 10px; } }
 
-/* a consistent brand bar sits on every tile in both sets — both are branded */
-.tile .brandbar { display: flex; align-items: center; gap: 4px; margin-bottom: 7px; }
-.tile .brandbar i { width: 11px; height: 11px; border-radius: 3px; background-image: var(--stg-grad); flex: 0 0 auto; }
-.tile .brandbar span { font-size: .42rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #9a9a9e; }
+.tile { container-type: inline-size; aspect-ratio: 1/1; border-radius: 10px; overflow: hidden;
+  position: relative; background: #fff; border: 1px solid #ececee; display: flex; flex-direction: column;
+  box-sizing: border-box; padding: 9% 9% 15%; }
+.tile-cap { position: absolute; left: 0; right: 0; bottom: 0; height: 12%; display: flex;
+  align-items: center; justify-content: center; font-weight: 700; letter-spacing: .07em;
+  text-transform: uppercase; text-align: center; background: #f6f6f7; color: #8a8a8e;
+  font-size: 10px; font-size: 5cqw; }
+.strip.good .tile-cap { color: var(--stg-ink); background: var(--stg-soft); }
 
-/* --- assembled: branded, tidy, and saying nothing in particular --- */
-.tile.b .hd { font-size: .6rem; font-weight: 700; line-height: 1.22; margin-bottom: 5px; }
-.tile.b .sm { font-size: .43rem; line-height: 1.45; color: #7a7a7e; overflow: hidden; }
-.tile.b .pk { margin: auto; width: 38%; height: 54%; border-radius: 4px; background: linear-gradient(180deg,#d6dade,#b6bec5); }
-.tile.b .chips { display: flex; flex-wrap: wrap; gap: 3px; margin-top: auto; }
-.tile.b .chips i { font-size: .38rem; font-weight: 700; padding: 2px 5px; border-radius: 99px;
-  background: #f1f1f2; color: #8a8a8e; font-style: normal; }
-.tile.b .grid6 { display: grid; grid-template-columns: repeat(3,1fr); gap: 4px; margin: auto 0; }
-.tile.b .grid6 i { aspect-ratio: 1/1; border-radius: 3px; background: #e7eaec; }
-.tile.b .seal { margin: auto; display: flex; gap: 6px; }
-.tile.b .seal i { width: 24%; aspect-ratio: 1/1; border-radius: 50%; border: 1.5px solid #dcdfe2; }
+.tile .brandbar { display: flex; align-items: center; gap: 4cqw; margin-bottom: 5cqw; }
+.tile .brandbar i { width: 7cqw; height: 7cqw; border-radius: 2cqw; background-image: var(--stg-grad); flex: 0 0 auto; }
+.tile .brandbar span { font-size: 9px; font-size: 4.4cqw; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: #b4b4b8; }
 
-/* --- designed: one system, each frame doing a job --- */
-.tile.g { border-color: rgba(12,13,16,.08); }
-.tile.g .n { font-size: .48rem; font-weight: 700; letter-spacing: .16em; margin-left: auto; }
-.tile.g h5 { margin: 0; font-size: .78rem; line-height: 1.22; letter-spacing: -.01em; }
-.tile.g p { margin: 0; font-size: .5rem; line-height: 1.45; color: #6b6b6e; }
-.tile.g .art { flex: 1; display: flex; align-items: center; justify-content: center; margin: 4px 0; }
-.tile.g .mini { width: 100%; display: flex; flex-direction: column; gap: 4px; }
-.tile.g .mini i { height: 6px; border-radius: 99px; background: #eceeef; display: block; overflow: hidden; }
-.tile.g .mini i b { display: block; height: 100%; border-radius: 99px; background-image: var(--stg-grad); }
-.tile.g .moa { width: 100%; display: flex; align-items: center; justify-content: center; gap: 5px; }
-.tile.g .moa i { width: 17%; aspect-ratio: 1/1; border-radius: 50%; background-image: var(--stg-grad); opacity: .35; }
-.tile.g .moa i:nth-child(2){ opacity: .65; } .tile.g .moa i:nth-child(3){ opacity: 1; }
-.tile.g .moa span { font-size: .6rem; color: #b9b9bd; }
-.tile.g .big { font-size: 1.5rem; font-weight: 700; letter-spacing: -.02em; line-height: 1;
+/* --- typical: branded, but every frame is doing three jobs at once --- */
+.tile.b .hd { font-size: 11px; font-size: 7.4cqw; font-weight: 700; line-height: 1.15; margin-bottom: 3cqw; }
+.tile.b .sm { font-size: 9px; font-size: 5.2cqw; line-height: 1.4; color: #76767a; }
+.tile.b .sm b { display: block; color: #4a4a4e; }
+.tile.b .row { display: flex; gap: 3cqw; margin-top: auto; align-items: flex-end; }
+.tile.b .row .col { flex: 1; }
+.tile.b .pk { width: 100%; height: 34cqw; border-radius: 2cqw; background: linear-gradient(170deg,#e3e7ea,#c2c9cf); }
+.tile.b .stars { font-size: 6cqw; color: #E8A33D; letter-spacing: .1em; }
+
+/* --- Science Carousel: one job per frame --- */
+.tile.g .art { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2cqw; }
+.tile.g h5 { margin: 0; font-size: 12px; font-size: 8.2cqw; line-height: 1.16; letter-spacing: -.01em; }
+.tile.g .sub { font-size: 9px; font-size: 5cqw; line-height: 1.35; color: #6b6b6e; margin: 2cqw 0 0; }
+.tile.g .big { font-size: 26px; font-size: 19cqw; font-weight: 700; letter-spacing: -.03em; line-height: 1;
   background-image: var(--stg-grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-.tile.g .rule { height: 3px; border-radius: 99px; background-image: var(--stg-grad); margin-top: 6px; }
+.tile.g .arrowline { display: flex; align-items: center; justify-content: center; gap: 3cqw; width: 100%; }
+.tile.g .arrowline .was { font-size: 12px; font-size: 9cqw; font-weight: 700; color: #c2c2c6; text-decoration: line-through; }
+.tile.g .arrowline .ar { font-size: 8cqw; color: #b4b4b8; }
+.tile.g .ben { width: 100%; display: flex; flex-direction: column; gap: 3cqw; }
+.tile.g .ben span { display: flex; align-items: center; gap: 3cqw; font-size: 9px; font-size: 5.4cqw;
+  font-weight: 600; line-height: 1.25; }
+.tile.g .ben i { width: 5cqw; height: 5cqw; border-radius: 50%; background-image: var(--stg-grad); flex: 0 0 auto; }
+.tile.g .steps3 { display: flex; align-items: center; justify-content: center; gap: 2.5cqw; width: 100%; }
+.tile.g .steps3 i { width: 15cqw; height: 15cqw; border-radius: 50%; background-image: var(--stg-grad); opacity: .34; }
+.tile.g .steps3 i:nth-of-type(2){ opacity: .66; } .tile.g .steps3 i:nth-of-type(3){ opacity: 1; }
+.tile.g .steps3 span { font-size: 7cqw; color: #c2c2c6; }
+.tile.g .line { display: flex; gap: 2.5cqw; width: 100%; justify-content: center; }
+.tile.g .line i { width: 17cqw; height: 30cqw; border-radius: 1.5cqw; background: linear-gradient(170deg,#e9edf0,#ccd3d9); }
+.tile.g .line i:nth-child(2){ background-image: var(--stg-grad); opacity: .85; }
 
-/* the last frame points at the video rather than pretending to play it */
-.tile.next { border-style: dashed; border-color: rgba(12,13,16,.2); background: #fafafa; }
-.tile.next .swipe { margin: auto 0; display: flex; align-items: center; gap: 6px; }
-.tile.next .swipe .ar { font-size: .9rem; color: #9a9a9e; }
-.tile.next .film { flex: 1; height: 42%; border-radius: 5px 0 0 5px; margin-right: -12%;
-  background: linear-gradient(120deg,#2a2c33,#15161a); position: relative; }
-.tile.next .film::after { content: ""; position: absolute; left: 34%; top: 50%; transform: translateY(-50%);
-  border-left: 8px solid rgba(255,255,255,.9); border-top: 5px solid transparent; border-bottom: 5px solid transparent; }
+/* the video really does sit in the carousel, so it is shown as a video */
+.tile.vid { background: #16171b; border-color: #16171b; }
+.tile.vid h5, .tile.vid .sub { color: #fff; }
+.tile.vid .sub { color: rgba(255,255,255,.66); }
+.tile.vid .brandbar span { color: rgba(255,255,255,.5); }
+.tile.vid .tile-cap { background: rgba(255,255,255,.1); color: rgba(255,255,255,.8); }
+.tile.vid .play { width: 22cqw; height: 22cqw; border-radius: 50%; background: rgba(255,255,255,.95);
+  display: grid; place-items: center; margin: 0 auto; }
+.tile.vid .play::after { content: ""; border-left: 7cqw solid #16171b; border-top: 4.5cqw solid transparent;
+  border-bottom: 4.5cqw solid transparent; margin-left: 2cqw; }
 
 .strip-notes { list-style: none; padding: 0; margin: 18px 0 0; display: flex; flex-direction: column; gap: 9px; }
-.strip-notes li { font-size: .92rem; line-height: 1.5; padding-left: 24px; position: relative; color: #4a4a4e; }
-.strip-notes li::before { content: "\2715"; position: absolute; left: 0; top: 0; color: var(--coral); font-weight: 700; font-size: .82rem; }
+.strip-notes li { font-size: .95rem; line-height: 1.5; padding-left: 24px; position: relative; color: #4a4a4e; }
+.strip-notes li::before { content: "\2715"; position: absolute; left: 0; top: 0; color: var(--coral); font-weight: 700; font-size: .85rem; }
 .strip.good .strip-notes li::before { content: "\2713"; color: var(--stg-a); }
 
 /* ============ PER-STAGE COLOUR ============
