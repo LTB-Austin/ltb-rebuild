@@ -2749,3 +2749,18 @@ body.stage-studio {
   border-radius: 2px; background: #d6d6da; }
 .ans.win .ans-src li::before { background-image: var(--stg-grad); }
 .ans.win .ans-src li { color: #3a3a3e; font-weight: 500; }
+
+
+/* ---- Two-step sequence diagram (Ad-to-Education) ---- */
+.seq { display: flex; flex-direction: column; gap: 10px; }
+.seq-step { background: #fff; border: 1px solid #e7e7ea; border-radius: 12px; padding: 14px 16px; position: relative; }
+.seq-step .seq-top { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 6px; }
+.seq-step .seq-len { font-size: .72rem; font-weight: 700; letter-spacing: .06em; padding: 4px 9px;
+  border-radius: 999px; color: #fff; background-image: var(--stg-grad); white-space: nowrap; }
+.seq-step .seq-where { font-size: .72rem; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: #9a9a9e; }
+.seq-step h6 { margin: 0 0 4px; font-size: 1.02rem; letter-spacing: -.01em; }
+.seq-step p { margin: 0; font-size: .9rem; line-height: 1.45; color: #6b6b6e; }
+.seq-link { display: flex; align-items: center; gap: 10px; padding-left: 16px; }
+.seq-link .ln { flex: 0 0 2px; width: 2px; height: 26px; background-image: var(--stg-grad); }
+.seq-link span { font-size: .84rem; font-weight: 600; color: var(--stg-a); }
+.seq-out { margin-top: 2px; font-size: .88rem; color: #6b6b6e; padding-left: 16px; }
