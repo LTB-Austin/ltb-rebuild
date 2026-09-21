@@ -2764,3 +2764,23 @@ body.stage-studio {
 .seq-link .ln { flex: 0 0 2px; width: 2px; height: 26px; background-image: var(--stg-grad); }
 .seq-link span { font-size: .84rem; font-weight: 600; color: var(--stg-a); }
 .seq-out { margin-top: 2px; font-size: .88rem; color: #6b6b6e; padding-left: 16px; }
+
+
+/* ---- Bio body: give the paragraphs room, and a branded pull quote ---- */
+.bio-body .lead { font-size: 1.25rem; line-height: 1.68; }
+.bio-body p { margin: 0 0 1.35em; max-width: 70ch; }
+.bio-body p:last-child { margin-bottom: 0; }
+.bio-body .label { margin-bottom: var(--s4); }
+
+.bio-quote { position: relative; margin: var(--s8) 0; padding: 30px 34px 30px 38px;
+  background: #fff; border: 1px solid #ececee; border-radius: 18px; max-width: 70ch;
+  box-shadow: 0 14px 38px rgba(12,13,16,.06); }
+.bio-quote::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+  border-radius: 18px 0 0 18px; background: var(--grad); }
+.bio-quote .bq-mark { display: block; font-size: 2.4rem; line-height: .8; font-weight: 700; margin-bottom: 6px;
+  background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.bio-quote p { font-size: clamp(1.18rem, 2vw, 1.46rem); line-height: 1.42; font-weight: 600;
+  letter-spacing: -.012em; margin: 0; max-width: none; }
+.bio-quote cite { display: block; margin-top: 14px; font-style: normal; font-size: .82rem;
+  font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: #9a9a9e; }
+@media (max-width: 560px){ .bio-quote { padding: 22px 20px 22px 24px; } }
