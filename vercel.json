@@ -1,4 +1,16 @@
 {
   "cleanUrls": true,
-  "trailingSlash": false
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/rsq",
+      "destination": "/",
+      "permanent": false
+    },
+    {
+      "source": "/rsq.html",
+      "destination": "/",
+      "permanent": false
+    }
+  ]
 }
