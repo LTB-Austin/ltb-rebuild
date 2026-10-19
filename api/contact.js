@@ -4,6 +4,8 @@
 //   CONTACT_TO      (optional)  — defaults to alex@lettherebe.com
 //   CONTACT_FROM    (optional)  — defaults to "Let There Be <onboarding@resend.dev>";
 //                                  once your domain is verified in Resend, use e.g. "Website <hello@lettherebe.com>"
+import { screen } from "./_protect.js";
+
 export default async function handler(req, res) {
   if (req.method !== "POST") {
     res.setHeader("Allow", "POST");
@@ -11,8 +13,11 @@ export default async function handler(req, res) {
   }
   try {
     const b = typeof req.body === "string" ? JSON.parse(req.body || "{}") : (req.body || {});
-    // honeypot — silently accept so bots think they succeeded
-    if (b.hp) return res.status(200).json({ ok: true });
+    // Spam screen (origin, honeypot, timing, Vercel BotID, content) — see api/_protect.js
+    const verdict = await screen(req, b, { form: "contact" });
+    if (verdict.action === "reject") return res.status(403).json({ error: verdict.message });
+    if (verdict.action === "drop") return res.status(200).json({ ok: true });   // bots think it worked
+    const tag = verdict.action === "flag" ? verdict.subjectTag : "";
 
     const name = (b.name || "").trim();
     const email = (b.email || "").trim();
@@ -30,7 +35,8 @@ export default async function handler(req, res) {
       "\nCompany: " + company +
       "\nExploring: " + (b.interest || "") +
       "\nFound us via: " + (b.source || "") +
-      "\n\n" + (b.message || "");
+      "\n\n" + (b.message || "") +
+      (tag ? "\n\n---\nSpam signals: " + verdict.reasons.join(", ") : "");
 
     const r = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -39,7 +45,7 @@ export default async function handler(req, res) {
         from,
         to: [to],
         reply_to: email,
-        subject: "Website inquiry — " + (company || name),
+        subject: tag + "Website inquiry — " + (company || name),
         text
       })
     });

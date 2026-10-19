@@ -95,7 +95,7 @@
     <h2 class="reveal reveal-d1 mb-2">Apply for this role</h2>
     <p class="lead reveal">Tell us about you, share your work, and attach your resume. Your application goes straight to our team.</p>
     <p class="reveal" style="color:#6b6b6e">Have extra work samples that won&#8217;t fit here? Email them to <a href="mailto:shivaya@lettherebe.com?subject=Application%20%E2%80%94%20Freelance%202D%20Animator">shivaya@lettherebe.com</a>.</p>
-    <form class="form reveal" id="apply-form" action="#" method="POST" style="max-width:680px">
+    <form class="form reveal" id="apply-form" action="#" method="POST" data-protect="apply" style="max-width:680px">
       <input type="hidden" id="a-role" name="role" value="Freelance 2D Animator">
       <input type="text" name="company-website" id="a-hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
       <div><label for="a-name">Full name *</label><input id="a-name" name="name" type="text" required></div>
@@ -108,7 +108,6 @@
       <div><label for="a-msg">Why you? Anything you&#8217;d like us to know</label><textarea id="a-msg" name="message" rows="5"></textarea></div>
       <div><label for="a-hear">How did you hear about this role?</label>
         <select id="a-hear" name="hear"><option>Select one…</option><option>LinkedIn</option><option>Referral</option><option>Our website</option><option>Job board</option><option>Other</option></select></div>
-      <div><label for="a-captcha" id="a-captcha-label">Quick check: what is 3 + 4?</label><input id="a-captcha" name="captcha" type="text" inputmode="numeric" required></div>
       <button class="btn" type="submit">Submit application</button>
       <p style="font-size:0.8rem;opacity:0.7">Your application goes straight to the LTB team.</p>
     </form>
@@ -151,5 +150,6 @@
   </div>
 </footer>
 <script src="js/main.js"></script>
+<script type="module" src="/js/botid-init.mjs"></script>
 </body>
 </html>

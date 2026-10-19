@@ -1,3 +1,16 @@
+/* ---------- FORM PROTECTION (shared) ----------
+   Bot checking is done by Vercel BotID (js/botid-init.mjs attaches it to form posts)
+   and verified on the server in api/_protect.js. This helper only adds how long the
+   form was open, which the server uses to drop instant bot submissions. */
+;(function () {
+  var opened = Date.now();
+  window.LTBProtect = {
+    fields: function () { return { t: Date.now() - opened }; },
+    ready: function () { return true; },
+    reset: function () {}
+  };
+})();
+
 /* ============================================================
    LET THERE BE — site behavior
    Nav, scroll reveals, and the generative mitosis cell system.
@@ -688,41 +701,42 @@
   /* ---------- CONTACT FORM — posts to /api/contact (Resend), mailto fallback ---------- */
   var cform = document.getElementById("contact-form");
   if (cform) {
-    var A = 2 + Math.floor(Math.random() * 6), B = 2 + Math.floor(Math.random() * 6);
-    var capLabel = document.getElementById("f-captcha-label");
-    if (capLabel) capLabel.textContent = "Quick check: what is " + A + " + " + B + "?";
     var g = function (id) { return (document.getElementById(id) || {}).value || ""; };
+    var showErr = function (html) {
+      var err = document.getElementById("f-error");
+      if (!err) {
+        err = document.createElement("p");
+        err.id = "f-error"; err.className = "form-error"; err.setAttribute("role", "alert");
+        cform.appendChild(err);
+      }
+      err.innerHTML = html;
+    };
     cform.addEventListener("submit", function (e) {
       e.preventDefault();
       if (document.getElementById("f-hp").value) return;                  // bot filled the honeypot
-      var cap = document.getElementById("f-captcha");
-      if (parseInt(cap.value, 10) !== A + B) {
-        cap.setCustomValidity("That doesn't add up — try again.");
-        cap.reportValidity();
-        cap.setCustomValidity("");
+      if (!window.LTBProtect || !LTBProtect.ready(cform)) {
+        showErr("Please complete the verification check above the Send button.");
         return;
       }
+      var pf = LTBProtect.fields(cform);
       var payload = { name: g("f-name"), email: g("f-email"), company: g("f-company"),
-        interest: g("f-interest"), source: g("f-source"), message: g("f-msg"), hp: g("f-hp") };
+        interest: g("f-interest"), source: g("f-source"), message: g("f-msg"), hp: g("f-hp"),
+        t: pf.t };
       var btn = cform.querySelector('[type="submit"]');
       var orig = btn ? btn.textContent : "";
       if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
       fetch("/api/contact", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
-        .then(function (r) { if (!r.ok) throw new Error("bad"); return r.json(); })
+        .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { if (!r.ok) { var e = new Error("bad"); e.data = d; e.status = r.status; throw e; } return d; }); })
         .then(function () {
           cform.innerHTML = '<div class="form-thanks"><h3>Thank you — we’ll be in touch.</h3>' +
             '<p class="lead">Your message is on its way to our team.</p></div>';
         })
-        .catch(function () {
+        .catch(function (e) {
           if (btn) { btn.disabled = false; btn.textContent = orig; }
-          var err = document.getElementById("f-error");
-          if (!err) {
-            err = document.createElement("p");
-            err.id = "f-error"; err.className = "form-error"; err.setAttribute("role", "alert");
-            cform.appendChild(err);
-          }
-          err.innerHTML = 'We couldn’t send your message just now. Please email us directly at ' +
-            '<a href="mailto:alex@lettherebe.com">alex@lettherebe.com</a> and we’ll get right back to you.';
+          if (window.LTBProtect) LTBProtect.reset(cform);
+          if (e && (e.status === 400 || e.status === 403) && e.data && e.data.error) { showErr(e.data.error); return; }
+          showErr('We couldn’t send your message just now. Please email us directly at ' +
+            '<a href="mailto:alex@lettherebe.com">alex@lettherebe.com</a> and we’ll get right back to you.');
         });
     });
   }
@@ -1107,9 +1121,6 @@
 ;(function () {
   var aform = document.getElementById("apply-form");
   if (!aform) return;
-  var A = 2 + Math.floor(Math.random() * 6), B = 2 + Math.floor(Math.random() * 6);
-  var lab = document.getElementById("a-captcha-label");
-  if (lab) lab.textContent = "Quick check: what is " + A + " + " + B + "?";
   var g = function (id) { return (document.getElementById(id) || {}).value || ""; };
   var btn = aform.querySelector('[type="submit"]'); var orig = btn ? btn.textContent : "";
   function fail(msg) {
@@ -1121,18 +1132,22 @@
   function send(payload) {
     if (btn) { btn.disabled = true; btn.textContent = "Sending…"; }
     fetch("/api/apply", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
-      .then(function (r) { if (!r.ok) throw new Error("bad"); return r.json(); })
+      .then(function (r) { return r.json().catch(function () { return {}; }).then(function (d) { if (!r.ok) { var e = new Error("bad"); e.data = d; e.status = r.status; throw e; } return d; }); })
       .then(function () { aform.innerHTML = '<div class="form-thanks"><h3>Thanks — your application is in.</h3><p class="lead">We review every submission and will reach out if there’s a fit.</p></div>'; })
-      .catch(function () { fail('We couldn’t submit just now. Please email your application to <a href="mailto:shivaya@lettherebe.com">shivaya@lettherebe.com</a>.'); });
+      .catch(function (e) {
+        if (window.LTBProtect) LTBProtect.reset(aform);
+        if (e && (e.status === 400 || e.status === 403) && e.data && e.data.error) { fail(e.data.error); return; }
+        fail('We couldn’t submit just now. Please email your application to <a href="mailto:shivaya@lettherebe.com">shivaya@lettherebe.com</a>.');
+      });
   }
   aform.addEventListener("submit", function (e) {
     e.preventDefault();
     if ((document.getElementById("a-hp") || {}).value) return;
-    var cap = document.getElementById("a-captcha");
-    if (parseInt(cap.value, 10) !== A + B) { cap.setCustomValidity("That doesn't add up — try again."); cap.reportValidity(); cap.setCustomValidity(""); return; }
+    if (!window.LTBProtect || !LTBProtect.ready(aform)) { fail("Please complete the verification check above the Submit button."); return; }
+    var pf = LTBProtect.fields(aform);
     var payload = { role: g("a-role"), name: g("a-name"), email: g("a-email"), phone: g("a-phone"),
       location: g("a-location"), portfolio: g("a-portfolio"), linkedin: g("a-linkedin"),
-      message: g("a-msg"), hear: g("a-hear"), hp: g("a-hp") };
+      message: g("a-msg"), hear: g("a-hear"), hp: g("a-hp"), t: pf.t };
     var fi = document.getElementById("a-resume-file");
     var file = fi && fi.files && fi.files[0];
     if (file) {

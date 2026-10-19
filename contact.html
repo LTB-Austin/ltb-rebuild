@@ -105,7 +105,7 @@
            1) Formspree: set action="https://formspree.io/f/YOUR_ID" method="POST"
            2) Squarespace form block if rebuilt inside Squarespace
            3) Netlify Forms: add data-netlify="true" if hosted on Netlify -->
-      <form class="form reveal" id="contact-form" action="#" method="POST">
+      <form class="form reveal" id="contact-form" action="#" method="POST" data-protect="contact">
         <!-- honeypot — humans never see or fill this -->
         <input type="text" name="company-website" id="f-hp" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
         <div>
@@ -153,10 +153,6 @@
         <div>
           <label for="f-msg">Tell us about your science</label>
           <textarea id="f-msg" name="message" rows="5"></textarea>
-        </div>
-        <div>
-          <label for="f-captcha" id="f-captcha-label">Quick check: what is 3 + 4?</label>
-          <input id="f-captcha" name="captcha" type="text" inputmode="numeric" required>
         </div>
         <button class="btn" type="submit">Send</button>
         <p style="font-size:0.8rem;opacity:0.7">Your message goes straight to the LTB team.</p>
@@ -223,5 +219,6 @@
 <script src="js/main.js"></script>
 <script id="interest-preselect">(function(){var p=new URLSearchParams(location.search).get("interest");if(!p)return;var sel=document.getElementById("f-interest");if(!sel)return;for(var i=0;i<sel.options.length;i++){var o=sel.options[i];if((o.value&&o.value===p)||o.text.toLowerCase().indexOf(p.toLowerCase().replace(/-/g," "))>-1){sel.selectedIndex=i;break;}}})();</script>
 
+<script type="module" src="/js/botid-init.mjs"></script>
 </body>
 </html>

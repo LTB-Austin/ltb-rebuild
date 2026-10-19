@@ -1,0 +1,8 @@
+{
+  "name": "lettherebe-site",
+  "private": true,
+  "description": "Static site + Vercel functions. No build step.",
+  "dependencies": {
+    "botid": "^1.5.11"
+  }
+}
