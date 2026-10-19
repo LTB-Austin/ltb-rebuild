@@ -21,8 +21,6 @@
 //   if (verdict.action === "drop")   return res.status(200).json({ ok: true });   // silent: bot thinks it worked
 //   // "ok" or "flag"; on "flag", prefix the email subject with verdict.subjectTag
 
-import { checkBotId } from "botid/server";
-
 const MIN_FILL_MS = 3000;
 
 const SPAM_PATTERNS = [
@@ -61,6 +59,9 @@ function originAllowed(req) {
 async function verifyBotId(req) {
   if (process.env.BOTID_DISABLED === "1") return { ok: true, skipped: true };
   try {
+    // Loaded here, not at the top of the file, so a missing or broken package can never
+    // crash the form handler. If it fails, the submission goes through flagged.
+    const { checkBotId } = await import("botid/server");
     const v = await checkBotId({ advancedOptions: { headers: req.headers } });
     return { ok: !v.isBot, verifiedBot: !!v.isVerifiedBot };
   } catch (e) {

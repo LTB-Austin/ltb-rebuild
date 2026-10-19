@@ -4,5 +4,6 @@
   "description": "Static site + Vercel functions. No build step.",
   "dependencies": {
     "botid": "^1.5.11"
-  }
+  },
+  "type": "module"
 }
