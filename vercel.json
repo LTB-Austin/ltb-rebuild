@@ -11,6 +11,26 @@
       "source": "/rsq.html",
       "destination": "/",
       "permanent": false
+    },
+    {
+      "source": "/career-social-media-intern",
+      "destination": "/careers",
+      "permanent": true
+    },
+    {
+      "source": "/career-social-media-intern.html",
+      "destination": "/careers",
+      "permanent": true
+    },
+    {
+      "source": "/career-agency-operations-intern",
+      "destination": "/careers",
+      "permanent": true
+    },
+    {
+      "source": "/career-agency-operations-intern.html",
+      "destination": "/careers",
+      "permanent": true
     }
   ],
   "rewrites": [

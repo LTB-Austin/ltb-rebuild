@@ -1300,3 +1300,57 @@
 
 
 
+
+/* ---------- SCIENCE CAROUSEL — phone product-page showcase ----------
+   Standalone: swipe or tap the frame list; auto-advances until the visitor
+   interacts, pauses off-screen, respects reduced motion. */
+(function () {
+  var phone = document.querySelector(".pdp-phone");
+  if (!phone) return;
+  var track = phone.querySelector(".pdp-track");
+  var slides = track.querySelectorAll(".pdp-slide");
+  var dots = phone.querySelectorAll(".pdp-dots i");
+  var num = phone.querySelector(".pdp-n");
+  var jobs = document.querySelectorAll(".pdp-job");
+  var n = slides.length, cur = 0, timer = null, touched = false, visible = true;
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function mark(i) {
+    cur = i;
+    for (var k = 0; k < n; k++) {
+      if (dots[k]) dots[k].classList.toggle("on", k === i);
+      if (jobs[k]) { jobs[k].classList.toggle("on", k === i); jobs[k].setAttribute("aria-pressed", k === i ? "true" : "false"); }
+    }
+    if (num) num.textContent = i + 1;
+  }
+  function go(i, smooth) {
+    i = (i + n) % n;
+    track.scrollTo({ left: i * track.clientWidth, behavior: smooth === false || reduce ? "auto" : "smooth" });
+    mark(i);
+  }
+  var raf;
+  track.addEventListener("scroll", function () {
+    cancelAnimationFrame(raf);
+    raf = requestAnimationFrame(function () {
+      var i = Math.round(track.scrollLeft / Math.max(1, track.clientWidth));
+      if (i !== cur && i >= 0 && i < n) mark(i);
+    });
+  }, { passive: true });
+  function stop() { touched = true; clearInterval(timer); timer = null; }
+  ["pointerdown", "touchstart", "wheel", "keydown"].forEach(function (ev) { track.addEventListener(ev, stop, { passive: true }); });
+  track.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight") { e.preventDefault(); go(cur + 1); }
+    if (e.key === "ArrowLeft") { e.preventDefault(); go(cur - 1); }
+  });
+  Array.prototype.forEach.call(jobs, function (b) {
+    b.addEventListener("click", function () { stop(); go(parseInt(b.getAttribute("data-i"), 10)); });
+  });
+  function start() {
+    if (reduce || touched || timer) return;
+    timer = setInterval(function () { if (visible && !document.hidden) go(cur + 1); }, 3600);
+  }
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) { visible = es[0].isIntersecting; if (visible) start(); }, { threshold: 0.35 }).observe(phone);
+  } else { start(); }
+  window.addEventListener("resize", function () { go(cur, false); });
+  mark(0);
+})();
