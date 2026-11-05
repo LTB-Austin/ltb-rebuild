@@ -1073,9 +1073,7 @@
     story: { svc: "Science Story™",        name: "Science Story™", why: "Shape the claims into a concept worth believing." },
     studio:{ svc: "Science Studio™",       name: "Science Studio™", why: "Produce it — video, social, and beyond." },
     moa:   { svc: "Science Studio™",       name: "MOA Moment™",  why: "Your mechanism of action, shown in seconds." },
-    isk:   { svc: "Science Studio™",       name: "Influencer Science Kit™", why: "Science that creators can actually run with." },
-    a2e:   { svc: "Science Studio™",       name: "Ad-to-Education Sequence™", why: "From a scroll-stopping hook to the deep explainer." },
-    lab:   { svc: "Claims Lab™",           name: "Claims Lab™",  why: "A flexible, ongoing retainer that keeps finding and testing your next edge." }
+    a2e:   { svc: "Science Studio™",       name: "Ad-to-Education Sequence™", why: "From a scroll-stopping hook to the deep explainer." }
   };
   var COMP = { t: "", txt: "Aimed squarely at the competition — where you can win against a direct rival or the category." };
   var OWN  = { t: "", txt: "Runs on its own track — an ongoing retainer that keeps a repository of tested claims ready for every opening." };
@@ -1090,15 +1088,13 @@
     reposition: { label: "reposition the brand",                   path: ["lit","claim","story"] },
     audience:   { label: "reach an underserved audience",          path: ["lit","claim","story"] },
     moa:        { label: "explain your mechanism",                 path: ["lit","claim","story","moa"] },
-    tiktok:     { label: "make science-led social",                path: ["lit","claim","story","isk"] },
-    creators:   { label: "work with science creators",             path: ["lit","claim","story","isk"] },
+    tiktok:     { label: "make science-led social",                path: ["lit","claim","story","studio"] },
+    creators:   { label: "work with science creators",             path: ["lit","claim","story","studio"] },
     a2e:        { label: "make an ad that also educates",          path: ["lit","claim","story","a2e"] },
     hcp:        { label: "make professional / HCP education",      path: ["lit","claim","story","studio"] },
     campaign:   { label: "run a full science-led campaign",        path: ["lit","claim","story","studio"] },
     amazon:     { label: "win on Amazon",                          path: ["lit","claim","story","studio"] },
     educate:    { label: "educate consumers on the science",       path: ["lit","claim","story","a2e"] },
-    edge:       { label: "stay ahead all year",                    path: ["lab"], note: OWN },
-    repo:       { label: "build a claim repository for next year", path: ["lab"], note: OWN }
   };
   function render(gid) {
     var g = GOAL[gid]; if (!g) return;

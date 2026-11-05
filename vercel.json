@@ -31,6 +31,26 @@
       "source": "/career-agency-operations-intern.html",
       "destination": "/careers",
       "permanent": true
+    },
+    {
+      "source": "/claims-lab",
+      "destination": "/science-intelligence",
+      "permanent": true
+    },
+    {
+      "source": "/claims-lab.html",
+      "destination": "/science-intelligence",
+      "permanent": true
+    },
+    {
+      "source": "/influencer-science-kit",
+      "destination": "/studio",
+      "permanent": true
+    },
+    {
+      "source": "/influencer-science-kit.html",
+      "destination": "/studio",
+      "permanent": true
     }
   ],
   "rewrites": [
