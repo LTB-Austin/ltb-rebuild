@@ -1354,3 +1354,29 @@
   window.addEventListener("resize", function () { go(cur, false); });
   mark(0);
 })();
+
+/* ---------- SCIENCE STORY — concept tabs (standalone) ---------- */
+(function () {
+  var root = document.querySelector(".ssc");
+  if (!root) return;
+  var tabs = root.querySelectorAll(".ssc-tab");
+  function show(t) {
+    Array.prototype.forEach.call(tabs, function (b) {
+      var on = b === t;
+      b.classList.toggle("on", on);
+      b.setAttribute("aria-selected", on ? "true" : "false");
+      b.tabIndex = on ? 0 : -1;
+      var p = document.getElementById(b.getAttribute("aria-controls"));
+      if (p) p.hidden = !on;
+    });
+  }
+  Array.prototype.forEach.call(tabs, function (b, i) {
+    b.addEventListener("click", function () { show(b); });
+    b.addEventListener("keydown", function (e) {
+      var n = tabs.length, j = null;
+      if (e.key === "ArrowRight") j = (i + 1) % n;
+      if (e.key === "ArrowLeft") j = (i - 1 + n) % n;
+      if (j !== null) { e.preventDefault(); tabs[j].focus(); show(tabs[j]); }
+    });
+  });
+})();
