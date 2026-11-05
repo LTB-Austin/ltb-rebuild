@@ -1073,28 +1073,31 @@
     story: { svc: "Science Story™",        name: "Science Story™", why: "Shape the claims into a concept worth believing." },
     studio:{ svc: "Science Studio™",       name: "Science Studio™", why: "Produce it — video, social, and beyond." },
     moa:   { svc: "Science Studio™",       name: "MOA Moment™",  why: "Your mechanism of action, shown in seconds." },
-    a2e:   { svc: "Science Studio™",       name: "Ad-to-Education Sequence™", why: "From a scroll-stopping hook to the deep explainer." }
+    a2e:   { svc: "Science Studio™",       name: "Ad-to-Education Sequence™", why: "From a scroll-stopping hook to the deep explainer." },
+    index: { svc: "Science Intelligence™", name: "Science Index™", why: "Publish the evidence so AI assistants and search can find it and recommend you." },
+    carousel: { svc: "Science Studio™",    name: "Science Carousel™", why: "Six product-page images, each with one job." },
+    custom: { svc: "Science Intelligence™", name: "Custom project", why: "Scoped to your question, from formula options to a competitor&#8217;s evidence." }
   };
   var COMP = { t: "", txt: "Aimed squarely at the competition — where you can win against a direct rival or the category." };
-  var OWN  = { t: "", txt: "Runs on its own track — an ongoing retainer that keeps a repository of tested claims ready for every opening." };
   var GOAL = {
-    claim:      { label: "launch a new claim",                     path: ["lit","claim"] },
-    headtohead: { label: "win a head-to-head claim",               path: ["lit","claim"], note: COMP },
-    whitespace: { label: "find where you can credibly win",        path: ["lit"] },
-    defend:     { label: "respond to a competitor's claim",        path: ["lit","claim"], note: COMP },
-    mlr:        { label: "get claims through MLR faster",          path: ["lit","claim"] },
-    vet:        { label: "vet a new ingredient or acquisition",    path: ["lit"] },
-    refresh:    { label: "refresh a tired claim set",              path: ["lit","claim"] },
-    reposition: { label: "reposition the brand",                   path: ["lit","claim","story"] },
-    audience:   { label: "reach an underserved audience",          path: ["lit","claim","story"] },
-    moa:        { label: "explain your mechanism",                 path: ["lit","claim","story","moa"] },
-    tiktok:     { label: "make science-led social",                path: ["lit","claim","story","studio"] },
-    creators:   { label: "work with science creators",             path: ["lit","claim","story","studio"] },
-    a2e:        { label: "make an ad that also educates",          path: ["lit","claim","story","a2e"] },
-    hcp:        { label: "make professional / HCP education",      path: ["lit","claim","story","studio"] },
-    campaign:   { label: "run a full science-led campaign",        path: ["lit","claim","story","studio"] },
-    amazon:     { label: "win on Amazon",                          path: ["lit","claim","story","studio"] },
-    educate:    { label: "educate consumers on the science",       path: ["lit","claim","story","a2e"] },
+    claim:         { label: "launch a new claim",                       path: ["lit","claim"] },
+    challenge:     { label: "challenge a competitor's claim",           path: ["custom","claim"], note: COMP },
+    whitespace:    { label: "find where you can credibly win",          path: ["lit"] },
+    defend:        { label: "defend a claim that's being questioned",   path: ["custom","claim"] },
+    refresh:       { label: "refresh a tired claim set",                path: ["lit","claim"] },
+    mlr:           { label: "get claims through MLR faster",            path: ["lit","claim"] },
+    vet:           { label: "vet a new ingredient or acquisition",      path: ["lit"] },
+    reform:        { label: "weigh a reformulation",                    path: ["custom","lit","claim"] },
+    ai:            { label: "show up in AI answers",                    path: ["lit","claim","index"] },
+    reposition:    { label: "reposition the brand",                     path: ["lit","claim","story"] },
+    audience:      { label: "reach a new audience",                     path: ["lit","claim","story"] },
+    campaign_idea: { label: "find a tested campaign idea",              path: ["lit","claim","story"] },
+    moa:           { label: "explain your mechanism",                   path: ["lit","claim","story","moa"] },
+    amazon:        { label: "win on Amazon",                            path: ["lit","claim","story","carousel"] },
+    a2e:           { label: "make an ad that also educates",            path: ["lit","claim","story","a2e"] },
+    social:        { label: "make science-led social and creator content", path: ["lit","claim","story","studio"] },
+    hcp:           { label: "educate HCPs and pharmacists",             path: ["lit","claim","story","studio"] },
+    campaign:      { label: "run a full science-led campaign",          path: ["lit","claim","story","studio"] }
   };
   function render(gid) {
     var g = GOAL[gid]; if (!g) return;
@@ -1375,4 +1378,77 @@
       if (j !== null) { e.preventDefault(); tabs[j].focus(); show(tabs[j]); }
     });
   });
+})();
+
+/* ---------- CONSUMER TESTING — simulated respondent (standalone) ----------
+   Plays one respondent through the survey: picks answers, highlights, rates
+   claims, types a reason. Auto-plays when visible; Pause / step controls;
+   reduced motion shows each screen fully answered with manual stepping. */
+(function () {
+  var root = document.querySelector(".tq");
+  if (!root) return;
+  var screens = root.querySelectorAll(".tq-s");
+  var steps = root.querySelectorAll(".tq-steps li");
+  var prog = root.querySelector(".tq-prog i");
+  var playBtn = root.querySelector(".tq-play");
+  var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var cur = 0, timers = [], playing = !reduce, visible = false, started = false;
+  function later(fn, ms) { timers.push(setTimeout(fn, ms)); }
+  function clear() { timers.forEach(clearTimeout); timers = []; }
+  function reset(s) {
+    s.querySelectorAll(".tq-opt").forEach(function (o) { o.classList.remove("picked"); });
+    s.querySelectorAll(".tq-h").forEach(function (h) { h.classList.remove("l", "d"); });
+    s.querySelectorAll(".tq-cl em").forEach(function (e) { e.classList.remove("set"); e.textContent = "—"; });
+    var t = s.querySelector(".tq-type"); if (t) t.textContent = "";
+  }
+  function fill(s) {   // instant end state
+    s.querySelectorAll(".tq-opts").forEach(function (g) { var o = g.querySelectorAll(".tq-opt")[+g.getAttribute("data-pick")]; if (o) o.classList.add("picked"); });
+    if (s.getAttribute("data-kind") === "hl") s.querySelectorAll(".tq-h").forEach(function (h) { h.classList.add(h.getAttribute("data-hl") === "dis" ? "d" : "l"); });
+    s.querySelectorAll(".tq-cl em").forEach(function (e) { e.textContent = e.getAttribute("data-v"); e.classList.add("set"); });
+    var t = s.querySelector(".tq-type"); if (t) t.textContent = t.getAttribute("data-text");
+  }
+  function animate(s, done) {   // play the respondent's actions, then call done
+    var kind = s.getAttribute("data-kind"), d = 900;
+    if (kind === "multi") {
+      s.querySelectorAll(".tq-opts").forEach(function (g) {
+        later(function () { var o = g.querySelectorAll(".tq-opt")[+g.getAttribute("data-pick")]; if (o) o.classList.add("picked"); }, d); d += 1000;
+      });
+      var t = s.querySelector(".tq-type");
+      if (t) { var txt = t.getAttribute("data-text"); d += 200;
+        for (var i = 1; i <= txt.length; i++) (function (k) { later(function () { t.textContent = txt.slice(0, k); }, d + k * 38); })(i);
+        d += txt.length * 38 + 400; }
+    } else if (kind === "read") { d = 4200; }
+    else if (kind === "hl") {
+      s.querySelectorAll(".tq-h").forEach(function (h) {
+        later(function () { h.classList.add(h.getAttribute("data-hl") === "dis" ? "d" : "l"); }, d); d += 1000;
+      });
+    } else if (kind === "claims") {
+      s.querySelectorAll(".tq-cl em").forEach(function (e) { later(function () { e.textContent = e.getAttribute("data-v"); e.classList.add("set"); }, d); d += 650; });
+    } else if (kind === "end") { d = 4200; }
+    later(done, d + 900);
+  }
+  function show(i, auto) {
+    clear();
+    cur = (i + screens.length) % screens.length;
+    screens.forEach(function (s, k) { s.classList.toggle("on", k === cur); if (k === cur) reset(s); });
+    steps.forEach(function (li, k) { li.classList.toggle("on", k === Math.min(cur, steps.length - 1) && cur < steps.length); li.classList.toggle("done", k < cur); });
+    if (prog) prog.style.width = Math.round((cur / (screens.length - 1)) * 100) + "%";
+    var s = screens[cur];
+    if (auto && playing) animate(s, function () { if (playing && visible) show(cur + 1, true); });
+    else fill(s);
+  }
+  function setPlaying(p) { playing = p; if (playBtn) playBtn.textContent = p ? "Pause" : "Play"; }
+  if (playBtn) playBtn.addEventListener("click", function () { setPlaying(!playing); show(cur, playing); });
+  root.querySelector(".tq-next").addEventListener("click", function () { setPlaying(false); show(cur + 1, false); });
+  root.querySelector(".tq-prev").addEventListener("click", function () { setPlaying(false); show(cur - 1, false); });
+  steps.forEach(function (li, k) { li.style.cursor = "pointer"; li.addEventListener("click", function () { setPlaying(false); show(k, false); }); });
+  if (reduce) setPlaying(false);
+  function start() { if (!started) { started = true; show(0, playing); } }
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(function (es) {
+      visible = es[0].isIntersecting;
+      if (visible) { if (!started) start(); else if (playing && !timers.length) show(cur, true); }
+      else { clear(); }
+    }, { threshold: 0.35 }).observe(root);
+  } else { visible = true; start(); }
 })();
