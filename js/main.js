@@ -1356,8 +1356,7 @@
 
 /* ---------- SCIENCE STORY — concept tabs (standalone) ---------- */
 (function () {
-  var root = document.querySelector(".ssc");
-  if (!root) return;
+  document.querySelectorAll(".ssc").forEach(function (root) {
   var tabs = root.querySelectorAll(".ssc-tab");
   function show(t) {
     Array.prototype.forEach.call(tabs, function (b) {
@@ -1377,6 +1376,7 @@
       if (e.key === "ArrowLeft") j = (i - 1 + n) % n;
       if (j !== null) { e.preventDefault(); tabs[j].focus(); show(tabs[j]); }
     });
+  });
   });
 })();
 
@@ -1408,24 +1408,24 @@
     var t = s.querySelector(".tq-type"); if (t) t.textContent = t.getAttribute("data-text");
   }
   function animate(s, done) {   // play the respondent's actions, then call done
-    var kind = s.getAttribute("data-kind"), d = 900;
+    var kind = s.getAttribute("data-kind"), d = 1500;
     if (kind === "multi") {
       s.querySelectorAll(".tq-opts").forEach(function (g) {
-        later(function () { var o = g.querySelectorAll(".tq-opt")[+g.getAttribute("data-pick")]; if (o) o.classList.add("picked"); }, d); d += 1000;
+        later(function () { var o = g.querySelectorAll(".tq-opt")[+g.getAttribute("data-pick")]; if (o) o.classList.add("picked"); }, d); d += 1700;
       });
       var t = s.querySelector(".tq-type");
-      if (t) { var txt = t.getAttribute("data-text"); d += 200;
-        for (var i = 1; i <= txt.length; i++) (function (k) { later(function () { t.textContent = txt.slice(0, k); }, d + k * 38); })(i);
-        d += txt.length * 38 + 400; }
-    } else if (kind === "read") { d = 4200; }
+      if (t) { var txt = t.getAttribute("data-text"); d += 400;
+        for (var i = 1; i <= txt.length; i++) (function (k) { later(function () { t.textContent = txt.slice(0, k); }, d + k * 60); })(i);
+        d += txt.length * 60 + 800; }
+    } else if (kind === "read") { d = 9000; }
     else if (kind === "hl") {
       s.querySelectorAll(".tq-h").forEach(function (h) {
-        later(function () { h.classList.add(h.getAttribute("data-hl") === "dis" ? "d" : "l"); }, d); d += 1000;
+        later(function () { h.classList.add(h.getAttribute("data-hl") === "dis" ? "d" : "l"); }, d); d += 1800;
       });
     } else if (kind === "claims") {
-      s.querySelectorAll(".tq-cl em").forEach(function (e) { later(function () { e.textContent = e.getAttribute("data-v"); e.classList.add("set"); }, d); d += 650; });
-    } else if (kind === "end") { d = 4200; }
-    later(done, d + 900);
+      s.querySelectorAll(".tq-cl em").forEach(function (e) { later(function () { e.textContent = e.getAttribute("data-v"); e.classList.add("set"); }, d); d += 1100; });
+    } else if (kind === "end") { d = 6500; }
+    later(done, d + 1800);
   }
   function show(i, auto) {
     clear();
@@ -1451,4 +1451,22 @@
       else { clear(); }
     }, { threshold: 0.35 }).observe(root);
   } else { visible = true; start(); }
+})();
+
+/* Concept switcher — prev / next buttons inside each panel (standalone) */
+(function () {
+  document.querySelectorAll(".ssc").forEach(function (root) {
+    var tabs = root.querySelectorAll(".ssc-tab");
+    root.querySelectorAll(".ssc-go").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var t = tabs[parseInt(b.getAttribute("data-go"), 10)];
+        if (t) { t.click(); t.focus({ preventScroll: true }); root.scrollIntoView({ behavior: "smooth", block: "start" }); }
+      });
+    });
+    tabs.forEach(function (t) {
+      t.addEventListener("click", function () {
+        tabs.forEach(function (o) { var c = o.querySelector(".ssc-tab-cta"); if (c) c.textContent = o === t ? "Reading" : "Read this one →"; });
+      });
+    });
+  });
 })();
