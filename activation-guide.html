@@ -301,7 +301,7 @@
               cTotal++; if(on){cDone++;vDone++;}
               return '<button type="button" class="ag-fmt'+(on?' on':'')+'" data-toggle="'+v.id+'" data-key="'+esc(key)+'" aria-pressed="'+(on?'true':'false')+'" title="'+(on?'Posted — click to undo':'Click when this cut is posted')+'"><span class="ag-box" aria-hidden="true"></span>'+f+'</button>';
             }).join('');
-            var guide=isOpen?('<div class="ag-guide"><p>'+esc(link.blurb||'')+'</p><p class="ag-why"><strong>Why it’s on the list:</strong> '+esc(link.why||'')+'</p>'+(link.url?'<a href="'+esc(link.url)+'" target="_blank" rel="noopener">Open the platform guide →</a>':'<em>No public documentation. Your media partner sets this up.</em>')+'</div>'):'';
+            var guide=isOpen?('<div class="ag-guide"><p>'+esc(link.blurb||'')+'</p><p class="ag-why"><strong>Why it’s on the list:</strong> '+esc(link.why||'')+'</p>'+(link.url?'<a href="'+esc(link.url)+'" target="_blank" rel="noopener">Open the platform guide →</a>':'<span class="ag-nodoc">No public documentation. Your media partner sets this up.</span>')+'</div>'):'';
             return '<div class="ag-place"><div class="ag-prow"><span class="ag-pname">'+esc(p.name)+'</span>'+fmts+'<button class="ag-howto" data-open="'+esc(openKey)+'">'+(isOpen?'Hide':'How to')+'</button></div>'+guide+'</div>';
           }).join('');
           return '<div class="ag-channel"><div class="ag-chead"><h4>'+cn+'</h4><span>'+cDone+' / '+cTotal+'</span></div><p class="ag-fmthint">Click a format to mark it posted.</p>'+rows+'</div>';
